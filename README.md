@@ -1,1 +1,1 @@
-# xcs - client stack
+# EVE : XCS : CLIENT STACK
