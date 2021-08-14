@@ -1,0 +1,16 @@
+.profile-icon-button {
+  display: flex;
+  width: 72px; height: 72px;
+  margin: 16px;
+  background-color: var(--background-secondary-alt);
+  border-radius: 50%;
+  align-items: center; justify-content: center;
+}
+.icon-button {
+  display: flex;
+  width: var(--button-size); height: var(--button-size);
+  margin: 16px; padding: 8px;
+  background-color: var(--background-secondary-alt);
+  border-radius: 50%;
+  align-items: center; justify-content: center;
+}

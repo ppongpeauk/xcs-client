@@ -1,0 +1,7 @@
+main {
+  position: absolute;
+  margin-top: 3rem; margin-left: 5rem;
+  padding: 1rem;
+  width: calc(100% - 7.5rem); height: auto;
+  z-index: -1;
+}

@@ -1,0 +1,57 @@
+form {
+  width: 320px;
+  padding-top: 16px; padding-bottom: 32px;
+  padding-left: 24px; padding-right: 24px;
+
+  background-color: #3B4252;
+
+  border: 1px solid #1c1f26;
+  border-radius: 24px;
+
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+::placeholder {
+  font-weight: 400;
+  color: #8a9cbf;
+}
+
+input {
+  margin: 4px;
+}
+
+.inputBox {
+  background-color: #434C5E;
+  color: #fff;
+
+  padding-left: 8px; padding-right: 8px;
+  border-radius: 8px;
+  border: 1px solid #2E3440;
+
+  font-size: 16px;
+  height: 36px;
+  width: 50%;
+  transition: 0.1s;
+}
+.inputBox:focus {
+  outline: none;
+  border: 1px solid #fff;
+  transition: 0.1s;
+}
+
+.submitButton {
+  background-color: #434C5E;
+  height: 48px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.1s;
+}
+
+.submitButton:hover {
+  background-color: #2E3440;
+  cursor: pointer;
+  transition: 0.1s;
+}

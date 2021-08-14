@@ -1,0 +1,8 @@
+body::-webkit-scrollbar {width: 0.75rem;}
+body::-webkit-scrollbar-track {
+  background: var(--background-secondary-alt);
+}
+body::-webkit-scrollbar-thumb {
+  background: var(--background-primary-alt);
+  border-radius: 4px;
+}

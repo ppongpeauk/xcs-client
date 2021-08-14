@@ -1,0 +1,131 @@
+form {
+  border: 1px solid var(--background-tertiary);
+  border-radius: var(--border-radius-primary);
+  box-shadow: var(--shadow-primary);
+}
+
+.form-auth {
+  padding-top: 16px;
+  padding-bottom: 16px;
+  padding-left: 16px;
+  padding-right: 16px;
+  background-color: var(--background-primary);
+}
+
+::placeholder {
+  font-weight: 400;
+  color: var(--text-secondary);
+}
+
+input, label, select {
+  display: block;
+}
+
+input, button, textarea, select, .button-file-upload {
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-top: 8px !important;
+  padding-bottom: 8px !important;
+  margin-top: 0.25rem;
+  margin-bottom: 0.25rem;
+}
+
+input[type="file"] {
+  display: none;
+  width: 100%;
+  height: 100%;
+}
+
+.input-box, .button, .button-file-upload {
+  background-color: var(--background-primary);
+  color: var(--text-primary);
+  border-radius: var(--border-radius-primary);
+  border: 1px solid var(--background-secondary);
+  font-size: 16px;
+  min-height: 18px;
+  width: auto;
+  transition: var(--transition-duration-primary);
+  box-shadow: var(--shadow-primary);
+  text-overflow: ellipsis;
+}
+
+.input-box:focus, .button:focus {
+  outline: none;
+  border: 1px solid var(--background-tertiary);
+  box-shadow: var(--shadow-tertiary);
+}
+
+.button, .button-file-upload {
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+button, .button {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--background-primary);
+  height: 48px;
+  transition: var(--transition-duration-primary);
+}
+
+button:hover, .button:hover {
+  cursor: pointer;
+  box-shadow: var(--shadow-tertiary);
+}
+
+button:active, .button:active {
+  box-shadow: var(--shadow-inset-primary);
+}
+
+.button>svg {
+  margin-left: 0.25rem;
+  margin-right: 0.25rem;
+}
+
+.button>span {
+  margin-left: 0.25rem;
+  margin-right: 0.25rem;
+}
+
+.button-file-upload {
+  background-color: var(--background-primary);
+  transition: var(--transition-duration-primary);
+}
+
+.button-file-upload:hover {
+  cursor: pointer;
+  box-shadow: var(--shadow-tertiary);
+}
+
+.button-file-upload:active {
+  box-shadow: var(--shadow-inset-primary);
+}
+
+.button-file-upload div {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  vertical-align: middle;
+  width: 100%;
+  height: 100%;
+}
+
+label[for="file-upload"] {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  vertical-align: middle;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+}
+
+.input-box:disabled, .button-file-upload:disabled {
+  background-color: var(--background-secondary);
+}

@@ -1,0 +1,14 @@
+tr {
+  text-align: left;
+}
+.tr-margin {
+  margin-bottom: 1rem;
+}
+th {
+  text-transform: uppercase;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--background-secondary);
+}
+td a:hover {
+  text-decoration: underline;
+}

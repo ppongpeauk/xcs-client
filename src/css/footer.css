@@ -1,0 +1,18 @@
+footer {
+  display: flex;
+  margin-top: 1rem;
+  height: 2.5rem;
+  border: 1px solid var(--background-secondary); border-radius: var(--border-radius-primary);
+  justify-content: center;
+  padding: 16px;
+  bottom: 2rem;
+  box-shadow: var(--shadow-primary);
+}
+.main-footer {
+  min-width: calc(100% - 18rem);
+}
+.footer-container {
+  display: flex; flex-direction: column;
+  height: 100%; width: 100%;
+  align-items: center; justify-content: center;
+}

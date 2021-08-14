@@ -1,0 +1,172 @@
+main {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  margin-top: 4rem; margin-bottom: 3rem;
+  padding: 1rem;
+  min-width: calc(100% - 18rem); min-height: calc(100% - 6rem);
+  z-index: -1;
+  left: 16rem;
+}
+
+.loader {
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  background-color: #fff;
+  position: fixed;
+  height: 100%; width: 100%;
+  z-index: 999;
+}
+/*
+.loader-main {
+  margin-top: 4rem; margin-bottom: 3rem;
+  min-width: calc(100% - 16rem); min-height: calc(100% - 4rem);
+  height: auto; width: auto;
+  left: 16rem;
+}
+*/
+.loader-main {
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  position: fixed;
+  background-color: var(--background-primary);
+  width: 100vw; height: 100vh;
+  z-index: 1000;
+}
+.loader-page {
+  position: absolute;
+  left: 0rem;
+  width: calc(100% - 0rem); height: calc(100% - 2rem);
+}
+.loader-visible {
+  opacity: 1;
+  transition: 0.5s ease;
+}
+.loader-visible .loader-container {
+  transform: scale(1);
+  transition: 0.5s ease;
+}
+.loader-not-visible {
+  opacity: 0;
+  transition: 0.5s ease;
+  pointer-events: none;
+}
+.loader-not-visible .loader-container {
+  transform: scale(0);
+  transition: 0.5s ease;
+}
+
+.main-content {
+  flex: 1 1 auto;
+}
+.fill-height { height: auto; }
+.fill-width { width: auto; }
+.fill { flex: 1 1 auto; }
+.center-to-screen {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+.flex {
+  display: flex;
+}
+.flex-row {
+  flex-direction: row;
+}
+.flex-column {
+  flex-direction: column;
+}
+.flex-align-center {
+  align-items: center; justify-content: center;
+}
+.flex-align-center-h {
+  justify-content: center;
+}
+.flex-align-center-v {
+  align-items: center;
+}
+.flex-align-left-h {
+  justify-content: flex-start;
+}
+.flex-align-left-h {
+  justify-content: flex-start;
+}
+.flex-align-top-h {
+  align-items: flex-start;
+}
+.flex-align-bottom-h {
+  align-items: flex-start;
+}
+
+.reactEasyCrop_Container {
+  position: relative;
+  object-fit: cover;
+  width: 100%; height: 100%;
+  user-select: none;
+  touch-action: none;
+  cursor: move;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.reactEasyCrop_Image,
+.reactEasyCrop_Video {
+  will-change: transform; /* this improves performances and prevent painting issues on iOS Chrome */
+}
+
+.reactEasyCrop_Contain {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+}
+.reactEasyCrop_Cover_Horizontal {
+  width: 100%;
+  height: auto;
+}
+.reactEasyCrop_Cover_Vertical {
+  width: auto;
+  height: 100%;
+}
+
+.reactEasyCrop_CropArea {
+  position: absolute;
+  border: 1px solid rgba(0, 0, 0, 0.5);
+  box-sizing: border-box;
+  box-shadow: 0 0 0 9999em;
+  color: rgba(0, 0, 0, 0);
+  overflow: hidden;
+}
+
+.reactEasyCrop_CropAreaRound {
+  border-radius: 50%;
+}
+
+.reactEasyCrop_CropAreaGrid::before {
+  content: ' ';
+  box-sizing: border-box;
+  position: absolute;
+  border: 1px solid rgba(0, 0, 0, 0.5);
+  top: 0;
+  bottom: 0;
+  left: 33.33%;
+  right: 33.33%;
+  border-top: 0;
+  border-bottom: 0;
+}
+
+.reactEasyCrop_CropAreaGrid::after {
+  content: ' ';
+  box-sizing: border-box;
+  position: absolute;
+  border: 1px solid rgba(0, 0, 0, 0.5);
+  top: 33.33%;
+  bottom: 33.33%;
+  left: 0;
+  right: 0;
+  border-left: 0;
+  border-right: 0;
+}

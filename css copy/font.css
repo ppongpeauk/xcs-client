@@ -1,0 +1,6 @@
+@font-face {
+  font-family: 'Mulish';
+  src: url('../assets/fonts/mulish-regular.woff2') format('woff2'),
+      url('../assets/fonts/mulish-regular.woff') format('woff');
+  font-weight: normal; font-style: normal; font-display: swap;
+}

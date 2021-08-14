@@ -1,0 +1,103 @@
+.top-navbar {
+  width: 100vw;
+  height: 4rem;
+  position: fixed;
+  background-color: var(--background-primary);
+  transition: 0.2s ease;
+}
+.top-navbar-nav {
+  list-style: none;
+  padding: 0; margin: 0;
+  padding-right: 8px;
+  display: flex;
+  height: 100%;
+  flex-direction: row; align-items: center; justify-content: flex-end;
+}
+.top-navbar-item {
+  display: flex;
+  height: 3rem;
+  margin-left: 1rem;
+  border-radius: 24px;
+  background-color: var(--background-secondary);
+  transition: 0.1s ease;
+  align-items: center; justify-content: space-evenly;
+}
+
+.top-navbar-link {
+  display: flex;
+  align-items: center; justify-content: center;
+  height: 4rem; min-width: 4rem;
+  border-radius: 24px;
+  color: var(--text-primary);
+  text-decoration: none !important;
+  transition: height 0.1s ease;
+}
+.top-navbar-link:hover {
+  background-color: var(--background-tertiary);
+}
+.top-navbar-link:active {
+  height: calc(3rem - 4px);
+}
+
+.side-navbar {
+  width: 5rem;
+  height: 100vh;
+  position: fixed;
+  background-color: var(--background-primary);
+  transition: 0.2s ease;
+  overflow: hidden;
+}
+.side-navbar-nav {
+  list-style: none;
+  padding: 0; margin: 0;
+  display: flex;
+  flex-direction: column; align-items: center;
+}
+.side-navbar-section-text {
+  margin-bottom: 0.25rem;
+}
+.side-navbar-section-padding {
+  margin-top: 0.5rem;
+}
+.side-navbar-section-divider {
+  width: 75%;
+}
+.side-navbar-item {
+  width: 100%;
+  background-color: var(--background-secondary);
+  transition: 0.1s ease;
+}
+.side-navbar-item:hover {
+  background-color: var(--background-tertiary);
+}
+.side-navbar-link {
+  display: flex;
+  align-items: center;
+  height: 3rem;
+  color: var(--text-primary);
+  text-decoration: none !important;
+}
+.navbar-link-active {
+  background: var(--background-primary);
+}
+.side-navbar-link-text {
+  display: none;
+  text-align: center; white-space: nowrap;
+  font-size: 18px; font-weight: 500;
+  margin-left: 1rem;
+}
+.side-navbar-link svg {
+  min-width: 2rem;
+  max-height: 50%;
+  height: auto;
+  margin: 0 1.5rem;
+}
+.side-navbar:hover {
+  width: 18rem;
+}
+.side-navbar:hover .side-navbar-link-text {
+  display: block;
+}
+.side-navbar-logo-text {
+  font-size: 1.5rem;
+}
