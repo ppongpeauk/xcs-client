@@ -1,0 +1,45 @@
+@import url('main.css');
+
+:root {
+  --background-primary: #fff;
+  --background-primary-alt: #5e6472;
+  --background-secondary: #eee;
+  --background-secondary-alt: #ddd;
+  --background-tertiary: #CED4DA;
+  --text-primary: #343A40;
+  --text-secondary: #adb5bd;
+
+  --background-red-primary: #ffa69e;
+  --background-red-secondary: #ff686b;
+
+  --background-green-primary: #c1fba4;
+  --background-green-secondary: #7ae582;
+
+  --background-blue-primary: #a0c4ff;
+  --background-blue-secondary: #9ba9ff;
+
+  --border-radius-primary: 12px;
+  --border-radius-secondary: 6px;
+  --button-size: 24px;
+  --transition-duration-primary: 0.2s; --transition-duration-secondary: 0.3s;  --transition-duration-tertiary: 0.1s;
+  --shadow-primary: 0 1px 4px var(--background-secondary);
+  --shadow-secondary: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+  --shadow-tertiary: rgba(0, 0, 0, 0.18) 0px 2px 4px;;
+  --shadow-quarternary: rgba(17, 17, 26, 0.05) 0px 1px 0px, rgba(17, 17, 26, 0.1) 0px 0px 8px;
+  --shadow-inset-primary: rgb(204, 219, 232) 3px 3px 6px 0px inset, rgba(255, 255, 255, 0.5) -3px -3px 6px 1px inset;
+  --shadow-inset-secondary: rgba(0, 0, 0, 0.06) 0px 2px 4px 0px inset;
+
+  --text-primary-light: #343A40;
+  --text-primary-hover-light: #525c66;
+  --text-primary-dark: #fff;
+
+  font-family: "Poppins";
+  font-size: 16px;
+}
+
+html, body {
+  background-color: #fff;
+  color: var(--text-primary-light);
+  margin: 0; padding: 0; border: 0;
+  
+}

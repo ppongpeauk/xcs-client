@@ -1,0 +1,63 @@
+.profile-image {
+  display: block;
+  object-fit: cover !important;
+  border: 1px solid var(--background-tertiary);
+  border-radius: 50%;
+  box-shadow: var(--shadow-tertiary);
+  width: 128px !important;
+  height: 128px !important;
+  height: 100%;
+  overflow: hidden;
+  position: relative;
+  
+}
+
+.profile-image-pane {
+  height: 85%!important;
+  width: 85% !important;
+}
+
+.profile-pane {
+  display: flex;
+  height: 100%;
+  width: auto;
+  padding-left: 4px;
+  padding-right: 4px;
+  justify-content: space-evenly;
+}
+
+.profile-badge {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  background-color: transparent;
+  border: 1px solid var(--background-tertiary);
+  border-radius: var(--border-radius-primary);
+  padding-top: 0.1rem;
+  padding-bottom: 0.1rem;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+  box-shadow: var(--shadow-tertiary);
+  font-weight: 600;
+}
+
+.profile-badge-icon {
+  margin-right: 0.25rem;
+}
+
+.profile-pane * {
+  margin: 0.25rem;
+}
+
+.profile-bar-name {
+  /*
+  padding-left: 0.25rem;
+  padding-right: 0.25rem;
+  */
+  font-size: 20px;
+}
+
+.profile-text-uppercase {
+  text-transform: uppercase;
+}
