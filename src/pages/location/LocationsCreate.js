@@ -9,7 +9,7 @@
 
 // core imports
 import React, { useState, useEffect, useRef } from "react";
-import { useParams, useHistory, Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 // external imports
 import Loader from "../../components/Loader";
@@ -20,13 +20,12 @@ import PageHeader from "../../components/PageHeader.js";
 import firebase from "firebase";
 import { useAuth } from "../../contexts/AuthContext";
 
-export default function (props) {
+export default function LocationsCreate(props) {
   const [error, setError] = useState();
   const [success, setSuccess] = useState();
 
   // database stuff
   const { userCredential, database } = useAuth();
-  const [user, setUser] = useState();
   const [namePlaceholder, setNamePlaceholder] = useState();
   const [isLoading, setLoading] = useState(true);
 

@@ -15,7 +15,7 @@ import * as Icon from '@material-ui/icons';
 import PageHeader from "../../components/PageHeader.js";
 import { Link } from "react-router-dom";
 
-function HomeStatistics() {
+export default function HomeStatistics() {
   return (
     <div className="home-statistics" style={{height: "auto", display: "flex", flexDirection: "row",alignItems: "flex-start", justifyContent: "flex-start"}}>
       <div style={{height: "100%", width: "49%", paddingRight: "2%"}}>
@@ -73,5 +73,3 @@ function HomeStatistics() {
     </div>
   );
 }
-
-export default HomeStatistics;

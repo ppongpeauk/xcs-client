@@ -43,7 +43,10 @@ export default function Login() {
   async function handleSubmit(e) {
     e.preventDefault(); // prevent default form submit behavior
     setError(null); setLoading(true);
-    if (!(emailRef.current.value && passwordRef.current.value)) { return setError("please fill out all of the required fields."); }
+    if (!(emailRef.current.value && passwordRef.current.value)) {
+      setLoading(false);
+      return setError("please fill out all of the required fields.");
+    }
     try {
       // refuse to login if disabled by the server
       if (!siteConfig.loginEnabled) {

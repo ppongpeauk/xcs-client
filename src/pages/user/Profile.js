@@ -22,13 +22,13 @@ import PageHeader from "../../components/PageHeader.js";
 import { Helmet } from "react-helmet";
 import UserBadge from "../../components/UserBadge";
 
-export default function (props) {
+export default function Profile(props) {
   const history = useHistory();
   const [isLoading, setLoading] = useState(true);
 
 
   const [profileUser, setProfileUser] = useState();
-  const { database, userCredential } = useAuth();
+  const { database } = useAuth();
   const { userProfile } = useUser();
 
   // prepare username for database checking
@@ -72,7 +72,7 @@ export default function (props) {
           </Helmet>
           {/* main content */}
           <div className="main-content">
-            <PageHeader title={`${profileUser.username}'s Profile`} headerTitle={`${profileUser.username}'s PROFILE`.toUpperCase()} description={(userProfile && profileUser.username == userProfile.username) && "(you)"}/>
+            <PageHeader title={`${profileUser.username}'s Profile`} headerTitle={`${profileUser.username}'s PROFILE`.toUpperCase()} description={(userProfile && profileUser.username === userProfile.username) && "(you)"}/>
             <br />
             <div className="card" style={{ flexDirection: "row", alignItems: "flex-start", justifyContent: "flex-start", height: "auto", maxWidth: "auto", marginBottom: "12px", overflowWrap: "break-word" }}>
               <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", maxWidth: "100%", maxHeight: "100%" }}>
@@ -83,7 +83,7 @@ export default function (props) {
                 <div className="flex flex-column" style={{ paddingBottom: "12px", minWidth: "384px" }}>
                   <h2 style={{ margin: 0, padding: 0 }}><span style={{ display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "flex-start", maxWidth: "100%" }}>{((profileUser.preferences.namePrivacy == "public" ? profileUser.profile.name : `@${profileUser.username}`))}<UserBadge user={profileUser} icon title /></span></h2>
                   {
-                    (profileUser.preferences.namePrivacy == "public") &&
+                    (profileUser.preferences.namePrivacy === "public") &&
                     <p>@{profileUser.username}</p>
                   }
                   {
@@ -95,7 +95,7 @@ export default function (props) {
                   /*
                     if the shown user is the logged in user, show an edit profile button
                   */
-                  (userProfile && profileUser.username == userProfile.username) ?
+                  (userProfile && profileUser.username === userProfile.username) ?
                   <>
                     <div className="flex flex-column" style={{ minWidth: "384px" }}>
                       <Link exact to="/settings" className="button">

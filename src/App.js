@@ -8,8 +8,8 @@
 */
 
 // core imports
-import React, { useState, useEffect, useContext, createContext } from "react";
-import { BrowserRouter as Router, Switch, Route, useHistory, Redirect } from "react-router-dom";
+import React from "react";
+import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom";
 import PrivateRoute from "./components/PrivateRoute";
 import { Helmet } from "react-helmet";
 
@@ -28,7 +28,7 @@ import PasswordReset from "./pages/auth/PasswordReset";
 import Login from "./pages/auth/Login";
 import Signup from "./pages/auth/Signup";
 
-export default function () {
+export default function App() {
   return (
     <>
       {/* TODO: metadata implementation */}

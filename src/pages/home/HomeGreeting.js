@@ -12,7 +12,7 @@ import React from "react";
 // external imports
 import { useUser } from "../../contexts/UserContext";
 
-function HomeGreeting(props) {
+export default function HomeGreeting(props) {
     const { userProfile } = useUser();
 
     // time-based greeting
@@ -34,5 +34,3 @@ function HomeGreeting(props) {
         </div>
     );
 }
-
-export default HomeGreeting;

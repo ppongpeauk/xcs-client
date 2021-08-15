@@ -16,7 +16,7 @@ import PageHeader from "../../components/PageHeader.js";
 import HomeGreeting from "./HomeGreeting";
 import HomeStatistics from "./HomeStatistics";
 
-export default function (props) {
+export default function Home(props) {
   const [isLoading, setLoading] = useState(true);
   useEffect(() => {
     setLoading(false);

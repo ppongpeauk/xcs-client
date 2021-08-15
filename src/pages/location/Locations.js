@@ -19,7 +19,7 @@ import PageHeader from "../../components/PageHeader.js";
 // authentication
 import { useAuth } from "../../contexts/AuthContext";
 
-export default function (props) {
+export default function Locations(props) {
   const history = useHistory();
   // database stuff
   const { userCredential, database } = useAuth();

@@ -15,7 +15,7 @@ import { Link } from "react-router-dom";
 import Loader from "../../components/Loader";
 import PageHeader from "../../components/PageHeader.js";
 
-export default function (props) {
+export default function NotFound() {
   const [isLoading, setLoading] = useState(true);
   useEffect(() => {
     setLoading(false);

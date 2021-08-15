@@ -19,7 +19,7 @@ import PageHeader from "../../components/PageHeader.js";
 import { Helmet } from "react-helmet";
 import UserBadge from "../../components/UserBadge";
 
-export default function (props) {
+export default function Location(props) {
   const history = useHistory();
   const [isLoading, setLoading] = useState(true);
   const [user, setUser] = useState();
@@ -45,10 +45,10 @@ export default function (props) {
       {!isLoading &&
         <>
           <Helmet>
-            
+
           </Helmet>
           <div className="main-content">
-            <PageHeader title={`${location.name}`} headerTitle={`LOCATION : ${location.name}`.toUpperCase()}/>
+            <PageHeader title={`${location.name}`} headerTitle={`LOCATION : ${location.name}`.toUpperCase()} />
             <br />
             <div className="card" style={{ flexDirection: "row", alignItems: "flex-start", justifyContent: "flex-start", height: "auto", maxWidth: "auto", marginBottom: "12px", overflowWrap: "break-word" }}>
               <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", maxWidth: "100%", maxHeight: "100%" }}>
@@ -58,14 +58,14 @@ export default function (props) {
                 </div>
                 {
                   ((user && props.user) && (user.username == props.user.username)) ?
-                  <>
-                    <div className="flex flex-column" style={{ minWidth: "384px" }}>
-                      <Link exact to="/settings" className="button">
-                        <Icon.AccountCircle />
-                        <span>edit profile</span>
-                      </Link>
-                    </div>
-                  </> : <></>
+                    <>
+                      <div className="flex flex-column" style={{ minWidth: "384px" }}>
+                        <Link exact to="/settings" className="button">
+                          <Icon.AccountCircle />
+                          <span>edit profile</span>
+                        </Link>
+                      </div>
+                    </> : <></>
                 }
               </div>
               <div style={{ flexDirection: "column", alignItems: "center", justifyContent: "center", maxHeight: "auto", width: "100%" }}>

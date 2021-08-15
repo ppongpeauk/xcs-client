@@ -9,14 +9,13 @@
 
 // core imports
 import React from "react"
-import { Route, Redirect, useHistory } from "react-router-dom"
+import { Route, Redirect } from "react-router-dom"
 
 // authentication
 import { useAuth } from "../contexts/AuthContext"
 
 export default function PrivateRoute({ redirect="/login", authStatus=true, component: Component, ...rest}) {
   const { userCredential } = useAuth()
-  const history = useHistory()
 
   return (
     <Route

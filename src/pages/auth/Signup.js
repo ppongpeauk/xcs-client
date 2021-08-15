@@ -19,9 +19,8 @@ import * as Icon from '@material-ui/icons';
 import firebase from "firebase/app";
 import "firebase/firestore";
 import { useAuth } from "../../contexts/AuthContext";
-import { dataURLtoFile } from "image-conversion";
 
-export default function () {
+export default function Signup() {
   // loading state
   const [isLoading, setLoading] = useState(true);
 

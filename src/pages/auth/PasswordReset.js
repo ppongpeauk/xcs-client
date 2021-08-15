@@ -18,7 +18,7 @@ import * as Icon from '@material-ui/icons';
 // authentication
 import { useAuth } from "../../contexts/AuthContext";
 
-export default function() {
+export default function PasswordReset() {
   const emailRef = useRef();
   const passwordRef = useRef();
   const passwordConfirmRef = useRef();
@@ -86,7 +86,7 @@ export default function() {
           <button type="submit" disabled={loading} className="input-box submit-button button">
             <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
               <span>continue</span>
-              <Icon.ArrowForwardIos style={{ paddingLeft: "0.25rem" }} />
+              <Icon.ChevronLeft style={{ paddingLeft: "0.25rem" }} />
             </div>
           </button>
         </div>

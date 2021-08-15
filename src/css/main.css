@@ -17,14 +17,6 @@ main {
   height: 100%; width: 100%;
   z-index: 999;
 }
-/*
-.loader-main {
-  margin-top: 4rem; margin-bottom: 3rem;
-  min-width: calc(100% - 16rem); min-height: calc(100% - 4rem);
-  height: auto; width: auto;
-  left: 16rem;
-}
-*/
 .loader-main {
   display: flex; flex-direction: column;
   align-items: center; justify-content: center;
@@ -40,7 +32,7 @@ main {
 }
 .loader-visible {
   opacity: 1;
-  transition: 0.5s ease;
+  transition: 0.25s ease;
 }
 .loader-visible .loader-container {
   transform: scale(1);
@@ -48,7 +40,7 @@ main {
 }
 .loader-not-visible {
   opacity: 0;
-  transition: 0.5s ease;
+  transition: 0.25s ease;
   pointer-events: none;
 }
 .loader-not-visible .loader-container {

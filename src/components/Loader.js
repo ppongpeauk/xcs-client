@@ -13,7 +13,7 @@ import React from "react";
 // external imports
 import Loader from "react-loader-spinner";
 
-export default function(props) {
+export default function Spinner(props) {
     return (
       <Loader
         className={props.className}

@@ -27,7 +27,7 @@ import Profile from "./user/Profile";
 import NotFound from "./errorPage/NotFound";
 import MainNavbar from "../components/Navbar";
 
-export default function (props) {
+export default function Main(props) {
   const [isLoading, setLoading] = useState(true);
   // database stuff
   const { userCredential } = useAuth();

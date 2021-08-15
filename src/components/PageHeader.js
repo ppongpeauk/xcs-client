@@ -13,19 +13,11 @@ import React from "react";
 // external imports
 import { Helmet } from "react-helmet";
 
-class PageHeader extends React.Component {
-  constructor(props) {
-    super(props);
-    this.props = props;
-  }
-  render() {
-    return (
-      <div className="page-header">
-        {(this.props.title) && <Helmet><title>{this.props.title} - {process.env.REACT_APP_APP_SHORT_TITLE}</title></Helmet>}
-        <h1>{this.props.headerTitle} {(this.props.description) && <small>{this.props.description}</small>}</h1>
-      </div>
-    );
-  }
+export default function PageHeader(props) {
+  return (
+    <div className="page-header">
+      {(props.title) && <Helmet><title>{props.title} - {process.env.REACT_APP_APP_SHORT_TITLE}</title></Helmet>}
+      <h1>{props.headerTitle} {(props.description) && <small>{props.description}</small>}</h1>
+    </div>
+  );
 }
-
-export default PageHeader;

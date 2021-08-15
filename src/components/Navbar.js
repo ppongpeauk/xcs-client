@@ -14,7 +14,6 @@ import { Link, NavLink, useHistory } from "react-router-dom";
 // external imports
 import * as Icon from '@material-ui/icons';
 import { CSSTransition as TransitionGroup } from 'react-transition-group';
-import defaultProfileImage from "./default_profile_image.png";
 import UserBadge from "./UserBadge";
 
 // authentication
@@ -61,7 +60,7 @@ function TopNavbarItem(props) {
   );
 }
 function TopNavbarDropdown(props) {
-  const [isLoading, setLoading] = props.loadingState;
+  const [isLoading] = props.loadingState;
   const [open, setOpen] = props.openState;
   return (
     <TopNavbarItem>
@@ -79,7 +78,6 @@ function Dropdown(props) {
   const [isLoading, setLoading] = props.loadingState;
   const [open, setOpen] = props.openState;
   const { logout } = useAuth();
-  const [error, setError] = useState();
   const history = useHistory();
 
   const [activeMenu, setActiveMenu] = props.activeMenu;
@@ -120,14 +118,9 @@ function Dropdown(props) {
   }
 
   async function handleLogout() {
-    setError(null);
     setLoading(true);
-    try {
-      await logout();
-      history.push("/login");
-    } catch (e) {
-      setError("unable to log out!");
-    }
+    await logout();
+    history.push("/login");
     setLoading(false);
   }
 
@@ -144,7 +137,7 @@ function Dropdown(props) {
           <div className="menu menu-primary-enter-done">
             {props.user ? <>
               <ProfileDropdownItem to={"/profile/" + ((props.user && props.user.username) || "")} leftIcon={<img alt="user avatar" src={
-                props.user ? props.user.profile.avatar : defaultProfileImage  /* user profile picture */
+                props.user && props.user.profile.avatar  /* user profile picture */
               } className="profile-image profile-image-pane"></img>}>
                 <p>
                   <h3 style={{ margin: 0, padding: 0 }}>
@@ -170,7 +163,7 @@ function Dropdown(props) {
               <DropdownItem leftIcon={<Icon.Settings />} rightIcon={<Icon.NavigateNextRounded />} goToMenu="settings">settings</DropdownItem>
               <DropdownItem leftIcon={<Icon.ExitToApp />} rightIcon={<Icon.NavigateNextRounded />} goToMenu="logout">log out</DropdownItem>
             </> : <>
-            <DropdownItem to="/login" leftIcon={<Icon.ExitToApp />}>go to login</DropdownItem>
+              <DropdownItem to="/login" leftIcon={<Icon.ExitToApp />}>go to login</DropdownItem>
             </>
             }
           </div>
@@ -216,7 +209,7 @@ function Dropdown(props) {
     </div>
   );
 }
-export default function (props) {
+export default function Navbar(props) {
   const [isLoading, setLoading] = useState(true);
 
   const { userCredential } = useAuth();

@@ -25,7 +25,7 @@ import { storage } from "../../firebase";
 
 const isImage = require("is-image");
 
-export default function (props) {
+export default function Settings() {
   const [isLoading, setLoading] = useState(true);
 
   const [profileImagePreviewFile, setProfileImagePreviewFile] = useState();
@@ -80,7 +80,7 @@ export default function (props) {
       }
     };
     try {
-      if (e.target.files.length == 1) {
+      if (e.target.files.length === 1) {
         getFile = e.target.files[0];
         const fileExt = getFile.name.match(/\.([0-9a-z]+)(?:[\?#]|$)/i);
         if (isImage(getFile.name)) {
@@ -125,7 +125,7 @@ export default function (props) {
         "profile.website": websiteRef.current.value,
         "profile.about": (aboutRef.current.value.length > 0) ? aboutRef.current.value : null,
         "profile.avatar": profileImageUrl || userProfile.profile.avatar,
-        "preferences.namePrivacy": (namePrivacyRef.current.value == "public") ? "public" : "private",
+        "preferences.namePrivacy": (namePrivacyRef.current.value === "public") ? "public" : "private",
       }).then(() => {
         setSuccess("profile updated!");
         refreshUserProfile().then(() => {
@@ -162,8 +162,8 @@ export default function (props) {
         setLoading(false);
         return;
       } else {
-        const filteredExt = (profileImagePreviewProcessedExt != "gif" ? "png" : "gif").toLowerCase(); // png if anything other than a gif, otherwise gif
-        if (filteredExt != "gif") {
+        const filteredExt = (profileImagePreviewProcessedExt !== "gif" ? "png" : "gif").toLowerCase(); // png if anything other than a gif, otherwise gif
+        if (filteredExt !== "gif") {
           await imageConversion.compressAccurately(profileImagePreviewFile, {
             size: 512,
             accuracy: 0.9,
@@ -182,7 +182,7 @@ export default function (props) {
         }
       }
     } else {
-      updateProfile(defaultProfileImage == profileImagePreviewProcessed ? "https://cdn.restrafes.co/xcs/default_profile_image.png" : null);
+      updateProfile(defaultProfileImage === profileImagePreviewProcessed ? "https://cdn.restrafes.co/xcs/default_profile_image.png" : null);
     }
   }
   return (
@@ -233,7 +233,7 @@ export default function (props) {
                           </>
                         )
                       }
-                      <button type="button" className="input-box button" disabled={(!profileImagePreviewProcessed && userProfile.profile.avatar == "https://cdn.restrafes.co/xcs/default_profile_image.png") || profileImagePreviewProcessed == defaultProfileImage} onClick={(e) => resetProfileImagePreview(e)} style={{ width: "100%", textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden" }}>
+                      <button type="button" className="input-box button" disabled={(!profileImagePreviewProcessed && userProfile.profile.avatar === "https://cdn.restrafes.co/xcs/default_profile_image.png") || profileImagePreviewProcessed === defaultProfileImage} onClick={(e) => resetProfileImagePreview(e)} style={{ width: "100%", textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden" }}>
                         use default avatar
                       </button>
                     </div>

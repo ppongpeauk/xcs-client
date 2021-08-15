@@ -9,6 +9,8 @@
 
 // core imports
 import React, { useEffect, useContext, useState } from "react";
+
+// authentication
 import { useAuth } from "./AuthContext";
 
 const UserContext = React.createContext();

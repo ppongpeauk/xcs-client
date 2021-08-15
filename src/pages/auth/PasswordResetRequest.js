@@ -18,7 +18,7 @@ import * as Icon from '@material-ui/icons';
 // authentication
 import { useAuth } from "../../contexts/AuthContext";
 
-export default function() {
+export default function PasswordResetRequest() {
   const [isLoading, setLoading] = useState(true);
   const [error, setError] = useState();
   const [message, setMessage] = useState();
@@ -92,12 +92,12 @@ export default function() {
           <button type="submit" disabled={isLoading} className="input-box submit-button button">
             <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
               <span>recover</span>
-              <Icon.ArrowForwardIos style={{ paddingLeft: "0.25rem" }} />
+              <Icon.ChevronRight style={{ paddingLeft: "0.25rem" }} />
             </div>
           </button>
         </div>
         <div style={{marginBottom: "0.25rem"}}>
-          <Link to="/login" className="button-hover-underline flex-align-center"><Icon.ArrowBackIos /> <b>return to login</b></Link>
+          <Link to="/login" className="button-hover-underline flex-align-center"><Icon.ChevronLeft /> <b>return to login</b></Link>
         </div>
       </form>
     </div>
