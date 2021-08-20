@@ -1,5 +1,9 @@
 <img src="./assets/logo.png" height="256" alt="eve xcs logo"/>
 
+<br/>
+
+[![Netlify Status](https://api.netlify.com/api/v1/badges/ef27d21b-927c-4d99-814f-74449f240764/deploy-status)](https://app.netlify.com/sites/eve-xcs-client/deploys)
+
 ## Description
 
 EVE : XCS is a simple web application for managing entry points.
