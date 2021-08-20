@@ -85,7 +85,8 @@
   },
   "scripts": {
     "start": "node scripts/start.js",
-    "build": "set \"GENERATE_SOURCEMAP=false\" && set \"CI=false\" && node scripts/build.js",
+    "build": "set \"GENERATE_SOURCEMAP=false\" && set \"CI=false\" && dotenv -e .env.production && node scripts/build.js",
+    "build:dev": "set \"GENERATE_SOURCEMAP=false\" && set \"CI=false\" && dotenv -e .env.development && node scripts/build.js",
     "test": "node scripts/test.js --passWithNoTests"
   },
   "eslintConfig": {
@@ -162,6 +163,7 @@
     ]
   },
   "devDependencies": {
+    "dotenv-cli": "^4.0.0",
     "jest-circus": "^26.6.0"
   }
 }
