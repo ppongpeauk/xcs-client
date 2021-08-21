@@ -2,6 +2,7 @@
 
 <br/>
 
+
 ## Description
 
 EVE : XCS is a simple web application for managing entry points.
@@ -21,13 +22,17 @@ To start the development environment, run the following command:
 
 `npm start`
 
-By default, the development server will be started on port 3000, however, you can specify a different port by passing the `PORT` environment variable in `manifest.json`.
+By default, the development server will be started on port 3000, however, you can specify a different port by passing the `PORT` environment variable in `manifest.json` under `start`.
 
 ## Building from Source
 
 To build the application from source, run the following command:
 
 `npm run build`
+
+## Contributing
+
+Have an idea? Found a bug? Create a pull request or open an issue!
 
 ## License
 
