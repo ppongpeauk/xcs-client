@@ -1,8 +1,5 @@
 <img src="./assets/logo.png" height="256" alt="eve xcs logo"/>
 
-<br/>
-
-
 ## Description
 
 EVE : XCS is a simple web application for managing entry points.
