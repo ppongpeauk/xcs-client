@@ -12,16 +12,16 @@ import React, { useState, useEffect, useRef } from "react";
 import { useHistory } from "react-router-dom";
 
 // external imports
-import Loader from "../../components/Loader";
-import PageHeader from "../../components/PageHeader";
-import defaultProfileImage from "../../components/default_profile_image.png";
+import Loader from "components/Loader";
+import PageHeader from "components/PageHeader";
+import defaultProfileImage from "components/default_profile_image.png";
 import * as Icon from '@material-ui/icons';
 import * as imageConversion from 'image-conversion';
 
 // authentication
-import { useAuth } from "../../contexts/AuthContext";
-import { useUser } from "../../contexts/UserContext";
-import { storage } from "../../firebase";
+import { useAuth } from "contexts/AuthContext";
+import { useUser } from "contexts/UserContext";
+import { storage } from "firebase.js";
 
 const isImage = require("is-image");
 

@@ -17,8 +17,8 @@ import { CSSTransition as TransitionGroup } from 'react-transition-group';
 import UserBadge from "./UserBadge";
 
 // authentication
-import { useAuth } from "../contexts/AuthContext";
-import { useUser } from "../contexts/UserContext";
+import { useAuth } from "contexts/AuthContext";
+import { useUser } from "contexts/UserContext";
 
 function SideNavbar(props) {
   return (

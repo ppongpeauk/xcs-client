@@ -12,7 +12,7 @@ import React from "react"
 import { Route, Redirect } from "react-router-dom"
 
 // authentication
-import { useAuth } from "../contexts/AuthContext"
+import { useAuth } from "contexts/AuthContext"
 
 export default function PrivateRoute({ redirect="/login", authStatus=true, component: Component, ...rest}) {
   const { userCredential } = useAuth()

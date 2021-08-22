@@ -11,7 +11,7 @@
 import React from "react";
 
 // external imports
-import PageHeader from "../../components/PageHeader.js";
+import PageHeader from "components/PageHeader.js";
 
 export default function Terms() {
   return <></>

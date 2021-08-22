@@ -12,13 +12,13 @@ import React, { useState, useEffect, useRef } from "react";
 import { useHistory } from "react-router-dom";
 
 // external imports
-import Loader from "../../components/Loader";
+import Loader from "components/Loader";
 import * as Icon from "@material-ui/icons";
-import PageHeader from "../../components/PageHeader.js";
+import PageHeader from "components/PageHeader.js";
 
 // authentication
 import firebase from "firebase";
-import { useAuth } from "../../contexts/AuthContext";
+import { useAuth } from "contexts/AuthContext";
 
 export default function LocationsCreate(props) {
   const [error, setError] = useState();

@@ -12,15 +12,15 @@ import React, { useEffect, useState } from "react";
 import { useParams, useHistory, Link } from "react-router-dom";
 
 // external imports
-import Loader from "../../components/Loader";
+import Loader from "components/Loader";
 import * as Icon from '@material-ui/icons';
 
-import { useAuth } from "../../contexts/AuthContext";
-import { useUser } from "../../contexts/UserContext";
+import { useAuth } from "contexts/AuthContext";
+import { useUser } from "contexts/UserContext";
 
-import PageHeader from "../../components/PageHeader.js";
+import PageHeader from "components/PageHeader.js";
 import { Helmet } from "react-helmet";
-import UserBadge from "../../components/UserBadge";
+import UserBadge from "components/UserBadge";
 
 export default function Profile(props) {
   const history = useHistory();

@@ -11,8 +11,8 @@
 import React, { useEffect, useState } from "react";
 
 // external imports
-import Loader from "../../components/Loader";
-import PageHeader from "../../components/PageHeader.js";
+import Loader from "components/Loader";
+import PageHeader from "components/PageHeader.js";
 import HomeGreeting from "./HomeGreeting";
 import HomeStatistics from "./HomeStatistics";
 

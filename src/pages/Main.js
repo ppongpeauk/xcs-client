@@ -11,11 +11,11 @@ import React, { useState, useEffect, useContext } from "react";
 import { Route, Switch, Redirect, Link } from "react-router-dom";
 
 // external imports
-import Footer from "../components/Footer";
+import Footer from "components/Footer";
 
 // authentication
-import { AuthProvider, useAuth } from "../contexts/AuthContext";
-import { useUser } from "../contexts/UserContext";
+import { AuthProvider, useAuth } from "contexts/AuthContext";
+import { useUser } from "contexts/UserContext";
 
 // pages
 import Home from "./home/Home";
@@ -25,7 +25,7 @@ import Location from "./location/Location";
 import LocationsCreate from "./location/LocationsCreate";
 import Profile from "./user/Profile";
 import NotFound from "./errorPage/NotFound";
-import MainNavbar from "../components/Navbar";
+import MainNavbar from "components/Navbar";
 
 export default function Main(props) {
   const [isLoading, setLoading] = useState(true);

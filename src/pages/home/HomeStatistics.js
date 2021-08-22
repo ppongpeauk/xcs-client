@@ -12,7 +12,7 @@ import React from "react";
 
 // external imports
 import * as Icon from '@material-ui/icons';
-import PageHeader from "../../components/PageHeader.js";
+import PageHeader from "components/PageHeader.js";
 import { Link } from "react-router-dom";
 
 export default function HomeStatistics() {

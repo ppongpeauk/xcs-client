@@ -12,8 +12,8 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 // external imports
-import Loader from "../../components/Loader";
-import PageHeader from "../../components/PageHeader.js";
+import Loader from "components/Loader";
+import PageHeader from "components/PageHeader.js";
 
 export default function NotFound() {
   const [isLoading, setLoading] = useState(true);

@@ -11,14 +11,14 @@ import React, { useRef, useState, useEffect } from "react";
 import { Link, useHistory } from "react-router-dom";
 
 // external imports
-import PageHeader from "../../components/PageHeader.js";
-import Loader from "../../components/Loader";
+import PageHeader from "components/PageHeader.js";
+import Loader from "components/Loader";
 import * as Icon from '@material-ui/icons';
 
 // authentication
 import firebase from "firebase/app";
 import "firebase/firestore";
-import { useAuth } from "../../contexts/AuthContext";
+import { useAuth } from "contexts/AuthContext";
 
 export default function Signup() {
   // loading state

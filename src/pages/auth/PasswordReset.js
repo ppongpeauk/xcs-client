@@ -12,11 +12,11 @@ import React, { useRef, useState, useEffect } from "react";
 import { Link, useHistory, useParams } from "react-router-dom";
 
 // external imports
-import PageHeader from "../../components/PageHeader.js";
+import PageHeader from "components/PageHeader.js";
 import * as Icon from '@material-ui/icons';
 
 // authentication
-import { useAuth } from "../../contexts/AuthContext";
+import { useAuth } from "contexts/AuthContext";
 
 export default function PasswordReset() {
   const emailRef = useRef();

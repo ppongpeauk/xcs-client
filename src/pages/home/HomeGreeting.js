@@ -10,7 +10,7 @@
 // core imports
 import React from "react";
 // external imports
-import { useUser } from "../../contexts/UserContext";
+import { useUser } from "contexts/UserContext";
 
 export default function HomeGreeting(props) {
     const { userProfile } = useUser();
