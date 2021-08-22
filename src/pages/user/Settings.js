@@ -61,12 +61,15 @@ export default function Settings() {
 
   function handleSendVerificationEmail(e) {
     e.preventDefault();
+    setLoading(true);
     setSuccess(null); setError(null);
     userCredential.sendEmailVerification().then(() => {
       setSuccess("verification email sent. check your inbox!");
     }).catch(() => {
       setError("verification email failed to send!");
-    })
+    }).finally(() => {
+      setLoading(false);
+    });
   }
 
   const handleProfileImagePreview = (e) => {
