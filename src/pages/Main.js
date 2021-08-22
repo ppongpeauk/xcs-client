@@ -36,12 +36,10 @@ export default function Main(props) {
 
   useEffect(() => {
     if (!userCredential) {
-      console.log("no credentials found");
       setTimeout(() => {
         setLoading(false);
       }, 500);
     } else {
-      console.log("existing credential found");
       refreshUserProfile().then(() => {
         setLoading(false);
       });
