@@ -132,7 +132,7 @@ export default function Settings() {
       setLoading(false);
       return;
     }
-    if (!validURL(websiteRef.current.value)) {
+    if (websiteRef.current.value.length > 0 && !validURL(websiteRef.current.value)) {
       setError("your website must be a valid url!");
       setLoading(false);
       return;
