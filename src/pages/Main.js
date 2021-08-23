@@ -20,9 +20,13 @@ import { useUser } from "contexts/UserContext";
 // pages
 import Home from "./home/Home";
 import Settings from "./user/Settings";
+
 import Locations from "./location/Locations";
 import Location from "./location/Location";
 import LocationsCreate from "./location/LocationsCreate";
+
+import EntryCreate from "./entry/EntryCreate";
+
 import Profile from "./user/Profile";
 import NotFound from "./errorPage/NotFound";
 import MainNavbar from "components/Navbar";
@@ -75,26 +79,28 @@ export default function Main(props) {
           <main>
             <Switch>
               <Route exact path="/">
-                <Home alert={alert} />
+                <Home />
               </Route>
               <Route path="/settings">
-                <Settings alert={alert} />
+                <Settings />
               </Route>
-              <Route path="/locations/create">
-                <LocationsCreate alert={alert} />
+
+              <Route exact path="/locations/create">
+                <LocationsCreate />
               </Route>
               <Route path="/locations/:locationId">
-                <Location alert={alert} />
+                <Location />
               </Route>
               <Route exact path="/locations">
-                <Locations alert={alert} />
+                <Locations />
               </Route>
+
               {
                 userProfile && <Redirect exact from="/profile" to={`/profile/${userProfile.username}`}></Redirect>
               }
               {/* @ username handle is in App.js */}
               <Route path="/profile/:username?">
-                <Profile alert={alert} />
+                <Profile />
               </Route>
               <Route path="/not-found">
                 <NotFound />

@@ -24,8 +24,8 @@ export default function Locations(props) {
   // database stuff
   const { userCredential, database } = useAuth();
   const [user, setUser] = useState();
+  const [userCache, setUserCache] = useState({});
   const [locations, setLocations] = useState({});
-  const [locationsList, setLocationsList] = useState([]);
   const [isLoading, setLoading] = useState(true);
   useEffect(() => {
     database.collection("locations").where("addedUsers", "array-contains", userCredential.uid)
@@ -43,28 +43,19 @@ export default function Locations(props) {
       });
   }, []);
 
-  useEffect(() => {
-    if (locations.length > 0) {
-      setLocationsList(locations.map((location) =>
-        <>
-          <tr className="tr-margin">
-            <td>{location.name}</td>
-            <td>owner</td>
-            <td>{location.updatedAt.toDate().toDateString()}</td>
-            <td>
-              <Link to={`/locations/${location.id}`}><Icon.Create /></Link>
-            </td>
-          </tr>
-        </>
-      ));
-    } else {
-      setLocationsList(
-        <tr className="tr-margin">
-          <td colSpan="4" style={{ textAlign: "center" }}>no locations found! <span style={{ fontWeight: 500 }}><Link to="/locations/create" style={{ display: "inline" }}>create one!</Link></span></td>
-        </tr>
-      );
+  function getUsername(uid) {
+    if (!userCache[uid]) {
+      database.doc(`users/${uid}`).get().then((doc) => {
+        if (doc.exists) {
+          setUserCache({
+            ...userCache,
+            [uid]: doc.data().username
+          });
+        }
+      })
     }
-  }, [locations]);
+  }
+
   return (
     <div className="main-content">
       <Loader
@@ -74,11 +65,11 @@ export default function Locations(props) {
       {props.alert}
       {!isLoading &&
         <>
-          <PageHeader title="View Locations" headerTitle="LOCATIONS" description="how many projects have you abandoned so far?" />
+          <PageHeader title="View Locations" headerTitle="locations" description={<Icon.Place />} />
           <br />
-          <div style={{ height: "100%", width: "49%" }}>
+          <div style={{ height: "100%", width: "50%" }}>
             <Link exact to="/locations/create" className="button">
-              <Icon.Add />
+              <Icon.AddCircle />
               <span>create a new location</span>
             </Link>
             <br />
@@ -91,7 +82,36 @@ export default function Locations(props) {
                     <th>last modified</th>
                     <th>actions</th>
                   </tr>
-                  {locationsList}
+                  {
+                    locations.length > 0 ? locations.map((location) =>
+                      <>
+                        {
+                          getUsername(location.ownerId)
+                        }
+                        <tr className="tr-margin">
+                          <td>
+                            <Link to={`/locations/${location.id}`}>
+                              {location.name}
+                            </Link>
+                          </td>
+                          <td>
+                            <Link to={`/profile/${userCache[location.ownerId]}`}>
+                              {userCache[location.ownerId]}
+                            </Link>
+                          </td>
+                          <td>{location.updatedAt.toDate().toDateString()}</td>
+                          <td>
+                            <Link to={`/locations/${location.id}`}><Icon.Create /></Link>
+                          </td>
+                        </tr>
+                      </>
+                    ) :
+                      <>
+                        <tr className="tr-margin">
+                          <td colSpan="4" style={{ textAlign: "center" }}>no locations found! <span style={{ fontWeight: 500 }}><Link to="/locations/create" style={{ display: "inline" }}>create one!</Link></span></td>
+                        </tr>
+                      </>
+                  }
                 </table>
               </div>
             </div>

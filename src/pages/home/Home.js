@@ -11,6 +11,7 @@
 import React, { useEffect, useState } from "react";
 
 // external imports
+import * as Icon from '@material-ui/icons';
 import Loader from "components/Loader";
 import PageHeader from "components/PageHeader.js";
 import HomeGreeting from "./HomeGreeting";
@@ -28,7 +29,7 @@ export default function Home(props) {
         visible={true}
       />
       {props.alert}
-      <PageHeader title="Home" headerTitle="HOME" description="at a glance" />
+      <PageHeader title="Home" headerTitle="home" description={<Icon.Home/>} />
       <br />
       <HomeGreeting user={props.user} />
       <br />

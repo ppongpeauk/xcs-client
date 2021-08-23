@@ -26,11 +26,9 @@ export default function HomeGreeting(props) {
     } else {
         timeGreeting = "evening";
     }
-
     return (
         <div className="card" style={{ width: "47%" }}>
             <h2 className="text-lowercase">good {timeGreeting}, {userProfile.profile.name}!</h2>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Aliquet risus feugiat in ante metus dictum at tempor commodo. Et malesuada fames ac turpis egestas maecenas.</p>
         </div>
     );
 }

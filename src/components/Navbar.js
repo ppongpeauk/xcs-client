@@ -15,6 +15,7 @@ import { Link, NavLink, useHistory } from "react-router-dom";
 import * as Icon from '@material-ui/icons';
 import { CSSTransition as TransitionGroup } from 'react-transition-group';
 import UserBadge from "./UserBadge";
+import Modal from "react-modal";
 
 // authentication
 import { useAuth } from "contexts/AuthContext";
@@ -125,7 +126,21 @@ function Dropdown(props) {
   }
 
   return (
+
     <div className={"dropdown" + (!open ? " dropdown-closed" : "")} style={{ height: menuHeight }} ref={dropdownRef}>
+      <Modal
+        isOpen={open}
+        onRequestClose={() => setOpen(false)}
+        style={{
+          overlay: {
+            background: "none",
+            // backdropFilter: "blur(12px)"
+          },
+          content: {
+            position: "none"
+          }
+        }}
+      />
       <div className="dropdown-padding">
         <TransitionGroup
           in={activeMenu === 'main'}
@@ -255,6 +270,12 @@ export default function Navbar(props) {
               <NavLink exact to="/" activeClassName="navbar-link-active" className="side-navbar-link">
                 <Icon.Home />
                 <SideNavbarLinkText>home</SideNavbarLinkText>
+              </NavLink>
+            </SideNavbarItem>
+            <SideNavbarItem>
+              <NavLink exact to={`/profile/${userProfile.username}`} activeClassName="navbar-link-active" className="side-navbar-link">
+                <Icon.AccountCircle />
+                <SideNavbarLinkText>my profile</SideNavbarLinkText>
               </NavLink>
             </SideNavbarItem>
             <SideNavbarItem>

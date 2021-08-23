@@ -13,7 +13,7 @@ import ReactDOM from 'react-dom';
 import App from './App';
 
 // main css
-import './index.css';
+import './index.scss';
 
 // print messages
 console.log(`

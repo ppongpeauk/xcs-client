@@ -9,18 +9,19 @@
 
 // core imports
 import React, { useState, useEffect, useRef } from "react";
-import { useHistory } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 
 // external imports
 import Loader from "components/Loader";
 import * as Icon from "@material-ui/icons";
 import PageHeader from "components/PageHeader.js";
+import ReactTagInput from "@pathofdev/react-tag-input";
 
 // authentication
 import firebase from "firebase";
 import { useAuth } from "contexts/AuthContext";
 
-export default function LocationsCreate(props) {
+export default function EntryCreate(props) {
   const [error, setError] = useState();
   const [success, setSuccess] = useState();
 
@@ -31,9 +32,11 @@ export default function LocationsCreate(props) {
 
   const history = useHistory();
 
+  let { locationId } = useParams();
+  const [tags, setTags] = useState([]);
+
   const nameRef = useRef();
   const ownerRef = useRef();
-  const descriptionRef = useRef();
 
   function generatePlaceholderName() {
     var hri = require('human-readable-ids').hri;
@@ -55,55 +58,72 @@ export default function LocationsCreate(props) {
     setLoading(false);
     setNamePlaceholder(generatePlaceholderName());
   }, []);
-
-  async function handleSubmit(e) {
+  
+  function handleSubmit(e) {
     e.preventDefault();
     setError(null); setSuccess(null);
     setLoading(true);
-    if (nameRef.current.value && nameRef.current.value.length < 3) {
-      setError("your location name must be at least 3 characters long!");
+    if (nameRef.current.value && (nameRef.current.value.length < 3 || nameRef.current.value.length > 32)) {
+      setError("your entry point name must be between 3 and 32 characters!");
       setLoading(false);
       return;
     }
-    if (descriptionRef.current.value.length > 1024) {
-      setError("your location description must be less than 1024 characters long!");
-      setLoading(false);
-      return;
+    for (var i = 0; i < tags.length; i++) {
+      if (tags[i].length > 16 || tags[i].length < 3) {
+        setError("tags must be between 3 and 16 characters!");
+        setLoading(false);
+        return;
+      }
     }
+
+    // // check if a location with the same name already exists
+    // database.collection("entryPoints").where("name", "in", [nameRef.current.value, namePlaceholder]).get().then((data) => {
+    //   if (data.size > 0) {
+    //     setError("an entry point with that name under this location already exists, please choose another name!");
+    //     setLoading(false);
+    //     return;
+    //   } else {
+    //     createEntryPoint();
+    //   }
+    // }).catch(err => {
+    //   setError("there was an error while trying to create an entry point! please try again later. " + err);
+    //   setLoading(false);
+    //   return;
+    // });
+
     const generatedId = createLocId();
-    database.collection("locations").doc(generatedId).set({
+    database.collection("entryPoints").doc(generatedId).set({
       "name": nameRef.current.value || namePlaceholder,
       "id": generatedId,
-      "addedUsers": [ownerRef.current.value],
-      "ownerId": ownerRef.current.value,
-      "experienceId": null,
-      "profile": {
-        "description": descriptionRef.current.value || "No description available."
+      "locationId": locationId,
+      "tags": tags,
+      "preferences": {
+        "enabled": true,
+        "locked": true,
+        "addedUsers": {},
+        "addedUserGroups": {},
+        "addedGroups": {},
       },
       "createdAt": firebase.firestore.FieldValue.serverTimestamp(),
       "updatedAt": firebase.firestore.FieldValue.serverTimestamp(),
     }).then(() => {
-      setSuccess("successfully created a location! redirecting...");
+      setSuccess("successfully created an entry point!");
+      setTags([]);
+      setNamePlaceholder(generatePlaceholderName());
+      props.refreshEntryPointsList();
       setLoading(false);
-      setTimeout(() => {
-        history.push(`/locations/${generatedId}`);
-      }, 2000);
     }).catch((err) => {
-      setError("there was an error while creating your location! please try again later.");
+      setError("there was an error while creating your entry point! please try again later. " + err);
       setLoading(false);
     })
   }
 
   return (
     <div className="main-content">
-      <Loader
-        className={`loader loader-page loader-${(!isLoading ? "not-" : "")}visible`}
-        visible={true}
-      />
       {props.alert}
       {!isLoading &&
         <>
-          <PageHeader title="Create Location" headerTitle="create location" description={<Icon.AddCircle/>} />
+          <PageHeader title="Create Entry" headerTitle="create entry point" description={<Icon.AddCircle />} />
           <br />
           {success &&
             <alert className="success">
@@ -122,32 +142,35 @@ export default function LocationsCreate(props) {
             </alert>
           }
           <form onSubmit={handleSubmit} style={{ border: "none", boxShadow: "none" }}>
-            <div className="card" style={{ width: "32rem" }}>
+            <div style={{ width: "100%" }}>
               <div className="flex flex-row">
                 <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-start", justifyContent: "center", width: "100%" }}>
                   <div className="flex flex-column flex-align-left-h" style={{ width: "auto", height: "100%", marginRight: "12px", marginLeft: "12px" }}>
                     <label>
                       <p>name</p>
-                      <input ref={nameRef} type="name" placeholder={namePlaceholder} className="input-box" name="name"></input>
+                      <input autocomplete="off" ref={nameRef} type="name" placeholder={namePlaceholder} className="input-box" name="name"></input>
                     </label>
                     <label>
-                      <p>location owner</p>
-                      <select ref={ownerRef} name="owner" className="input-box" defaultValue={userCredential.uid}>
-                        <option value={userCredential.uid}>me</option>
-                      </select>
-                    </label>
-                    <label>
-                      <p>description</p>
-                      <textarea ref={descriptionRef} placeholder="no description available." className="input-box" id="profile-about" style={{ resize: "none", flex: 1, height: "auto", width: "100%" }}></textarea>
+                      <p>tags</p>
+                      <ReactTagInput
+                        inline={true}
+                        maxTags={4}
+                        tags={tags}
+                        placeholder="tags"
+                        editable={true}
+                        readOnly={false}
+                        removeOnBackspace={true}
+                        onChange={(newTags) => setTags(newTags)}
+                      />
                     </label>
                   </div>
                 </div>
               </div>
             </div>
-            <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-start", justifyContent: "flex-end", width: "15%", marginTop: "6px" }}>
+            <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-start", justifyContent: "flex-end", width: "100%", marginTop: "6px" }}>
               <button type="submit" disabled={isLoading} className="input-box submit-button button" style={{ width: "100%" }}>
                 <Icon.AddCircle />
-                <span>create location</span>
+                <span>create entry point</span>
               </button>
             </div>
           </form>

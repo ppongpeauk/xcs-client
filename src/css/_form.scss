@@ -1,0 +1,228 @@
+form {
+  border: 1px solid var(--background-tertiary);
+  border-radius: var(--border-radius-primary);
+  box-shadow: var(--shadow-primary);
+}
+
+.form-auth {
+  padding-top: 16px;
+  padding-bottom: 16px;
+  padding-left: 16px;
+  padding-right: 16px;
+  background-color: var(--background-primary);
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+  margin: 4px;
+}
+
+.input-row {
+  display: flex;
+  flex-direction: row;
+}
+
+::placeholder {
+  font-weight: 400;
+  color: var(--text-secondary);
+}
+
+input,
+label,
+select {
+  display: block;
+}
+
+input,
+button,
+textarea,
+select,
+.button-file-upload {
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-top: 8px !important;
+  padding-bottom: 8px !important;
+  margin-top: 0.25rem !important;
+  margin-bottom: 0.25rem !important;
+}
+
+input[type="file"] {
+  display: none;
+  width: 100%;
+  height: 100%;
+}
+
+.input-box,
+.button,
+.button-file-upload,
+.react-tag-input {
+  background-color: var(--background-primary);
+  color: var(--text-primary);
+  border-radius: var(--border-radius-primary);
+  border: 1px solid var(--background-secondary);
+  font-size: 16px;
+  min-height: 18px;
+  max-width: auto;
+  transition: var(--transition-duration-primary);
+  box-shadow: var(--shadow-primary);
+  text-overflow: ellipsis;
+}
+
+.input-box:focus,
+.button:focus,
+.react-tag-input .react-tag-input__input:focus {
+  outline: none;
+  border: 1px solid var(--background-tertiary);
+  box-shadow: var(--shadow-tertiary);
+}
+
+/* .button, .button-file-upload .submit-button {
+  padding-left: 1rem;
+  padding-right: 1rem;
+} */
+
+button,
+.button {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--background-primary);
+  height: 48px;
+  transition: var(--transition-duration-primary);
+}
+
+button:hover,
+.button:hover {
+  cursor: pointer;
+  box-shadow: var(--shadow-tertiary);
+}
+
+button:active,
+.button:active {
+  box-shadow: var(--shadow-inset-primary);
+}
+
+.button > svg {
+  margin-left: 0.25rem;
+  margin-right: 0.25rem;
+}
+
+.button > span {
+  margin-left: 0.25rem;
+  margin-right: 0.25rem;
+}
+
+.button-file-upload {
+  background-color: var(--background-primary);
+  transition: var(--transition-duration-primary);
+}
+
+.button-file-upload:hover {
+  cursor: pointer;
+  box-shadow: var(--shadow-tertiary);
+}
+
+.button-file-upload:active {
+  box-shadow: var(--shadow-inset-primary);
+}
+
+.button-file-upload div {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  vertical-align: middle;
+  width: 100%;
+  height: 100%;
+}
+
+label[for="file-upload"] {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  vertical-align: middle;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+}
+
+.input-box:disabled,
+.button-file-upload:disabled {
+  background-color: var(--background-secondary);
+}
+
+.react-tag-input {
+  width: 100%;
+  min-height: 18px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-start;
+  padding: unset;
+  margin-top: 4px;
+  margin-bottom: 4px;
+}
+
+.react-tag-input__input,
+.react-tag-input__input:focus,
+.react-tag-input__input:hover,
+.react-tag-input__input:active {
+  border: none !important;
+  box-shadow: none !important;
+  outline: none;
+  margin-top: unset;
+  margin-bottom: unset;
+  background: none;
+}
+
+.react-tag-input__tag {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  height: auto;
+  margin: 4px;
+}
+
+.react-tag-input__tag__content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px;
+  border-top-left-radius: var(--border-radius-secondary);
+  border-bottom-left-radius: var(--border-radius-secondary);
+  border: 1px solid var(--background-tertiary);
+  background-color: var(--background-primary);
+}
+
+.react-tag-input__tag__remove {
+  width: 1em;
+  height: 1.75em;
+  background-color: var(--background-tertiary);
+  border-top-right-radius: var(--border-radius-secondary);
+  border-bottom-right-radius: var(--border-radius-secondary);
+}
+
+.react-tag-input__tag__remove:hover {
+  cursor: no-drop;
+}
+
+.react-tag-input__tag__remove:before {
+  -webkit-transform: translateX(-50%) translateY(-50%) rotate(45deg);
+  transform: translateX(-50%) translateY(-50%) rotate(45deg);
+}
+
+.react-tag-input__tag__remove:after {
+  -webkit-transform: translateX(-50%) translateY(-50%) rotate(-45deg);
+  transform: translateX(-50%) translateY(-50%) rotate(-45deg);
+}
+
+label p {
+  margin-bottom: 8px;
+}

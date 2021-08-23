@@ -8,8 +8,12 @@
   transition: var(--transition-duration-secondary);
 }
 
-.hover-scale:hover {
-  transform: scale(1.015);
+.card-fill-height {
+  flex-grow: 1;
+}
+
+.card-hover-scale:hover {
+  transform: scale(1.01);
 }
 
 .card-contents {

@@ -33,7 +33,7 @@ export default function Profile(props) {
 
   // prepare username for database checking
   let { username } = useParams();
-  
+
   if (!(username)) {
     username = userProfile.username || null;
   }
@@ -72,11 +72,11 @@ export default function Profile(props) {
           </Helmet>
           {/* main content */}
           <div className="main-content">
-            <PageHeader title={`${profileUser.username}'s Profile`} headerTitle={`${profileUser.username}'s PROFILE`.toUpperCase()} description={(userProfile && profileUser.username === userProfile.username) && "(you)"}/>
+            <PageHeader title={`${profileUser.username}'s Profile`} headerTitle={`${profileUser.username}'s profile`.toLowerCase()} description={(userProfile && profileUser.username === userProfile.username) && "(you)"} />
             <br />
             <div className="card" style={{ flexDirection: "row", alignItems: "flex-start", justifyContent: "flex-start", height: "auto", maxWidth: "auto", marginBottom: "12px", overflowWrap: "break-word" }}>
-              <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", maxWidth: "100%", maxHeight: "100%" }}>
-                <div className="flex flex-column">
+              <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", maxWidth: "100%", maxHeight: "100%", margin: "4px" }}>
+                <div className="flex flex-column" style={{ width: "128px" }}>
                   <img src={profileUser.profile.avatar} className="profile-image" style={{ borderRadius: "50%" }} draggable={false} />
                 </div>
                 <br />
@@ -88,7 +88,7 @@ export default function Profile(props) {
                   }
                   {
                     (profileUser.profile.website) &&
-                    <a href={profileUser.profile.website} target="_blank">{profileUser.profile.website}</a>
+                    <a href={profileUser.profile.website} target="_blank" rel="noopener noreferrer">{profileUser.profile.website}</a>
                   }
                 </div>
                 {
@@ -96,23 +96,21 @@ export default function Profile(props) {
                     if the shown user is the logged in user, show an edit profile button
                   */
                   (userProfile && profileUser.username === userProfile.username) ?
-                  <>
-                    <div className="flex flex-column" style={{ minWidth: "384px" }}>
-                      <Link exact to="/settings" className="button">
-                        <Icon.AccountCircle />
-                        <span>edit profile</span>
-                      </Link>
-                    </div>
-                  </> : <></>
+                    <>
+                      <div className="flex flex-column" style={{ minWidth: "384px" }}>
+                        <Link exact to="/settings" className="button">
+                          <Icon.AccountCircle />
+                          <span>edit profile</span>
+                        </Link>
+                      </div>
+                    </> : <></>
                 }
               </div>
-              <div style={{ flexDirection: "column", alignItems: "center", justifyContent: "center", maxHeight: "auto", width: "100%" }}>
-                <div className="card" style={{ flexDirection: "column", alignItems: "flex-start", justifyContent: "flex-start", height: "100%", maxWidth: " auto", marginTop: "0px", marginBottom: "12px" }}>
-                  <div style={{ display: "flex", flexDirection: "column", maxWidth: "100%", height: "100%" }}>
-                    <h2>about me</h2>
-                    <div className="flex flex-column">
-                      <p>{profileUser.profile.about || "no description available."}</p>
-                    </div>
+              <div style={{ flexDirection: "column", alignItems: "flex-start", justifyContent: "flex-start", flexGrow: 1, margin: "4px" }}>
+                <div style={{ display: "flex", flexDirection: "column", width: "100%", height: "100%" }}>
+                  <h2>about me</h2>
+                  <div className="flex flex-column">
+                    <p>{profileUser.profile.about || "no description available."}</p>
                   </div>
                 </div>
               </div>

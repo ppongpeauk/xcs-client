@@ -19,7 +19,7 @@ export default function HomeStatistics() {
   return (
     <div className="home-statistics" style={{height: "auto", display: "flex", flexDirection: "row",alignItems: "flex-start", justifyContent: "flex-start"}}>
       <div style={{height: "100%", width: "49%", paddingRight: "2%"}}>
-        <PageHeader headerTitle="GLOBAL STATISTICS" description="since the beginning of time" />
+        <PageHeader headerTitle="global stats" description="since the beginning of time" />
         <br/>
         <div className="card fill">
           <div className="card-contents">
@@ -28,7 +28,7 @@ export default function HomeStatistics() {
         </div>
       </div>
       <div style={{height: "100%", width: "49%"}}>
-        <PageHeader headerTitle="RECENT SCANS" description="only the last 10 scans are shown" />
+        <PageHeader headerTitle="recent scans" description="only the last 10 scans are shown" />
         <br/>
         <div className="card fill">
           <div className="card-contents">

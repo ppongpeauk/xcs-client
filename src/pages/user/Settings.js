@@ -9,7 +9,7 @@
 
 // core imports
 import React, { useState, useEffect, useRef } from "react";
-import { useHistory } from "react-router-dom";
+import { useHistory, Link } from "react-router-dom";
 
 // external imports
 import Loader from "components/Loader";
@@ -17,6 +17,7 @@ import PageHeader from "components/PageHeader";
 import defaultProfileImage from "components/default_profile_image.png";
 import * as Icon from '@material-ui/icons';
 import * as imageConversion from 'image-conversion';
+import ReactTooltip from "react-tooltip";
 
 // authentication
 import { useAuth } from "contexts/AuthContext";
@@ -48,6 +49,9 @@ export default function Settings() {
   const usernameRef = useRef();
   const profileImageRef = useRef();
   const specialTitleRef = useRef();
+
+  const newPasswordRef = useRef();
+  const newPasswordConfirmRef = useRef();
 
   useEffect(() => {
     setLoading(false);
@@ -99,6 +103,16 @@ export default function Settings() {
     return file.size;
   }
 
+  function validURL(str) {
+    var pattern = new RegExp('^(https?:\\/\\/)?'+ // protocol
+      '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|'+ // domain name
+      '((\\d{1,3}\\.){3}\\d{1,3}))'+ // OR ip (v4) address
+      '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*'+ // port and path
+      '(\\?[;&a-z\\d%_.~+=-]*)?'+ // query string
+      '(\\#[-a-z\\d_]*)?$','i'); // fragment locator
+    return !!pattern.test(str);
+  }
+
   async function handleSubmit(e) {
     e.preventDefault();
     setError(null); setSuccess(null);
@@ -113,11 +127,37 @@ export default function Settings() {
       setLoading(false);
       return;
     }
+    if (websiteRef.current.value.length > 64) {
+      setError("your website must be less than 64 characters long!");
+      setLoading(false);
+      return;
+    }
+    if (!validURL(websiteRef.current.value)) {
+      setError("your website must be a valid url!");
+      setLoading(false);
+      return;
+    }
     if (specialTitleRef.current && specialTitleRef.current.value.length > 24) {
       setError("your special title must be less than 24 characters long!");
       setLoading(false);
       return;
     }
+
+    if (newPasswordRef.current.value != "") {
+      if (newPasswordRef.current.value != newPasswordConfirmRef.current.value) {
+        setError("passwords do not match!");
+        setLoading(false);
+        return;
+      }
+      userCredential.updatePassword(newPasswordRef.current.value).then(() => {
+        //setSuccess("password updated!");
+      }).catch(() => {
+        setError("there was a problem while trying to update your password!");
+        setLoading(false);
+        return;
+      })
+    }
+
     const userInfoRef = database.collection("users").doc(userCredential.uid);
 
     function updateProfile(profileImageUrl) {
@@ -129,7 +169,7 @@ export default function Settings() {
         "profile.avatar": profileImageUrl || userProfile.profile.avatar,
         "preferences.namePrivacy": (namePrivacyRef.current.value === "public") ? "public" : "private",
       }).then(() => {
-        setSuccess("profile updated!");
+        setSuccess("successfully updated your profile!");
         refreshUserProfile().then(() => {
           window.scrollTo(0, 0);
           setLoading(false);
@@ -194,7 +234,7 @@ export default function Settings() {
         visible={true}
       />
       <div className="main-content">
-        <PageHeader title="Preferences" headerTitle="PREFERENCES" description="beep boop" />
+        <PageHeader title="Preferences" headerTitle="preferences" description={<Icon.Settings />} />
         <br />
         {success &&
           <alert className="success">
@@ -213,7 +253,7 @@ export default function Settings() {
         <form onSubmit={handleSubmit} style={{ border: "none", boxShadow: "none" }}>
           <div class="flex flex-row" style={{ width: "fit-content" }}>
             <div className="card" style={{ width: "100%", height: "auto", marginRight: "16px" }}>
-              <h2>PROFILE</h2>
+              <h2 style={{ color: "var(--background-tertiary)", fontWeight: 300 }}>profile</h2>
               <br />
               <div className="flex flex-row">
                 <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-start", justifyContent: "center", width: "100%" }}>
@@ -264,13 +304,16 @@ export default function Settings() {
               </div>
             </div>
             <div className="card" style={{ width: "100%", height: "auto", paddingLeft: "24px", paddingRight: "24px", marginRight: "16px" }}>
-              <h2>ACCOUNT</h2>
+              <h2 style={{ color: "var(--background-tertiary)", fontWeight: 300 }}>account</h2>
               <br />
               <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-start", justifyContent: "flex-end", maxWidth: "512px" }}>
                 <label>
-                  <p>username</p>
+                  <p>username <span data-tip data-for="usernameTip"><Icon.Help style={{ fontSize: "16px" }} /></span></p>
                   <input ref={usernameRef} type="name" disabled={true} placeholder="name" className="input-box" name="name" defaultValue={userProfile.username} ></input>
                 </label>
+                <ReactTooltip id="usernameTip" place="right" effect="solid">
+                  you cannot change your username.
+                </ReactTooltip>
                 <label>
                   <p>email</p>
                   <input ref={emailRef} type="email" placeholder="email" className="input-box" name="name" defaultValue={userCredential.email} ></input>
@@ -283,12 +326,25 @@ export default function Settings() {
                   }
                 </label>
               </div>
+              <br />
+              <h2 style={{ color: "var(--background-tertiary)", fontWeight: 300 }}>change password</h2>
+              <br />
+              <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-start", justifyContent: "flex-end", maxWidth: "512px" }}>
+                <label>
+                  <p>new password</p>
+                  <input ref={newPasswordRef} type="password" placeholder="new password" className="input-box" name="oldPassword" ></input>
+                </label>
+                <label>
+                  <p>new password (confirm)</p>
+                  <input ref={newPasswordConfirmRef} type="password" placeholder="new password (confirm)" className="input-box" name="oldPassword" ></input>
+                </label>
+              </div>
             </div>
             {
               userProfile.elevation >= 4 &&
               <>
                 <div className="card" style={{ width: "100%", height: "auto", paddingLeft: "24px", paddingRight: "24px" }}>
-                  <h2 className={`special-gradient-${userProfile.elevation}`}>SPECIAL</h2>
+                  <h2 className={`special-gradient-${userProfile.elevation}`} style={{ color: "var(--background-tertiary)", fontWeight: 300 }}>special</h2>
                   <br />
                   <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-start", justifyContent: "flex-end", maxWidth: "512px" }}>
                     {
@@ -304,10 +360,10 @@ export default function Settings() {
               </>
             }
           </div>
-          <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-start", justifyContent: "flex-end", maxWidth: "512px", marginTop: "6px" }}>
-            <button type="submit" disabled={isLoading} className="input-box submit-button button" style={{ width: "auto" }}>
-              <Icon.Done />
-              <span>enact changes</span>
+          <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-start", justifyContent: "flex-end", width: "15%", marginTop: "6px" }}>
+            <button type="submit" disabled={isLoading} className="input-box submit-button button" style={{ width: "100%" }}>
+              <Icon.CheckCircle />
+              <span>save changes</span>
             </button>
           </div>
         </form>
