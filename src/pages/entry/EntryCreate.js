@@ -160,7 +160,7 @@ export default function EntryCreate(props) {
                         editable={true}
                         readOnly={false}
                         removeOnBackspace={true}
-                        onChange={(newTags) => setTags(newTags)}
+                        onChange={(newTags) => setTags(newTags.sort())}
                       />
                     </label>
                   </div>

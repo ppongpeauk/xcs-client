@@ -176,19 +176,10 @@ main {
 }
 
 .tag-pill {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  background-color: transparent;
-  border: 1px solid var(--background-tertiary);
-  border-radius: var(--border-radius-primary);
   width: auto;
-  padding-top: 0.1rem;
-  padding-bottom: 0.1rem;
-  padding-left: 1rem;
-  padding-right: 1rem;
+  padding: 0.25rem;
   margin: 0.1em;
-  box-shadow: var(--shadow-tertiary);
   font-weight: 600;
+  font-size: 12px;
+  box-shadow: var(--shadow-primary);
 }

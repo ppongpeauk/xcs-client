@@ -133,8 +133,9 @@ function Dropdown(props) {
         onRequestClose={() => setOpen(false)}
         style={{
           overlay: {
+            transition: "var(--transition-duration-primary)",
             background: "none",
-            // backdropFilter: "blur(12px)"
+            // backdropFilter: "blur(6px)"
           },
           content: {
             position: "none"
@@ -279,7 +280,13 @@ export default function Navbar(props) {
               </NavLink>
             </SideNavbarItem>
             <SideNavbarItem>
-              <NavLink exact to="/locations" activeClassName="navbar-link-active" className="side-navbar-link">
+              <NavLink exact to="/recent" activeClassName="navbar-link-active" className="side-navbar-link">
+                <Icon.DonutLarge />
+                <SideNavbarLinkText>recent activity</SideNavbarLinkText>
+              </NavLink>
+            </SideNavbarItem>
+            <SideNavbarItem>
+              <NavLink to="/locations" activeClassName="navbar-link-active" className="side-navbar-link">
                 <Icon.Place />
                 <SideNavbarLinkText>manage locations</SideNavbarLinkText>
               </NavLink>

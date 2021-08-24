@@ -32,9 +32,10 @@ input,
 label,
 select {
   display: block;
+  box-sizing: border-box;
 }
 
-input,
+input:not(.react-tag-input__input):not([type='checkbox']):not([type='radio']),
 button,
 textarea,
 select,
@@ -51,6 +52,12 @@ input[type="file"] {
   display: none;
   width: 100%;
   height: 100%;
+}
+
+.button.invisible {
+  color: var(--text-primary);
+  font-size: 16px;
+  min-height: 18px;
 }
 
 .input-box,
@@ -104,6 +111,11 @@ button:active,
   box-shadow: var(--shadow-inset-primary);
 }
 
+.button.invisible {
+  background: transparent;
+  box-shadow: none;
+}
+
 .button > svg {
   margin-left: 0.25rem;
   margin-right: 0.25rem;
@@ -112,6 +124,25 @@ button:active,
 .button > span {
   margin-left: 0.25rem;
   margin-right: 0.25rem;
+}
+
+.button-danger {
+  color: var(--text-primary-dark);
+  background-color: var(--background-red-secondary);
+}
+
+.button-danger:hover {
+  cursor: pointer;
+  border: 1px solid var(--background-red-primary);
+  box-shadow: var(--shadow-tertiary-danger);
+}
+
+.button-danger:active {
+  box-shadow: var(--shadow-inset-primary-danger);
+}
+
+.button-danger:disabled {
+  background-color: var(--background-red-primary) !important;
 }
 
 .button-file-upload {
@@ -156,73 +187,186 @@ label[for="file-upload"] {
   background-color: var(--background-secondary);
 }
 
+// .react-tag-input {
+//   width: 100%;
+//   min-height: 18px;
+//   display: flex;
+//   flex-wrap: wrap;
+//   align-items: center;
+//   justify-content: flex-start;
+//   padding: unset;
+//   margin-top: 4px;
+//   margin-bottom: 4px;
+//   border: none;
+// }
+
+// .react-tag-input__input,
+// .react-tag-input__input:focus,
+// .react-tag-input__input:hover,
+// .react-tag-input__input:active {
+//   border: none !important;
+//   box-shadow: none !important;
+//   outline: none !important;
+//   margin-top: unset;
+//   margin-bottom: unset;
+//   background: none;
+// }
+
+// .react-tag-input__tag {
+//   position: relative;
+//   display: flex;
+//   align-items: center;
+//   justify-content: center;
+//   border: none;
+//   height: auto;
+//   margin: 4px;
+//   background-color: var(--background-primary) !important;
+//   border: 1px solid var(--background-tertiary) !important;
+//   border-radius: var(--border-radius-secondary) !important;
+// }
+
+// .react-tag-input__tag__content {
+//   display: flex;
+//   align-items: center;
+//   justify-content: center;
+//   padding: 4px;
+//   border-top-left-radius: var(--border-radius-secondary);
+//   border-bottom-left-radius: var(--border-radius-secondary);
+//   border: 1px solid var(--background-tertiary);
+// }
+
+// .react-tag-input__tag__remove {
+//   width: 1em;
+//   height: 1.75em;
+//   background: transparent !important;
+//   border-top-right-radius: var(--border-radius-secondary);
+//   border-bottom-right-radius: var(--border-radius-secondary);
+// }
+
+$reactTagColorGray: #e1e1e1;
+$reactTagColorText: var(--text-primary-light);
+$reactTagHeight: 2.375em;
+$reactTagFontSize: 1em;
+$reactTagBorderRadius: var(--border-radius-primary);
+$reactTagMarginPadding: 0.1875em;
+
 .react-tag-input {
+  position: relative;
   width: 100%;
   min-height: 18px;
+  height: auto;
+  overflow-y: auto;
+
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  justify-content: flex-start;
-  padding: unset;
-  margin-top: 4px;
-  margin-bottom: 4px;
-}
 
-.react-tag-input__input,
-.react-tag-input__input:focus,
-.react-tag-input__input:hover,
-.react-tag-input__input:active {
-  border: none !important;
-  box-shadow: none !important;
-  outline: none;
-  margin-top: unset;
-  margin-bottom: unset;
-  background: none;
-}
+  font-size: 1rem;
+  border: 1px solid var(--background-secondary);
+  border-radius: $reactTagBorderRadius;
 
-.react-tag-input__tag {
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: none;
-  height: auto;
-  margin: 4px;
-}
+  margin-top: 0.25rem !important;
+  margin-bottom: 0.25rem !important;
 
-.react-tag-input__tag__content {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 4px;
-  border-top-left-radius: var(--border-radius-secondary);
-  border-bottom-left-radius: var(--border-radius-secondary);
-  border: 1px solid var(--background-tertiary);
-  background-color: var(--background-primary);
-}
+  padding-left: 11px !important;
+  padding-right: 11px !important;
 
-.react-tag-input__tag__remove {
-  width: 1em;
-  height: 1.75em;
-  background-color: var(--background-tertiary);
-  border-top-right-radius: var(--border-radius-secondary);
-  border-bottom-right-radius: var(--border-radius-secondary);
-}
+  > * {
+    margin: $reactTagMarginPadding;
+  }
 
-.react-tag-input__tag__remove:hover {
-  cursor: no-drop;
-}
+  @at-root #{&}__input {
+    box-sizing: border-box;
+    width: auto;
+    flex-grow: 1;
 
-.react-tag-input__tag__remove:before {
-  -webkit-transform: translateX(-50%) translateY(-50%) rotate(45deg);
-  transform: translateX(-50%) translateY(-50%) rotate(45deg);
-}
+    line-height: 1;
 
-.react-tag-input__tag__remove:after {
-  -webkit-transform: translateX(-50%) translateY(-50%) rotate(-45deg);
-  transform: translateX(-50%) translateY(-50%) rotate(-45deg);
+    min-height: 36px;
+
+    background: transparent;
+    border: none;
+    border-radius: $reactTagBorderRadius;
+    outline: 0;
+    box-shadow: none;
+    -webkit-appearance: none;
+
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+
+    &:focus, &:hover, &:active {
+      border: unset !important;
+      outline: unset !important;
+      box-shadow: unset !important;
+    }
+    
+  }
+
+  @at-root #{&}__tag {
+    position: relative;
+    display: flex;
+    align-items: center;
+    line-height: 100%;
+    background: var(--background-primary);
+    border: 1px solid var(--background-tertiary);
+    border-radius: $reactTagBorderRadius;
+  }
+
+  @at-root #{&}__tag__content {
+    height: $reactTagFontSize * 1;
+    line-height: $reactTagFontSize * 1;
+    outline: 0;
+    border: none;
+    white-space: nowrap;
+    padding: 0 $reactTagMarginPadding * 2.5;
+  }
+
+  @at-root #{&}__tag__remove {
+    position: relative;
+    height: $reactTagFontSize * 2;
+    width: $reactTagFontSize * 2;
+
+    font-size: $reactTagFontSize - 0.15;
+    cursor: pointer;
+    border-top-right-radius: $reactTagBorderRadius;
+    border-bottom-right-radius: $reactTagBorderRadius;
+
+    transition: var(--transition-duration-secondary);
+
+    &:before,
+    &:after {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      content: " ";
+      height: $reactTagFontSize - 0.1;
+      width: 0.15em;
+      background-color: $reactTagColorText;
+    }
+    &:before {
+      transform: translateX(-50%) translateY(-50%) rotate(45deg);
+    }
+    &:after {
+      transform: translateX(-50%) translateY(-50%) rotate(-45deg);
+    }
+
+    @at-root #{&}-readonly {
+      width: 0;
+      &:before,
+      &:after {
+        content: "";
+        width: 0;
+      }
+    }
+
+    &:hover {
+      background: var(--background-secondary);
+    }
+  }
 }
 
 label p {
-  margin-bottom: 8px;
+  margin-bottom: 4px;
 }

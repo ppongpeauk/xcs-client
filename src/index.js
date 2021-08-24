@@ -14,6 +14,7 @@ import App from './App';
 
 // main css
 import './index.scss';
+// import "@pathofdev/react-tag-input/build/index.css";
 
 // print messages
 console.log(`

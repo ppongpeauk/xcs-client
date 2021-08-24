@@ -99,7 +99,9 @@ export default function Locations(props) {
                               {userCache[location.ownerId]}
                             </Link>
                           </td>
-                          <td>{location.updatedAt.toDate().toDateString()}</td>
+                          <td>
+                            <p>{location.updatedAt.toDate().toDateString()}</p>
+                          </td>
                           <td>
                             <Link to={`/locations/${location.id}`}><Icon.Create /></Link>
                           </td>
