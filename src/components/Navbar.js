@@ -266,7 +266,7 @@ export default function Navbar(props) {
 
       <SideNavbar>
         {
-          userCredential ? <>
+          (userCredential && userProfile) ? <>
             <SideNavbarItem>
               <NavLink exact to="/" activeClassName="navbar-link-active" className="side-navbar-link">
                 <Icon.Home />

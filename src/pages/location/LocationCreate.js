@@ -52,6 +52,7 @@ export default function LocationsCreate(props) {
   }
 
   useEffect(() => {
+    console.log("trigger")
     setLoading(false);
     setNamePlaceholder(generatePlaceholderName());
   }, []);
@@ -70,6 +71,11 @@ export default function LocationsCreate(props) {
       setLoading(false);
       return;
     }
+    if (ownerRef.current.value != userCredential.uid) { // change when organizations are implemented
+      setError("you must be the owner of this location!");
+      setLoading(false);
+      return;
+    }
     const generatedId = createLocId();
     database.collection("locations").doc(generatedId).set({
       "name": nameRef.current.value || namePlaceholder,
@@ -83,11 +89,9 @@ export default function LocationsCreate(props) {
       "createdAt": firebase.firestore.FieldValue.serverTimestamp(),
       "updatedAt": firebase.firestore.FieldValue.serverTimestamp(),
     }).then(() => {
-      setSuccess("successfully created a location! redirecting...");
+      setSuccess("successfully created a location!");
+      props.refreshLocationsList();
       setLoading(false);
-      setTimeout(() => {
-        history.push(`/locations/${generatedId}`);
-      }, 2000);
     }).catch((err) => {
       setError("there was an error while creating your location! please try again later.");
       setLoading(false);
@@ -96,15 +100,9 @@ export default function LocationsCreate(props) {
 
   return (
     <div className="main-content">
-      <Loader
-        className={`loader loader-page loader-${(!isLoading ? "not-" : "")}visible`}
-        visible={true}
-      />
-      {props.alert}
       {!isLoading &&
         <>
-          <PageHeader title="Create Location" headerTitle="create location" description={<Icon.AddCircle/>} />
-          <br />
+          <PageHeader title="Create Location" headerTitle="create location" description={<Icon.AddCircle />} />
           {success &&
             <alert className="success">
               <div>
@@ -122,7 +120,7 @@ export default function LocationsCreate(props) {
             </alert>
           }
           <form onSubmit={handleSubmit} style={{ border: "none", boxShadow: "none" }}>
-            <div className="card" style={{ width: "32rem" }}>
+            <div>
               <div className="flex flex-row">
                 <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-start", justifyContent: "center", width: "100%" }}>
                   <div className="flex flex-column flex-align-left-h" style={{ width: "auto", height: "100%", marginRight: "12px", marginLeft: "12px" }}>
@@ -144,12 +142,10 @@ export default function LocationsCreate(props) {
                 </div>
               </div>
             </div>
-            <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-start", justifyContent: "flex-end", width: "15%", marginTop: "6px" }}>
-              <button type="submit" disabled={isLoading} className="input-box submit-button button" style={{ width: "100%" }}>
-                <Icon.AddCircle />
-                <span>create location</span>
-              </button>
-            </div>
+            <button type="submit" disabled={isLoading} className="input-box submit-button button" style={{ width: "100%" }}>
+              <Icon.AddCircle />
+              <span>create location</span>
+            </button>
           </form>
         </>
       }

@@ -8,10 +8,11 @@
 */
 
 // core imports
-import React from "react";
+import React, { useEffect } from "react";
 import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom";
 import PrivateRoute from "./components/PrivateRoute";
 import { Helmet } from "react-helmet";
+import Modal from "react-modal";
 
 // authentication
 import { AuthProvider } from "./contexts/AuthContext";
@@ -29,6 +30,10 @@ import Login from "./pages/auth/Login";
 import Signup from "./pages/auth/Signup";
 
 export default function App() {
+  useEffect(() => {
+    Modal.setAppElement("#melody");
+  }, []);
+
   return (
     <>
       {/* TODO: metadata implementation */}

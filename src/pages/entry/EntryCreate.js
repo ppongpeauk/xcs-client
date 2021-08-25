@@ -113,7 +113,7 @@ export default function EntryCreate(props) {
       props.refreshEntryPointsList();
       setLoading(false);
     }).catch((err) => {
-      setError("there was an error while creating your entry point! please try again later. " + err);
+      setError(`there was an error while creating your entry point! please try again later. (${err.code})`);
       setLoading(false);
     })
   }
@@ -124,7 +124,6 @@ export default function EntryCreate(props) {
       {!isLoading &&
         <>
           <PageHeader title="Create Entry" headerTitle="create entry point" description={<Icon.AddCircle />} />
-          <br />
           {success &&
             <alert className="success">
               <div>

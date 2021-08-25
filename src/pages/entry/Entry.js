@@ -55,7 +55,9 @@ export default function Entry(props) {
         } else {
           history.push("/not-found");
         }
-      })
+      }).catch(() => {
+        history.push({ pathname: "/locations", state: { error: "you do not have access to this location." } });
+      });
     }
   }
 
@@ -110,7 +112,7 @@ export default function Entry(props) {
       database.collection("entryPoints").doc(entryId).delete().then(() => {
         props.refreshEntryPointsList(); // refresh locations list to show changes immediately
         setLoading(false);
-        history.push(`/locations/${entryPoint.locationId}`);
+        history.push(`/entry-points/${entryPoint.locationId}`);
       }).catch(() => {
         setError("there was a problem deleting the entry point!");
         setLoading(false);
@@ -146,7 +148,7 @@ export default function Entry(props) {
                 overlay: {
                   transition: "var(--transition-duration-primary)",
                   background: "none",
-                  backdropFilter: "blur(8px)",
+                  backdropFilter: "blur(4px)",
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center"
@@ -162,14 +164,15 @@ export default function Entry(props) {
                 }
               }}
             >
-              <div className="card" style={{ flexDirection: "column", alignItems: "flex-start", justifyContent: "flex-start", width: "100%", height: "100%", padding: "16px" }}>
+              <div className="card" style={{ flexDirection: "column", alignItems: "flex-start", justifyContent: "flex-start", width: "100%", height: "100%", padding: "20px" }}>
                 <PageHeader headerTitle={`delete ${entryPoint.name}`} description={<Icon.DeleteSweep />} />
-                <p>are you sure you'd like to delete this entry point?</p>
-                <br />
+                <p>are you sure you would like to delete this entry point?</p>
+                <strong>this action is irreversible.</strong>
                 <form onSubmit={handleSubmit} style={{ background: "transparent", border: "none", boxShadow: "none" }}>
-                  <div style={{ display: "flex", flexDirection: "row" }}>
+                  <div className="input-group" style={{ display: "flex", flexDirection: "row" }}>
                     <button type="submit" onClick={() => { setSubmitType(3) }} disabled={isLoading} className="input-box submit-button button button-danger" style={{ marginRight: "0.5em", height: "2.5em" }}>
-                      yes
+                      less go
+                      <img src="https://cdn.restrafes.co/xcs/dababy-spin.gif" style={{ padding: "4px", height: "100%" }} />
                       <Icon.DeleteSweep />
                     </button>
                     <button className="button" onClick={() => { setDeleteModalOpen(false); }} style={{ height: "2.5em" }}>
@@ -222,14 +225,14 @@ export default function Entry(props) {
                       <input ref={lockedRef} id="locked" type="checkbox" class="switch" defaultChecked={entryPoint.preferences.locked} />
                     </div>
                   </div>
-                  <div className="input-row">
-                    <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-start", justifyContent: "flex-end", minWidth: "48px", marginTop: "6px", marginLeft: "0.5em" }}>
+                  <div className="input-row" style={{ maxHeight: "48px", marginTop: "8px" }}>
+                    <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-start", justifyContent: "flex-end", minWidth: "48px", marginLeft: "0.5em" }}>
                       <button type="submit" onClick={() => { setSubmitType(1) }} disabled={isLoading} className="input-box submit-button button" style={{ width: "100%" }}>
                         <Icon.CheckCircle />
                         <span>save changes</span>
                       </button>
                     </div>
-                    <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-start", justifyContent: "flex-end", minWidth: "48px", marginTop: "6px", marginLeft: "0.5em" }}>
+                    <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-start", justifyContent: "flex-end", minWidth: "48px", marginLeft: "0.5em" }}>
                       <button type="submit" onClick={() => { setSubmitType(2) }} disabled={isLoading} className="input-box submit-button button button-danger" style={{ width: "100%" }}>
                         <Icon.DeleteSweep />
                       </button>

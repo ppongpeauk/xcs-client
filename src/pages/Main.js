@@ -22,10 +22,7 @@ import Home from "./home/Home";
 import Settings from "./user/Settings";
 
 import Locations from "./location/Locations";
-import Location from "./location/Location";
-import LocationsCreate from "./location/LocationsCreate";
-
-import EntryCreate from "./entry/EntryCreate";
+import Entries from "./entry/Entries";
 
 import Profile from "./user/Profile";
 import NotFound from "./errorPage/NotFound";
@@ -85,13 +82,10 @@ export default function Main(props) {
                 <Settings />
               </Route>
 
-              <Route exact path="/locations/create">
-                <LocationsCreate />
+              <Route path="/entry-points/:locationId">
+                <Entries />
               </Route>
-              <Route path="/locations/:locationId">
-                <Location />
-              </Route>
-              <Route exact path="/locations">
+              <Route path="/locations">
                 <Locations />
               </Route>
 

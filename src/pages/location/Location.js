@@ -19,286 +19,241 @@ import PageHeader from "components/PageHeader.js";
 import { Helmet } from "react-helmet";
 import UserBadge from "components/UserBadge";
 import ReactTagInput from "@pathofdev/react-tag-input";
+import Modal from "react-modal";
+import ReactTooltip from "react-tooltip";
 
-import CreateEntryPoint from "pages/entry/EntryCreate";
-import EntryPoint from "pages/entry/Entry";
+import Createlocation from "pages/entry/EntryCreate";
+
+// authentication
+import firebase from "firebase";
 
 export default function Location(props) {
+  const [error, setError] = useState();
+  const [success, setSuccess] = useState();
+
   const history = useHistory();
   const [isLoading, setLoading] = useState(true);
   const [user, setUser] = useState();
-  const [location, setLocation] = useState();
+  const [submitType, setSubmitType] = useState(1);
+  const [locationData, setLocationData] = useState({});
 
-  const [entryPoints, setEntryPoints] = useState({});
-  const [filteredEntryPoints, setFilteredEntryPoints] = useState({});
-  const [sortOption, setSortOption] = useState(["default", "asc"]);
-
-  const [tags, setTags] = useState([]);
-  let { locationId, entryId } = useParams();
+  let { locationId } = useParams();
   const { database, userCredential } = useAuth();
 
-  const [userCache, setUserCache] = useState({});
+  const nameRef = useRef();
+  const enabledRef = useRef();
 
-  const entryPointFilterRef = useRef();
+  const confirmDeleteRef = useRef();
+  const [confirmDeleteDisabled, setConfirmDeleteDisabled] = useState(true);
 
-  function compare(a, b) {
-    if (a < b) {
-      return -1;
-    }
-    if (a > b) {
-      return 1;
-    }
-    return 0;
-  }
+  const [isDeleteModalOpen, setDeleteModalOpen] = useState(false);
 
-  async function filterList() {
-    function sort(list) {
-      var sortedFilteredList = [...list];
-      if (sortOption[0] == "updatedAt") {
-        sortedFilteredList.sort(function(a,b){
-          var dateA = a.updatedAt.toDate().toLocaleString()
-          var dateB = b.updatedAt.toDate().toLocaleString()
-          return sortOption[1] == "asc" ? dateA.localeCompare(dateB) : dateB.localeCompare(dateA);
-        })
-      } else if (sortOption[0] == "name" || sortOption[0] == "default") {
-        sortedFilteredList.sort((a, b) => {
-          return (sortOption[1] == "asc" ? compare(a.name, b.name) : compare(b.name, a.name));
-        });
-      }
-      return sortedFilteredList;
-    }
-
-    let tagChecker = (arr, target) => target.every(v => arr.includes(v));
-    var filteredList = {};
-
-    if (entryPointFilterRef.current) {
-      if (!entryPointFilterRef.current.value && tags.length == 0) {
-        setFilteredEntryPoints(sort(entryPoints));
-      } else {
-        // filter the list of entry points by the search term and list of tags
-        filteredList = entryPoints.filter(function (entryPoint) {
-          return (
-            entryPoint.name.toLowerCase().indexOf(entryPointFilterRef.current.value.toLowerCase()) !== -1 &&
-            tagChecker(entryPoint.tags, tags)
-          );
-        });
-        setFilteredEntryPoints(sort(filteredList));
-      }
-    } else {
-      setFilteredEntryPoints(entryPoints);
-    }
-  }
-
-  async function refreshEntryPointsList() {
-    await database.collection("entryPoints").where("locationId", "==", locationId)
-      .get()
-      .then(async (querySnapshot) => {
-        let entryPointsData = [];
-        await querySnapshot.forEach((doc) => {
-          if (doc.exists) {
-            const data = doc.data();
-            entryPointsData.push(data);
-          }
-        });
-        await setEntryPoints(entryPointsData);
-        await filterList();
+  async function refreshLocation() {
+    if (locationId) {
+      const entry = await database.collection("locations").doc(locationId).get().then(doc => {
+        if (doc.exists) {
+          setLocationData(doc.data());
+        } else {
+          history.push("/not-found");
+        }
+      }).catch(() => {
+        history.push({ pathname: "/locations", state: { error: "you do not have access to this location." } });
       });
-  }
-
-  async function setSortHandler(filterName) {
-    if (sortOption[0] == filterName && sortOption[1] == "asc") {
-      await setSortOption([filterName, "desc"]);
-    } else if (sortOption[0] == filterName && sortOption[1] == "desc") {
-      await setSortOption(["default", "asc"]);
-    } else {
-      await setSortOption([filterName, "asc"]);
     }
   }
-
-  useEffect(() => {
-    filterList();
-  }, [tags, entryPoints, isLoading, sortOption]);
 
   useEffect(async () => {
-    if (entryId) {
-      const entry = await database.collection("entryPoints").doc(entryId).get().then(doc => {
-        if (doc.exists) {
-          locationId = doc.data().locationId;
-        }
-      })
-    }
-    await database.doc(`locations/${locationId}`).get().then((doc) => {
-      if (doc.exists) {
-        const data = doc.data();
-        setLocation(data);
-      } else {
-        history.push("/not-found");
-      }
-    });
-    await refreshEntryPointsList();
+    setError(null);
+    setSuccess(null);
+    setLoading(true);
+    await refreshLocation();
     setLoading(false);
-  }, []);
+  }, [locationId]);
 
-  function getUsername(uid) {
-    if (!userCache[uid]) {
-      database.doc(`users/${uid}`).get().then((doc) => {
-        if (doc.exists) {
-          setUserCache({
-            ...userCache,
-            [uid]: doc.data().username
-          });
-        }
-      })
+  function onConfirmDeleteChange() {
+    setConfirmDeleteDisabled(confirmDeleteRef.current.value != locationData.name);
+  }
+
+  async function handleSubmit(e) {
+    e.preventDefault();
+    if (submitType == 1) { // save changes
+      setError(null); setSuccess(null);
+      setLoading(true);
+      if (nameRef.current.value && (nameRef.current.value.length < 3 || nameRef.current.value.length > 32)) {
+        setError("your location name must be between 3 and 32 characters!");
+        setLoading(false);
+        return;
+      }
+
+      await database.collection("locations").doc(locationId).update({
+        "name": nameRef.current.value,
+        "updatedAt": firebase.firestore.FieldValue.serverTimestamp()
+      }).then(async () => {
+        setSuccess("location updated!");
+        await refreshLocation().then(() => {
+          window.scrollTo(0, 0);
+          props.refreshLocationsList(); // refresh locations list to show changes immediately
+          setLoading(false);
+        })
+      }).catch(() => {
+        setError("there was a problem updating the location!");
+        setLoading(false);
+      });
+    } else if (submitType == 2) { // delete location modal
+      setDeleteModalOpen(true);
+    } else if (submitType == 3) { // delete location
+      setError(null); setSuccess(null);
+      setLoading(true);
+      await database.collection("entryPoints").where("locationId", "==", locationId).get().then(async (docs) => {
+        docs.forEach(doc => {
+          doc.ref.delete();
+        });
+      }).catch(() => {
+        setError("there was a problem deleting the location!");
+        setLoading(false);
+        setDeleteModalOpen(false);
+      });
+      await database.collection("locations").doc(locationId).delete().then(async () => {
+        props.refreshLocationsList(); // refresh locations list to show changes immediately
+        setLoading(false);
+        history.push("/locations/");
+      }).catch(() => {
+        setError("there was a problem deleting the location!");
+        setLoading(false);
+        setDeleteModalOpen(false);
+      });
     }
   }
 
   return (
     <>
-      <Loader
-        className={`loader loader-page loader-${!isLoading ? "not-" : ""
-          }visible`}
-        visible={true}
-      />
-      {props.alert}
-      {!isLoading && (
+      {locationData && (
         <>
           <div className="main-content">
-            <PageHeader title={`${location.name}`} headerTitle={`${location.name}`.toLowerCase()} description={<Icon.Place />} />
-            <br />
-            <div className="flex flex-row" style={{ alignItems: "flex-start", justifyContent: "center", height: "100%" }}>
-              <div className="card" style={{ flexDirection: "column", alignItems: "flex-start", justifyContent: "center", height: "auto", width: "50%", marginRight: "4px", overflowWrap: "break-word", }}>
-                <PageHeader headerTitle="view entry points" />
+            <PageHeader title={`${locationData.name}`} headerTitle={`${locationData.name}`.toLowerCase()} description={<Icon.Domain />} />
+            {success &&
+              <alert className="success">
+                <div>
+                  <p style={{ textAlign: "left" }}>{success}</p>
+                </div>
+              </alert>
+            }
+            {error &&
+              <alert className="danger">
+                <div>
+                  <p style={{ textAlign: "left" }}>{error}</p>
+                </div>
+              </alert>
+            }
+            <Modal
+              isOpen={isDeleteModalOpen}
+              onRequestClose={() => setDeleteModalOpen(false)}
+              style={{
+                overlay: {
+                  transition: "var(--transition-duration-primary)",
+                  background: "none",
+                  backdropFilter: "blur(4px)",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center"
+                },
+                content: {
+                  padding: "0px",
+                  background: "transparent",
+                  border: 0,
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  position: "none"
+                }
+              }}
+            >
+              <div className="card" style={{ flexDirection: "column", alignItems: "flex-start", justifyContent: "flex-start", width: "100%", height: "100%", padding: "20px" }}>
+                <PageHeader headerTitle={`delete ${locationData.name}?`} />
+                <p>are you sure you would like to delete this location?</p>
+                <strong>this action is irreversible.</strong>
                 <br />
-                <Link exact to={`/locations/${locationId}/create`} className="button" style={{ width: "100%", marginBottom: "4px" }}>
-                  <Icon.AddCircle />
-                  <span>create a new entry point</span>
-                </Link>
-                <div className="flex flex-row">
-                  <input autocomplete="off" onChange={() => filterList()} ref={entryPointFilterRef} type="name" placeholder="filter by name" className="input-box" name="name" style={{ marginRight: "4px" }}></input>
-                </div>
-                <div className="flex flex-row">
-                  <ReactTagInput
-                    inline={true}
-                    maxTags={16}
-                    allowUnique={false}
-                    tags={tags}
-                    placeholder="filter by tags"
-                    editable={true}
-                    readOnly={false}
-                    removeOnBackspace={true}
-                    onChange={(newTags) => setTags(newTags.sort())}
-                  />
-                </div>
-                <div className="flex flex-row">
-                  <button type="button" onClick={() => { }} disabled={isLoading} className="input-box submit-button button" style={{ height: "32px" }}>
-                    mass action
-                    <Icon.ArrowDropDown />
-                  </button>
-                </div>
-                <table style={{ width: "100%" }}>
-                  <tr className="tr-group">
-                    <th style={{ width: "36px" }}><input id="c1" type="checkbox" /></th>
-                    <th style={{ display: "flex", justifyContent: "center", alignItems: "center", width: "auto" }}>
-                      <button className="button invisible" onClick={() => { setSortHandler("name") }} disabled={isLoading} style={{ display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "flex-start", border: "none", background: "transparent", height:"24px", width: "100%", padding:"0px" }}>
+                <form onSubmit={handleSubmit} style={{ background: "transparent", border: "none", boxShadow: "none" }}>
+                  <p>type <strong>{locationData.name}</strong> below to confirm.</p>
+                  <div className="input-group">
+                    <label key={confirmDeleteRef}>
+                      <input ref={confirmDeleteRef} onChange={() => onConfirmDeleteChange()} autocomplete="off" required type="name" placeholder={locationData.name} className="input-box" name="name" ></input>
+                    </label>
+                  </div>
+                  <div className="input-group" style={{ display: "flex", flexDirection: "row" }}>
+                    <button type="submit" onClick={() => { setSubmitType(3) }} disabled={isLoading || confirmDeleteDisabled} className="input-box submit-button button button-danger" style={{ marginRight: "0.5em", height: "2.5em" }}>
+                      less go
+                      <img src="https://cdn.restrafes.co/xcs/dababy-spin.gif" style={{ padding: "4px", height: "100%" }} />
+                      <Icon.DeleteSweep />
+                    </button>
+                    <button className="button" onClick={() => { setDeleteModalOpen(false); }} style={{ height: "2.5em" }}>
+                      nevermind
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </Modal>
+            <form onSubmit={handleSubmit} style={{ border: "none", boxShadow: "none" }}>
+              <div className="flex flex-column" style={{ alignItems: "flex-start", justifyContent: "flex-start", height: "100%" }}>
+                <div>
+                  <h2 style={{ color: "var(--background-tertiary)", fontWeight: 300 }}>info</h2>
+                  <div className="input-row">
+                    <div className="input-group">
+                      <label key={locationData.name}>
                         <p>name</p>
-                        {
-                          sortOption[0] === "name" && (
-                            sortOption[1] === "asc" ? (
-                              <Icon.ArrowDropUp />
-                            ) : (
-                              <Icon.ArrowDropDown />
-                            )
-                          )
-                        }
+                        <input ref={nameRef} autocomplete="off" required type="name" placeholder="name" className="input-box" name="name" defaultValue={locationData.name} ></input>
+                      </label>
+                    </div>
+                    <div className="input-group">
+                      <label key={locationData.experienceId}>
+                        <p>experience <span data-tip data-for="experienceTip"><Icon.Help style={{ fontSize: "16px" }} /></span></p>
+                        <input autocomplete="off" disabled type="name" placeholder="experience id" className="input-box" name="name" defaultValue={locationData.experienceId || "none"} ></input>
+                        <ReactTooltip id="experienceTip" place="right" effect="solid">
+                          <h2>about experience locking</h2>
+                          <p>your location's experience is automatically locked to the first experience that uses this location's API credentials</p>
+                          <strong>contact customer service if you've accidentally used the wrong place.</strong>
+                        </ReactTooltip>
+                      </label>
+                    </div>
+                  </div>
+                  <h2 style={{ color: "var(--background-tertiary)", fontWeight: 300 }}>states</h2>
+                  <div className="input-row">
+                    <div className="input-group" style={{ paddingRight: "0.5em" }} key={locationData.id}>
+                      <label for="enabled"><p>active</p></label>
+                      <input ref={enabledRef} id="enabled" type="checkbox" class="switch" defaultChecked={locationData.id} />
+                    </div>
+                  </div>
+                  <div className="input-row" style={{ maxHeight: "48px", marginTop: "8px" }}>
+                    <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-start", justifyContent: "flex-end", minWidth: "48px", marginLeft: "0.5em" }}>
+                      <button type="submit" onClick={() => { setSubmitType(1) }} disabled={isLoading} className="input-box submit-button button" style={{ width: "100%" }}>
+                        <Icon.CheckCircle />
+                        <span>save changes</span>
                       </button>
-                    </th>
-                    <th>tags</th>
-                    <th style={{ display: "flex", justifyContent: "center", alignItems: "center", width: "auto" }}>
-                      <button className="button invisible" onClick={() => { setSortHandler("updatedAt") }} disabled={isLoading} style={{ display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "flex-start", border: "none", background: "transparent", height:"24px", width: "100%", padding:"0px" }}>
-                        <p>modified</p>
-                        {
-                          sortOption[0] === "updatedAt" && (
-                            sortOption[1] === "asc" ? (
-                              <Icon.ArrowDropUp />
-                            ) : (
-                              <Icon.ArrowDropDown />
-                            )
-                          )
-                        }
+                    </div>
+                    <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-start", justifyContent: "flex-end", minWidth: "48px", marginLeft: "0.5em" }}>
+                      <button type="submit" onClick={() => { setSubmitType(4) }} disabled={isLoading} className="input-box submit-button button" style={{ width: "100%" }}>
+                        <Icon.GetApp />
+                        <span>download kit</span>
                       </button>
-                    </th>
-                    <th>actions</th>
-                  </tr>
-                  {
-                    filteredEntryPoints.length > 0 && (
+                    </div>
+                    {
+                      locationData.ownerId == userCredential.uid &&
                       <>
-                        {filteredEntryPoints.map((entry) =>
-                          <>
-                            <tr className="tr-group">
-                              <td>
-                                <input id="c1" type="checkbox" />
-                              </td>
-                              <td>
-                                <Link to={`/locations/${locationId}/${entry.id}`}>
-                                  {entry.name}
-                                </Link>
-                              </td>
-                              <td className="tag-list">
-                                {
-                                  entry.tags.sort().map((tag) => {
-                                    return (
-                                      <div class="react-tag-input__tag tag-pill">
-                                        <div class="react-tag-input__tag__content">
-                                          {tag}
-                                        </div>
-                                      </div>
-                                    );
-                                  })
-                                }
-                              </td>
-                              <td>
-                                <p>{entry.updatedAt.toDate().toDateString()}</p>
-                                <p>{entry.updatedAt.toDate().toLocaleTimeString("en-US")}</p>
-                              </td>
-                              <td>
-                                <Link to={`/locations/${locationId}/${entry.id}`}><Icon.Create /></Link>
-                              </td>
-                            </tr>
-                          </>
-                        )}
-                        <td colSpan="5" style={{ textAlign: "center" }}><small style={{ textTransform: "uppercase", color: "var(--background-tertiary)" }}><hr />showing {filteredEntryPoints.length} of {entryPoints.length} total entry points</small></td>
+                        <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-start", justifyContent: "flex-end", minWidth: "48px", marginLeft: "0.5em" }}>
+                          <button type="submit" onClick={() => { setSubmitType(2) }} disabled={isLoading} className="input-box submit-button button button-danger" style={{ width: "100%" }}>
+                            <Icon.DeleteSweep />
+                          </button>
+                        </div>
                       </>
-                    )
-
-                    || entryPoints.length == 0 &&
-                    <>
-                      <tr className="tr-group">
-                        <td colSpan="5" style={{ textAlign: "center" }}>no entry points found! <span style={{ fontWeight: 500 }}><Link to={`/locations/${locationId}/create`} style={{ display: "inline" }}>create one!</Link></span></td>
-                      </tr>
-                    </>
-                    || filteredEntryPoints.length == 0 && <td colSpan="5" style={{ textAlign: "center" }}>no entry points found matching your search criteria!</td>
-                  }
-                </table>
+                    }
+                  </div>
+                </div>
               </div>
-              <div className="card" style={{ flexDirection: "row", alignItems: "flex-start", justifyContent: "center", height: "auto", width: "50%", marginLeft: "4px", overflowWrap: "break-word" }}>
-                <Switch>
-                  <Route path="/locations/:locationId/create">
-                    <CreateEntryPoint refreshEntryPointsList={refreshEntryPointsList} />
-                  </Route>
-                  <Route path="/locations/:locationId/:entryId">
-                    <EntryPoint refreshEntryPointsList={refreshEntryPointsList} />
-                  </Route>
-                  <Route>
-                    <h2 style={{ color: "var(--background-tertiary)" }}>
-                      select an entry point to view
-                    </h2>
-                  </Route>
-                </Switch>
-              </div>
-            </div>
+            </form>
           </div>
         </>
-      )}
+      )
+      }
     </>
   );
 }

@@ -104,12 +104,12 @@ export default function Settings() {
   }
 
   function validURL(str) {
-    var pattern = new RegExp('^(https?:\\/\\/)?'+ // protocol
-      '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|'+ // domain name
-      '((\\d{1,3}\\.){3}\\d{1,3}))'+ // OR ip (v4) address
-      '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*'+ // port and path
-      '(\\?[;&a-z\\d%_.~+=-]*)?'+ // query string
-      '(\\#[-a-z\\d_]*)?$','i'); // fragment locator
+    var pattern = new RegExp('^(https?:\\/\\/)?' + // protocol
+      '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' + // domain name
+      '((\\d{1,3}\\.){3}\\d{1,3}))' + // OR ip (v4) address
+      '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' + // port and path
+      '(\\?[;&a-z\\d%_.~+=-]*)?' + // query string
+      '(\\#[-a-z\\d_]*)?$', 'i'); // fragment locator
     return !!pattern.test(str);
   }
 
@@ -262,7 +262,6 @@ export default function Settings() {
                       {
                         <img src={profileImagePreviewProcessed || userProfile.profile.avatar || defaultProfileImage} style={{ height: "100%" }} className="profile-image" draggable={false} />
                       }
-
                     </div>
                     <div className="flex flex-column flex-align-center" style={{ maxWidth: "auto", marginRight: "12px", marginLeft: "12px" }}>
                       {
@@ -310,10 +309,11 @@ export default function Settings() {
                 <label>
                   <p>username <span data-tip data-for="usernameTip"><Icon.Help style={{ fontSize: "16px" }} /></span></p>
                   <input ref={usernameRef} type="name" disabled={true} placeholder="name" className="input-box" name="name" defaultValue={userProfile.username} ></input>
+                  <ReactTooltip id="usernameTip" place="right" effect="solid">
+                    <h2>about usernames</h2>
+                    <p>you cannot change your username.</p>
+                  </ReactTooltip>
                 </label>
-                <ReactTooltip id="usernameTip" place="right" effect="solid">
-                  you cannot change your username.
-                </ReactTooltip>
                 <label>
                   <p>email</p>
                   <input ref={emailRef} type="email" placeholder="email" className="input-box" name="name" defaultValue={userCredential.email} ></input>
