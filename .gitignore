@@ -22,3 +22,8 @@ yarn-error.log*
 firebase.json
 .firebaserc
 /functions
+
+.env
+.env.production
+.env.development
+.env.test

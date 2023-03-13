@@ -267,7 +267,7 @@ export default function Settings() {
                       {
                         (
                           <>
-                            <input type="button" id="file-upload" type="file" ref={profileImageRef} accept="image/*" onChange={handleProfileImagePreview} />
+                            <input type="file" id="file-upload" ref={profileImageRef} accept="image/*" onChange={handleProfileImagePreview} />
                             <label for="file-upload" className="input-box button-file-upload" style={{ width: "100%", textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden" }}>
                               choose file
                             </label>

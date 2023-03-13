@@ -8,14 +8,14 @@
 */
 
 // core imports
-import React, { useState, useRef, useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link, NavLink, useHistory } from "react-router-dom";
 
 // external imports
 import * as Icon from '@material-ui/icons';
+import Modal from "react-modal";
 import { CSSTransition as TransitionGroup } from 'react-transition-group';
 import UserBadge from "./UserBadge";
-import Modal from "react-modal";
 
 // authentication
 import { useAuth } from "contexts/AuthContext";
