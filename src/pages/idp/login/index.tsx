@@ -104,7 +104,7 @@ export default function Login() {
                   </h2>
                   <p className={`${styles.faqItemBody}`}>
                     Your login credentials should have been given to you by a
-                    representative of Restrafes & CO. A temporary password
+                    representative of Restrafes & Co. A temporary password
                     should have been given to you via. email upon first sign up.
                   </p>
                 </div>
@@ -117,7 +117,18 @@ export default function Login() {
                   <p className={`${styles.faqItemBody}`}>
                     As of now, accounts are given on a case-by-case basis. If
                     you would like to sign up, please contact a representative
-                    of Restrafes & CO.
+                    of Restrafes & Co.
+                  </p>
+                </div>
+              </div>
+              <div className={`${styles.faqBody}`}>
+                <div className={`${styles.faqItem}`}>
+                  <h2 className={`${styles.faqItemTitle}`}>
+                    How can I contact a representative?
+                  </h2>
+                  <p className={`${styles.faqItemBody}`}>
+                    You can contact a representative of Restrafes & Co. via
+                    email: hello@restrafes.co
                   </p>
                 </div>
               </div>
