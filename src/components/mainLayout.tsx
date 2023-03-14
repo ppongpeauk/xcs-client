@@ -20,10 +20,7 @@ interface LayoutProps {
   children: React.ReactNode;
 }
 
-export default function MainLayout(
-  props: React.ReactNode,
-  { children }: LayoutProps
-) {
+export default function MainLayout({ children }: LayoutProps) {
   const router = useRouter();
   const app = initFirebase();
   const auth = getAuth();
