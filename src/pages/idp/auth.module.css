@@ -1,0 +1,186 @@
+.main {
+  background: linear-gradient(to bottom right,
+      var(--background-start-rgb),
+      var(--background-end-rgb));
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+}
+
+.cornerLogo {
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 24px;
+  z-index: 512;
+  font-size: 2em;
+  font-weight: 800;
+}
+
+.welcomeGreeting {
+  margin: 8px;
+}
+
+.welcomeTitle {
+  font-size: 2.5em;
+  font-weight: 800;
+}
+
+.welcomeSubtitle {
+  font-size: 1.1em;
+  color: #777;
+  overflow-wrap: break-word;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 50px;
+  z-index: 256;
+  padding: 64px;
+  width: 50vw;
+}
+
+.formContainer {
+  position: relative;
+  top: 128px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  width: 300px;
+}
+
+.form form {
+  display: flex;
+  flex-direction: column;
+  margin: 0 8px;
+  width: 100%;
+}
+
+.background {
+  background: #ccc;
+  flex-grow: 3;
+}
+
+@media (max-width: 768px) {
+  .form {
+    width: 100vw;
+    padding: 32px;
+  }
+
+  .formContainer {
+    top: 48px;
+    width: 100%;
+  }
+
+  .background {
+    display: none;
+  }
+}
+
+.formInput {
+  width: 100%;
+  margin: 8px 0;
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  border-radius: var(--border-radius-input);
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+  transition: border 0.2s;
+}
+
+.formInput:focus {
+  outline: none;
+  border: 1px solid #4361ee;
+}
+
+.formButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin: 8px 0;
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  border-radius: var(--border-radius-input);
+  background: #fff;
+  cursor: pointer;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+  transition: background 0.2s;
+  font-weight: 600;
+}
+
+.formButton:hover {
+  background: #eee;
+}
+
+.formButton:active {
+  background: #ddd;
+}
+
+.formButtonPrimary {
+  background: #4361ee;
+  border: 1px solid #4361ee;
+  color: #fff;
+}
+
+.formButtonPrimary:hover {
+  background: hsl(229, 81%, 63%);
+  border: 1px solid hsl(229, 81%, 63%);
+  color: #fff;
+}
+
+.formButtonPrimary:active {
+  background: hsl(229, 81%, 53%);
+  border: 1px solid hsl(229, 81%, 53%);
+  color: #fff;
+}
+
+.formButtonPrimary:disabled {
+  background: #ccc;
+  border: 1px solid #ccc;
+  color: #fff;
+}
+
+.authOptionLinks {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  margin: 8px;
+}
+
+.authOptionLink {
+  margin: 0 2px;
+  color: #4361ee;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.forgotPasswordLink {
+  color: #4361ee;
+  text-decoration: none;
+  transition: color 0.2s;
+  font-size: normal;
+}
+
+.alertContainer {
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  margin: 8px;
+  padding: 16px;
+  background-color: #ef233c;
+  color: #fff;
+  border-radius: var(--border-radius);
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+  width: 100%;
+}
+
+.alertMessage {
+  word-wrap: break-word;
+}
