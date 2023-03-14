@@ -11,6 +11,8 @@ import {
 import Head from "next/head";
 import styles from "../auth.module.css";
 
+import CloseIcon from "@mui/icons-material/Close";
+
 export default function Login() {
   const router = useRouter();
   const app = initFirebase();
@@ -24,6 +26,8 @@ export default function Login() {
 
   const [usernameField, setUsernameField] = useState("");
   const [passwordField, setPasswordField] = useState("");
+
+  const [faqVisible, setFaqVisible] = useState(false);
 
   // redirect to /idp/login if the user is not logged in
   useEffect(() => {
@@ -39,10 +43,6 @@ export default function Login() {
     e.preventDefault();
 
     if (pending) return;
-    if (!usernameField || !passwordField) {
-      setAlert("Please enter your username and password.");
-      return;
-    }
 
     // reset page states
     setPending(true);
@@ -74,6 +74,56 @@ export default function Login() {
         <title>EVE XCS - Authenticate</title>
       </Head>
       <main className={styles.main}>
+        <div
+          className={`${styles.faqModal} ${
+            !faqVisible ? styles.faqModal__invisible : ""
+          }`}
+          onClick={() => {
+            setFaqVisible(false);
+          }}
+        >
+          <div className={`${styles.faqContainer}`}>
+            <div className={`${styles.faqContent}`}>
+              <div className={`${styles.faqHeader}`}>
+                <h1 className={`${styles.faqTitle}`}>
+                  Frequently Asked Questions
+                  <button
+                    className={`${styles.faqClose}`}
+                    onClick={() => {
+                      setFaqVisible(false);
+                    }}
+                  >
+                    <CloseIcon sx={{ height: "100%", fontSize: "24px" }} />
+                  </button>
+                </h1>
+              </div>
+              <div className={`${styles.faqBody}`}>
+                <div className={`${styles.faqItem}`}>
+                  <h2 className={`${styles.faqItemTitle}`}>
+                    What is my login?
+                  </h2>
+                  <p className={`${styles.faqItemBody}`}>
+                    Your login credentials should have been given to you by a
+                    representative of Restrafes Technologies.
+                  </p>
+                </div>
+              </div>
+              <div className={`${styles.faqBody}`}>
+                <div className={`${styles.faqItem}`}>
+                  <h2 className={`${styles.faqItemTitle}`}>
+                    How can I sign up?
+                  </h2>
+                  <p className={`${styles.faqItemBody}`}>
+                    As of now, accounts are given on a case-by-case basis. If
+                    you would like to sign up, please contact a representative
+                    of Restrafes Technologies.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <div className={styles.cornerLogo}>
           <Link href="/">EVE XCS</Link>
         </div>
@@ -124,9 +174,14 @@ export default function Login() {
             <div className={styles.authOptionLinks}>
               <span>
                 Need help?{" "}
-                <Link className={styles.authOptionLink} href="/auth/faq">
-                  View FAQ.
-                </Link>
+                <button
+                  className={styles.authOptionLink}
+                  onClick={() => {
+                    setFaqVisible(true);
+                  }}
+                >
+                  View the FAQ.
+                </button>
               </span>
             </div>
           </div>

@@ -184,3 +184,74 @@
 .alertMessage {
   word-wrap: break-word;
 }
+
+.faqModal {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 1024;
+  transition: opacity 0.2s;
+  pointer-events: all;
+}
+
+.faqContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 24px;
+  box-sizing: border-box;
+  position: absolute;
+  width: 540px;
+  height: 540px;
+  background: #fff;
+  z-index: 1024;
+  opacity: 100%;
+  border-radius: var(--border-radius);
+}
+
+@media screen and (max-width: 768px) {
+  .faqContainer {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.faqTitle {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  font-size: 1.75em;
+  font-weight: 800;
+  margin: 8px;
+}
+
+.faqClose {
+  margin-left: 8px;
+  height: 100%;
+}
+
+.faqItem {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  margin: 8px;
+}
+
+.faqItemTitle {
+  font-size: 1.1em;
+  font-weight: 800;
+}
+
+.faqModal__invisible {
+  opacity: 0;
+  pointer-events: none;
+}
