@@ -8,6 +8,16 @@ const nextConfig = {
         destination: '/xcs/home',
         permanent: true,
       },
+      {
+        source: "/home",
+        destination: '/xcs/home',
+        permanent: true,
+      },
+      {
+        source: "/login",
+        destination: '/ldp',
+        permanent: true,
+      },
     ]
   },
 }

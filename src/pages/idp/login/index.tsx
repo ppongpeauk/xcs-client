@@ -104,7 +104,8 @@ export default function Login() {
                   </h2>
                   <p className={`${styles.faqItemBody}`}>
                     Your login credentials should have been given to you by a
-                    representative of Restrafes Technologies.
+                    representative of Restrafes & CO. A temporary password
+                    should have been given to you via. email upon first sign up.
                   </p>
                 </div>
               </div>
@@ -116,7 +117,7 @@ export default function Login() {
                   <p className={`${styles.faqItemBody}`}>
                     As of now, accounts are given on a case-by-case basis. If
                     you would like to sign up, please contact a representative
-                    of Restrafes Technologies.
+                    of Restrafes & CO.
                   </p>
                 </div>
               </div>
