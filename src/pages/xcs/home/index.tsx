@@ -1,3 +1,4 @@
+import MainLayout from "@/components/mainLayout";
 import { initFirebase } from "@/firebase/firebaseApp";
 import { getAuth } from "firebase/auth";
 import { useRouter } from "next/router";
@@ -18,10 +19,8 @@ export default function Home() {
   }
 
   return (
-    <div>
+    <MainLayout title="Home">
       <h1>Home</h1>
-      {/*logout button  */}
-      <button onClick={() => auth.signOut()}>Logout</button>
-    </div>
+    </MainLayout>
   );
 }

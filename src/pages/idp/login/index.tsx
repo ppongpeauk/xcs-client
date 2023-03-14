@@ -3,7 +3,10 @@ import { getAuth } from "firebase/auth";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { useSignInWithEmailAndPassword } from "react-firebase-hooks/auth";
+import {
+  useAuthState,
+  useSignInWithEmailAndPassword,
+} from "react-firebase-hooks/auth";
 
 import Head from "next/head";
 import styles from "../auth.module.css";
@@ -12,18 +15,23 @@ export default function Login() {
   const router = useRouter();
   const app = initFirebase();
   const auth = getAuth();
-  const [signInWithEmailAndPassword, user, loading, error] =
+  const [signInWithEmailAndPassword, userSO, loading, error] =
     useSignInWithEmailAndPassword(auth);
+
+  const [user] = useAuthState(auth);
   const [alert, setAlert] = useState("");
   const [pending, setPending] = useState(false);
 
   const [usernameField, setUsernameField] = useState("");
   const [passwordField, setPasswordField] = useState("");
 
+  // redirect to /idp/login if the user is not logged in
   useEffect(() => {
     if (loading) return;
-    if (user) {
-      router.push("/");
+    if (!user) {
+      router.push("/idp/login");
+    } else {
+      router.push("/xcs/home");
     }
   }, [loading, user]);
 

@@ -10,7 +10,7 @@ export default function Auth() {
   const auth = getAuth();
   const [user, loading] = useAuthState(auth);
 
-  // redirect to /auth/login if the user is not logged in
+  // redirect to /idp/login if the user is not logged in
   useEffect(() => {
     if (loading) return;
     if (!user) {
@@ -18,7 +18,7 @@ export default function Auth() {
     } else {
       router.push("/xcs/home");
     }
-  }, [loading]);
+  }, [loading, user]);
 
   return (
     <div>
