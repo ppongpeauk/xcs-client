@@ -1,5 +1,5 @@
 import Navbar from "@/components/Navbar";
-import styles from "@/pages/xcs/main.module.css";
+import styles from "@/pages/platform/main.module.css";
 
 import ExitToAppOutlinedIcon from "@mui/icons-material/ExitToAppOutlined";
 import MarkunreadOutlinedIcon from "@mui/icons-material/MarkunreadOutlined";
