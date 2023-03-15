@@ -63,3 +63,7 @@
 .navButton:hover {
   background-color: #f8f9fa;
 }
+
+.navButton:active {
+  background-color: #e9ecef;
+}

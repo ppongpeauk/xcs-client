@@ -215,6 +215,7 @@
   z-index: 1024;
   opacity: 100%;
   border-radius: var(--border-radius);
+  border: 1px solid #ccc;
 }
 
 @media screen and (max-width: 768px) {
