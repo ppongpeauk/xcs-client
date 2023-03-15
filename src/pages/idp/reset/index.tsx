@@ -26,11 +26,10 @@ export default function Login() {
 
   // redirect to /idp/login if the user is not logged in
   useEffect(() => {
-    if (loading) return;
     if (user) {
-      router.push("/xcs/home");
+      router.push("/platform/home");
     }
-  }, [loading, user]);
+  }, [router, user]);
 
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();

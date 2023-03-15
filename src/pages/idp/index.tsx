@@ -16,7 +16,7 @@ export default function Auth() {
     if (!user) {
       router.push("/idp/login");
     } else {
-      router.push("/xcs/home");
+      router.push("/platform/home");
     }
   }, [loading, user]);
 

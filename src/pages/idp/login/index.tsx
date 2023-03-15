@@ -32,7 +32,7 @@ export default function Login() {
   // redirect to /idp/login if the user is not logged in
   useEffect(() => {
     if (user) {
-      router.push("/xcs/home");
+      router.push("/platform/home");
     }
   }, [router, user]);
 
