@@ -34,7 +34,7 @@ export default function Login() {
     if (user) {
       router.push("/xcs/home");
     }
-  }, [user]);
+  }, [router, user]);
 
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
