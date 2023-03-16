@@ -4,13 +4,18 @@ const nextConfig = {
   async redirects() {
     return [
       {
-        source: "/xcs",
-        destination: '/xcs/home',
+        source: "/xcs/:path*",
+        destination: '/platform/:path*',
+        permanent: true,
+      },
+      {
+        source: "/platform",
+        destination: '/platform/home',
         permanent: true,
       },
       {
         source: "/home",
-        destination: '/xcs/home',
+        destination: '/platform/home',
         permanent: true,
       },
       {
