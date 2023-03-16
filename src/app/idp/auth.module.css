@@ -265,5 +265,8 @@
 
 .faqModal__invisible {
   opacity: 0;
+}
+
+.faqModal__invisible, .faqModal__invisible * {
   pointer-events: none;
 }
