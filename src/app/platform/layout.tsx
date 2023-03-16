@@ -109,6 +109,7 @@ export default function AppLayout({
             className={styles.accountDropdownButton}
             onClick={() => {
               auth.signOut();
+              setAccountDropdownVisible(false);
             }}
           >
             <ExitToAppOutlinedIcon
