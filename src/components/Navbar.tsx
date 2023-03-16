@@ -1,7 +1,9 @@
-import { initFirebase } from "@/firebase/firebaseApp";
+"use client";
+
 import { getAuth } from "@firebase/auth";
-import { useRouter } from "next/router";
+import { usePathname, useRouter } from "next/navigation";
 import { useAuthState } from "react-firebase-hooks/auth";
+import { initFirebase } from "../firebase/firebaseApp";
 
 import Link from "next/link";
 import styles from "./Navbar.module.css";
@@ -15,14 +17,10 @@ import WidgetsRoundedIcon from "@mui/icons-material/WidgetsRounded";
 
 export default function Navbar() {
   const router = useRouter();
-  const currentRoute = router.pathname;
+  const currentRoute = usePathname();
   const app = initFirebase();
   const auth = getAuth();
   const [user, loading] = useAuthState(auth);
-
-  if (loading) {
-    return <></>;
-  }
 
   return (
     <div className={styles.nav}>
@@ -91,9 +89,11 @@ export default function Navbar() {
           Support Server
         </Link>
       </div>
-      <div className={`${styles.navButtons} mb-4`}>
-        <span className={styles.navCategoryTitle}>V0.8 beta</span>
-      </div>
+      {/* <div className={`${styles.navButtons} mb-4`}>
+        <span className={styles.navCategoryTitle}>
+          V{process.env.NEXT_PUBLIC_VERSION}
+        </span>
+      </div> */}
     </div>
   );
 }

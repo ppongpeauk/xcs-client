@@ -1,10 +1,11 @@
-import MainLayout from "@/components/mainLayout";
-import { initFirebase } from "@/firebase/firebaseApp";
-import { getAuth } from "firebase/auth";
-import { useRouter } from "next/router";
-import { useAuthState } from "react-firebase-hooks/auth";
+"use client";
 
-export default function Home() {
+import { getAuth } from "firebase/auth";
+import { useRouter } from "next/navigation";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { initFirebase } from "../../../firebase/firebaseApp";
+
+export default function Page() {
   const app = initFirebase();
   const router = useRouter();
   const auth = getAuth();
@@ -19,8 +20,8 @@ export default function Home() {
   }
 
   return (
-    <MainLayout>
+    <>
       <h1>Home</h1>
-    </MainLayout>
+    </>
   );
 }

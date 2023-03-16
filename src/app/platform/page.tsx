@@ -1,26 +1,25 @@
+"use client";
+
 import styles from "@/pages/platform/main.module.css";
-import Navbar from "./Navbar";
+import Navbar from "../../components/Navbar";
 
 import ExitToAppOutlinedIcon from "@mui/icons-material/ExitToAppOutlined";
 import MarkunreadOutlinedIcon from "@mui/icons-material/MarkunreadOutlined";
 import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
-import Head from "next/head";
 import Link from "next/link";
 
 import { useState } from "react";
 
 import { getAuth } from "@firebase/auth";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { initFirebase } from "../firebase/firebaseApp";
+import { initFirebase } from "../../firebase/firebaseApp";
 
-// <MarkEmailUnreadRoundedIcon/>
-
-interface LayoutProps {
+export default function AppLayout({
+  children, // will be a page or nested layout
+}: {
   children: React.ReactNode;
-}
-
-export default function MainLayout({ children }: LayoutProps) {
+}) {
   const router = useRouter();
   const app = initFirebase();
   const auth = getAuth();
@@ -37,9 +36,6 @@ export default function MainLayout({ children }: LayoutProps) {
 
   return (
     <>
-      <Head>
-        <title>EVE XCS</title>
-      </Head>
       <Navbar />
       <main className={styles.main}>
         <div className={styles.topBar}>
@@ -75,7 +71,10 @@ export default function MainLayout({ children }: LayoutProps) {
               : null
           }`}
         >
-          <Link href="/xcs/profile" className={styles.accountDropdownHeader}>
+          <Link
+            href="/platform/profile"
+            className={styles.accountDropdownHeader}
+          >
             <img
               src="https://cdn.discordapp.com/attachments/813308393208414219/1085048432823128114/0ec4c87ead4f513c336f092a803a8cf6.png"
               alt="Avatar"

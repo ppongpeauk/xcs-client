@@ -1,27 +1,27 @@
-import styles from "@/pages/platform/main.module.css";
-import Navbar from "./Navbar";
+"use client";
+
+import styles from "@/app/platform/main.module.css";
+import Navbar from "../../components/Navbar";
 
 import ExitToAppOutlinedIcon from "@mui/icons-material/ExitToAppOutlined";
 import MarkunreadOutlinedIcon from "@mui/icons-material/MarkunreadOutlined";
 import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
-import Head from "next/head";
 import Link from "next/link";
 
 import { useState } from "react";
 
 import { getAuth } from "@firebase/auth";
-import { useRouter } from "next/router";
+import { usePathname, useRouter } from "next/navigation";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { initFirebase } from "../firebase/firebaseApp";
+import { initFirebase } from "../../firebase/firebaseApp";
 
-// <MarkEmailUnreadRoundedIcon/>
-
-interface LayoutProps {
+export default function AppLayout({
+  children, // will be a page or nested layout
+}: {
   children: React.ReactNode;
-}
-
-export default function MainLayout({ children }: LayoutProps) {
+}) {
   const router = useRouter();
+  const pathname = usePathname();
   const app = initFirebase();
   const auth = getAuth();
   const [user, loading] = useAuthState(auth);
@@ -37,13 +37,10 @@ export default function MainLayout({ children }: LayoutProps) {
 
   return (
     <>
-      <Head>
-        <title>EVE XCS</title>
-      </Head>
       <Navbar />
       <main className={styles.main}>
         <div className={styles.topBar}>
-          <h1 className={styles.pageTitle}>{pageNames[router.pathname]}</h1>
+          <h1 className={styles.pageTitle}>{pageNames[pathname]}</h1>
           <div className={styles.topBarButtons}>
             <button className={styles.topBarButton}>
               <MarkunreadOutlinedIcon sx={{ fontSize: "24px" }} />

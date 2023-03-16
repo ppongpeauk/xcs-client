@@ -1,8 +1,10 @@
-import { initFirebase } from "@/firebase/firebaseApp";
+"use client";
+
 import { getAuth } from "firebase/auth";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
+import { initFirebase } from "../../firebase/firebaseApp";
 
 export default function Auth() {
   const app = initFirebase();

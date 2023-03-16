@@ -1,12 +1,14 @@
-import { initFirebase } from "@/firebase/firebaseApp";
+"use client";
+
 import { getAuth } from "firebase/auth";
 import Link from "next/link";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import {
   useAuthState,
   useSendPasswordResetEmail,
 } from "react-firebase-hooks/auth";
+import { initFirebase } from "../../../firebase/firebaseApp";
 
 import Head from "next/head";
 import styles from "../auth.module.css";

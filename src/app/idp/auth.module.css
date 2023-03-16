@@ -107,7 +107,7 @@
   padding: 8px 12px;
   border: 1px solid #ccc;
   border-radius: var(--border-radius-input);
-  background: #fff;
+  background-color: #fff !important;
   cursor: pointer;
   box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
   transition: background 0.2s;
@@ -115,33 +115,33 @@
 }
 
 .formButton:hover {
-  background: #eee;
+  background-color: #eee;
 }
 
 .formButton:active {
-  background: #ddd;
+  background-color: #ddd;
 }
 
 .formButtonPrimary {
-  background: #4361ee;
+  background-color: #4361ee !important;
   border: 1px solid #4361ee;
   color: #fff;
 }
 
 .formButtonPrimary:hover {
-  background: hsl(229, 81%, 63%);
+  background-color: hsl(229, 81%, 63%) !important;
   border: 1px solid hsl(229, 81%, 63%);
   color: #fff;
 }
 
 .formButtonPrimary:active {
-  background: hsl(229, 81%, 53%);
+  background-color: hsl(229, 81%, 53%) !important;
   border: 1px solid hsl(229, 81%, 53%);
   color: #fff;
 }
 
 .formButtonPrimary:disabled {
-  background: #ccc;
+  background-color: #ccc !important;
   border: 1px solid #ccc;
   color: #fff;
 }
