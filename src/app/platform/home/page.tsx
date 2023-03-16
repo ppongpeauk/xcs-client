@@ -11,17 +11,9 @@ export default function Page() {
   const auth = getAuth();
   const [user, loading] = useAuthState(auth);
 
-  if (loading) {
-    return <h1>Loading...</h1>;
-  }
-
-  if (!user) {
-    router.push("/idp/login");
-  }
-
   return (
     <>
-      <h1>Home</h1>
+      <h1>Home Page</h1>
     </>
   );
 }

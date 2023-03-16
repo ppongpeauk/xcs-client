@@ -6,6 +6,7 @@ import Navbar from "../../components/Navbar";
 import ExitToAppOutlinedIcon from "@mui/icons-material/ExitToAppOutlined";
 import MarkunreadOutlinedIcon from "@mui/icons-material/MarkunreadOutlined";
 import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
+import Image from "next/image";
 import Link from "next/link";
 
 import { useEffect, useState } from "react";
@@ -55,9 +56,11 @@ export default function AppLayout({
               className={`${styles.topBarButton} ${styles.topBarAccountButton}`}
               onClick={() => setAccountDropdownVisible(!accountDropdownVisible)}
             >
-              <img
+              <Image
                 src="https://cdn.discordapp.com/attachments/813308393208414219/1085048432823128114/0ec4c87ead4f513c336f092a803a8cf6.png"
                 alt="Avatar"
+                width={64}
+                height={64}
                 className={styles.topBarAvatar}
               />
             </button>
@@ -79,8 +82,10 @@ export default function AppLayout({
           }`}
         >
           <Link href="/xcs/profile" className={styles.accountDropdownHeader}>
-            <img
+            <Image
               src="https://cdn.discordapp.com/attachments/813308393208414219/1085048432823128114/0ec4c87ead4f513c336f092a803a8cf6.png"
+              width={64}
+              height={64}
               alt="Avatar"
               className={styles.accountDropdownAvatar}
             />
@@ -112,7 +117,7 @@ export default function AppLayout({
             Logout
           </button>
         </div>
-        {children}
+        <div className={styles.mainContent}>{children}</div>
       </main>
     </>
   );

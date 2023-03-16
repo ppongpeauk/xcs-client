@@ -6,6 +6,18 @@
   height: 100vh;
 }
 
+.mainContent {
+  position: absolute;
+  top: 96px;
+  left: 0;
+  width: 100%;
+  height: calc(100vh - 96px);
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 24px;
+  box-sizing: border-box;
+}
+
 .pageTitle {
   display: flex;
   justify-content: center;
@@ -159,6 +171,7 @@
   border-radius: 50%;
   margin: 0 16px;
   height: 100%;
+  width: auto;
   transition: background-color 0.2s;
   background-color: #fff;
   border: 1px solid #ccc;
