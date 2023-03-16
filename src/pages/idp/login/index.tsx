@@ -52,9 +52,22 @@ export default function Login() {
           if (res) {
             router.push("/");
           } else {
-            setAlert(
-              "Are you sure you've entered the right login or password? Please check and try again."
-            );
+            // handle error codes
+            switch (error?.code) {
+              case "auth/too-many-requests":
+                setAlert("Too many login attempts. Please try again later.");
+                break;
+              case "auth/network-request-failed":
+                setAlert(
+                  "Unable to connect to the server. Please check your internet connection and try again."
+                );
+                break;
+              default:
+                setAlert(
+                  "Are you sure you've entered the right login or password? Please check and try again."
+                );
+                break;
+            }
           }
         })
         .finally(() => setPending(false));
@@ -69,6 +82,16 @@ export default function Login() {
     <>
       <Head>
         <title>EVE XCS - Authenticate</title>
+        <meta property="og:title" content="EVE XCS" />
+        <meta name="description" content="Authenticate" key="desc" />
+        <meta
+          property="og:description"
+          content="And a social description for our cool page"
+        />
+        <meta
+          property="og:image"
+          content="https://example.com/images/cool-page.jpg"
+        />
       </Head>
       <main className={styles.main}>
         <div
