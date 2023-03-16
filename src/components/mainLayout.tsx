@@ -1,4 +1,4 @@
-import styles from "@/pages/platform/main.module.css";
+import styles from "@/app/platform/main.module.css";
 import Navbar from "./Navbar";
 
 import ExitToAppOutlinedIcon from "@mui/icons-material/ExitToAppOutlined";
