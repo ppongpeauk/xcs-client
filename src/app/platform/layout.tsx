@@ -40,7 +40,7 @@ export default function AppLayout({
     if (!loading && !user) {
       router.push("/idp/login");
     }
-  }, [user]);
+  }, [loading, router, user]);
 
   return (
     <>
