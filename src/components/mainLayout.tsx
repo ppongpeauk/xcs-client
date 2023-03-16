@@ -27,6 +27,14 @@ export default function MainLayout({ children }: LayoutProps) {
   const [user, loading] = useAuthState(auth);
   const [accountDropdownVisible, setAccountDropdownVisible] = useState(false);
 
+  const pageNames = {
+    "/platform/home": "Home",
+    "/platform/activity": "Recent Activity",
+    "/platform/profile": "Profile",
+    "/platform/locations": "Locations",
+    "/platform/organizations": "Organizations",
+  };
+
   return (
     <>
       <Head>
@@ -35,7 +43,7 @@ export default function MainLayout({ children }: LayoutProps) {
       <Navbar />
       <main className={styles.main}>
         <div className={styles.topBar}>
-          <h1 className={styles.pageTitle}>Dashboard</h1>
+          <h1 className={styles.pageTitle}>{pageNames[router.pathname]}</h1>
           <div className={styles.topBarButtons}>
             <button className={styles.topBarButton}>
               <MarkunreadOutlinedIcon sx={{ fontSize: "24px" }} />

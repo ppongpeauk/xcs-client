@@ -113,7 +113,12 @@ export default function Login() {
                       setFaqVisible(false);
                     }}
                   >
-                    <CloseIcon sx={{ height: "100%", fontSize: "24px" }} />
+                    <CloseIcon
+                      sx={{
+                        height: "100%",
+                        fontSize: "24px",
+                      }}
+                    />
                   </button>
                 </h1>
               </div>

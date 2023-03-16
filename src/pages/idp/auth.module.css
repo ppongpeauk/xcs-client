@@ -237,7 +237,18 @@
 .faqClose {
   margin-left: 8px;
   height: 100%;
+  color: #000;
+  transition: color 0.2s;
 }
+
+.faqClose:hover {
+  color: #6c757d;
+}
+
+.faqClose:active {
+  color: #adb5bd;
+}
+
 
 .faqItem {
   display: flex;

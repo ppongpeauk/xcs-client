@@ -52,12 +52,14 @@
   border-radius: var(--border-radius);
 
   padding: 0 8px;
+  margin: 2px 0;
 
   height: 48px;
   width: 100%;
   transition: background-color 0.2s;
 
   color: #212529;
+  font-weight: 600;
 }
 
 .navButton:hover {
@@ -66,4 +68,9 @@
 
 .navButton:active {
   background-color: #e9ecef;
+}
+
+.navButton__active, .navButton__active:hover, .navButton__active:active {
+  background-color: #212529;
+  color: #fff;
 }
