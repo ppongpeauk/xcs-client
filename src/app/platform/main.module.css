@@ -118,6 +118,7 @@
   margin-top: 16px;
   transition: background-color 0.2s;
   color: #212529;
+  font-weight: 600;
 }
 
 .accountDropdownHeader {
