@@ -27,7 +27,7 @@ export default function AppLayout({
   const [user, loading] = useAuthState(auth);
   const [accountDropdownVisible, setAccountDropdownVisible] = useState(false);
 
-  const pageNames = {
+  const pageNames: { [key: string]: any } = {
     "/platform/home": "Home",
     "/platform/activity": "Recent Activity",
     "/platform/profile": "Profile",
