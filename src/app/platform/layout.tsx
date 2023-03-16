@@ -8,7 +8,7 @@ import MarkunreadOutlinedIcon from "@mui/icons-material/MarkunreadOutlined";
 import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
 import Link from "next/link";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { getAuth } from "@firebase/auth";
 import { usePathname, useRouter } from "next/navigation";
@@ -34,6 +34,12 @@ export default function AppLayout({
     "/platform/locations": "Locations",
     "/platform/organizations": "Organizations",
   };
+
+  useEffect(() => {
+    if (!loading && !user) {
+      router.push("/idp/login");
+    }
+  }, [user]);
 
   return (
     <>
