@@ -1,8 +1,8 @@
+import { AuthProvider } from "@/context/user";
 import "@/styles/globals.css";
-
 export const metadata = {
-  title: "Home",
-  description: "Welcome to Next.js",
+  title: "EVE XCS",
+  description: "EVE XCS",
 };
 
 export default function RootLayout({
@@ -13,8 +13,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <body>{children}</body>
-    </html>
+    <>
+      <AuthProvider>
+        <html lang="en">
+          <body>{children}</body>
+        </html>
+      </AuthProvider>
+    </>
   );
 }

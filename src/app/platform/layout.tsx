@@ -4,10 +4,12 @@ import styles from "@/app/platform/main.module.css";
 import Navbar from "../../components/Navbar";
 
 import ExitToAppOutlinedIcon from "@mui/icons-material/ExitToAppOutlined";
-import MarkunreadOutlinedIcon from "@mui/icons-material/MarkunreadOutlined";
+import MenuOpenRoundedIcon from "@mui/icons-material/MenuOpenRounded";
 import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
 import Image from "next/image";
 import Link from "next/link";
+
+import "react-loading-skeleton/dist/skeleton.css";
 
 import { useEffect, useState } from "react";
 
@@ -27,10 +29,11 @@ export default function AppLayout({
   const auth = getAuth();
   const [user, loading] = useAuthState(auth);
   const [accountDropdownVisible, setAccountDropdownVisible] = useState(false);
+  const [navbarVisible, setNavbarVisible] = useState(true);
 
   const pageNames: { [key: string]: any } = {
     "/platform/home": "Home",
-    "/platform/activity": "Recent Activity",
+    "/platform/event-logs": "Event Logs",
     "/platform/profile": "Profile",
     "/platform/locations": "Locations",
     "/platform/organizations": "Organizations",
@@ -42,22 +45,38 @@ export default function AppLayout({
     }
   }, [loading, router, user]);
 
-  return (
+  useEffect(() => {
+    if (window.innerWidth < 768) {
+      setNavbarVisible(false);
+    }
+  }, []);
+
+  return !loading && user ? (
     <>
-      <Navbar />
-      <main className={styles.main}>
+      <main
+        className={`${styles.main} ${
+          navbarVisible ? styles.navbarVisible : ""
+        }`}
+      >
+        <Navbar setVisible={setNavbarVisible} visible={navbarVisible} />
         <div className={styles.topBar}>
           <h1 className={styles.pageTitle}>{pageNames[pathname]}</h1>
           <div className={styles.topBarButtons}>
-            <button className={styles.topBarButton}>
-              <MarkunreadOutlinedIcon sx={{ fontSize: "24px" }} />
+            <button
+              className={styles.topBarButton}
+              onClick={() => {
+                setNavbarVisible(!navbarVisible);
+                setAccountDropdownVisible(false);
+              }}
+            >
+              <MenuOpenRoundedIcon sx={{ fontSize: "32px" }} />
             </button>
             <button
               className={`${styles.topBarButton} ${styles.topBarAccountButton}`}
               onClick={() => setAccountDropdownVisible(!accountDropdownVisible)}
             >
               <Image
-                src="https://cdn.discordapp.com/attachments/813308393208414219/1085048432823128114/0ec4c87ead4f513c336f092a803a8cf6.png"
+                src="https://cdn.discordapp.com/attachments/813308393208414219/1085935705986977812/1194f174e0d1281d41157074e5072436.png"
                 alt="Avatar"
                 width={64}
                 height={64}
@@ -81,7 +100,13 @@ export default function AppLayout({
               : null
           }`}
         >
-          <Link href="/xcs/profile" className={styles.accountDropdownHeader}>
+          <Link
+            href="/xcs/profile"
+            className={styles.accountDropdownHeader}
+            onClick={() => {
+              setAccountDropdownVisible(false);
+            }}
+          >
             <Image
               src="https://cdn.discordapp.com/attachments/813308393208414219/1085048432823128114/0ec4c87ead4f513c336f092a803a8cf6.png"
               width={64}
@@ -121,5 +146,5 @@ export default function AppLayout({
         <div className={styles.mainContent}>{children}</div>
       </main>
     </>
-  );
+  ) : null;
 }

@@ -8,6 +8,12 @@
   border-right: 1px solid #ccc;
   width: 240px;
   height: 100vh;
+  left: 0;
+  transition: left 0.25s;
+}
+
+.navInvisible {
+  left: -240px;
 }
 
 .navTitle {
@@ -70,7 +76,22 @@
   background-color: #e9ecef;
 }
 
-.navButton__active, .navButton__active:hover, .navButton__active:active {
+.navButton__active, .navButton__active:hover {
   background-color: #212529;
   color: #fff;
+}
+
+.navButton__active:active {
+  background-color: #343a40;
+}
+
+@media screen and (max-width: 768px) {
+  .nav {
+    width: 100vw;
+    left: 0;
+  }
+
+  .navInvisible {
+    left: -100vw;
+  }
 }

@@ -20,7 +20,7 @@ export default function Auth() {
     } else {
       router.push("/platform/home");
     }
-  }, [loading, user]);
+  }, [loading, router, user]);
 
   return (
     <div>

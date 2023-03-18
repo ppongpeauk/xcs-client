@@ -10,22 +10,34 @@ import styles from "./Navbar.module.css";
 
 import BadgeRoundedIcon from "@mui/icons-material/BadgeRounded";
 import CorporateFareRoundedIcon from "@mui/icons-material/CorporateFareRounded";
-import ForumRoundedIcon from "@mui/icons-material/ForumRounded";
 import HouseRoundedIcon from "@mui/icons-material/HouseRounded";
 import SensorsRoundedIcon from "@mui/icons-material/SensorsRounded";
+import SupportRoundedIcon from "@mui/icons-material/SupportRounded";
 import WidgetsRoundedIcon from "@mui/icons-material/WidgetsRounded";
 
-export default function Navbar() {
+export default function Navbar(props: {
+  setVisible: (visible: boolean) => void;
+  visible: boolean;
+}) {
   const router = useRouter();
   const currentRoute = usePathname();
   const app = initFirebase();
   const auth = getAuth();
   const [user, loading] = useAuthState(auth);
 
+  function setNavbarVisible(visible: boolean) {
+    console.log(window.innerWidth);
+    if (window.innerWidth < 768) {
+      props.setVisible(visible);
+    }
+  }
+
   return (
-    <div className={styles.nav}>
+    <div
+      className={`${styles.nav} ${!props.visible ? styles.navInvisible : ""}`}
+    >
       <div className={styles.navTitle}>
-        <Link href="/">EVE XCS</Link>
+        <Link href="/platform/home">EVE XCS</Link>
       </div>
       <div className={`${styles.navButtons} mb-auto`}>
         <span className={styles.navCategoryTitle}>Main Menu</span>
@@ -33,6 +45,7 @@ export default function Navbar() {
           className={`${styles.navButton} ${
             currentRoute == "/platform/home" ? styles.navButton__active : ""
           }`}
+          onClick={() => setNavbarVisible(false)}
           href="/platform/home"
         >
           <HouseRoundedIcon sx={{ fontSize: "24px", marginRight: "12px" }} />
@@ -40,18 +53,22 @@ export default function Navbar() {
         </Link>
         <Link
           className={`${styles.navButton} ${
-            currentRoute == "/platform/activity" ? styles.navButton__active : ""
+            currentRoute == "/platform/event-logs"
+              ? styles.navButton__active
+              : ""
           }`}
-          href="/platform/activity"
+          href="/platform/event-logs"
+          onClick={() => setNavbarVisible(false)}
         >
           <SensorsRoundedIcon sx={{ fontSize: "24px", marginRight: "12px" }} />
-          Recent Activity
+          Event Logs
         </Link>
         <Link
           className={`${styles.navButton} ${
             currentRoute == "/platform/profile" ? styles.navButton__active : ""
           }`}
           href="/platform/profile"
+          onClick={() => setNavbarVisible(false)}
         >
           <BadgeRoundedIcon sx={{ fontSize: "24px", marginRight: "12px" }} />
           Profile
@@ -63,6 +80,7 @@ export default function Navbar() {
               : ""
           }`}
           href="/platform/organizations"
+          onClick={() => setNavbarVisible(false)}
         >
           <CorporateFareRoundedIcon
             sx={{ fontSize: "24px", marginRight: "12px" }}
@@ -76,6 +94,7 @@ export default function Navbar() {
               : ""
           }`}
           href="/platform/locations"
+          onClick={() => setNavbarVisible(false)}
         >
           <WidgetsRoundedIcon sx={{ fontSize: "24px", marginRight: "12px" }} />
           Locations
@@ -85,8 +104,8 @@ export default function Navbar() {
           href="https://discord.gg/a2ZsmPB"
           target="_blank"
         >
-          <ForumRoundedIcon sx={{ fontSize: "24px", marginRight: "12px" }} />
-          Support Server
+          <SupportRoundedIcon sx={{ fontSize: "24px", marginRight: "12px" }} />
+          Get Support
         </Link>
       </div>
       {/* <div className={`${styles.navButtons} mb-4`}>

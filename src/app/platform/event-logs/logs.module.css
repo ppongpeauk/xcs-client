@@ -1,0 +1,140 @@
+.main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100%;
+}
+
+@media (max-width: 768px) {
+  .main {
+    width: 100%;
+  }
+}
+
+.actionBar {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 96px;
+  width: 100%;
+  background-color: #fff;
+  border-radius: var(--border-radius);
+  border: 1px solid #ccc;
+  margin-bottom: 24px;
+}
+
+.logs {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  height: calc(100% - 120px);
+  width: 100%;
+}
+
+.logDayGroup {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100%;
+  margin-bottom: 24px;
+  overflow-x: auto;
+}
+
+.logDayGroupTitle {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100%;
+  margin-bottom: 12px;
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.logStatusIcon {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+.logStatusIcon__success {
+  color: var(--color-success);
+}
+
+.logStatusIcon__error {
+  color: var(--color-error);
+}
+
+.table {
+  background-color: #fff;
+  border-radius: var(--border-radius);
+  border: 1px solid #ccc;
+  border-collapse: unset;
+  width: 100%;
+  height: auto;
+  overflow: hidden;
+}
+
+.td, .th {
+  text-align: left;
+  padding: 8px 16px;
+  height: auto;
+}
+
+.th {
+  background-color: #e9ecef;
+  border: 1px solid #ccc;
+  font-weight: 600;
+}
+
+.th:first-child {
+  border-top-left-radius: 10px;
+}
+
+.th:last-child {
+  border-top-right-radius: 10px;
+}
+
+.tdName {
+  display: flex;
+  flex-direction: row;
+}
+
+/* .tr:nth-child(even) {
+  background-color: #e9ecef;
+} */
+
+.actions {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  height: 100%;
+}
+
+.logInfoUserPhoto {
+  aspect-ratio: 1/1;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  border-radius: 50%;
+  margin-right: 8px;
+}
+
+.logInfoButton {
+  margin-right: 8px;
+}
+
+/* .username {
+  font-size: 0.9em;
+  font-weight: 500;
+  font-family: "IBM Plex Mono", monospace;
+} */
