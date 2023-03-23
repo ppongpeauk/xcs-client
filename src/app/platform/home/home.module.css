@@ -9,3 +9,27 @@
   border-radius: var(--border-radius);
   border: 1px solid #ccc;
 }
+
+.formButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 256px;
+  margin: 8px 0;
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  border-radius: var(--border-radius-input);
+  background-color: #fff;
+  cursor: pointer;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+  transition: background 0.2s;
+  font-weight: 600;
+}
+
+.formButton:hover {
+  background-color: #eee;
+}
+
+.formButton:active {
+  background-color: #ddd;
+}

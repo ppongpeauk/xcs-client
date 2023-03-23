@@ -2,27 +2,30 @@
 
 import { getAuth } from "firebase/auth";
 import { useRouter } from "next/navigation";
-import { useAuthState } from "react-firebase-hooks/auth";
 import { initFirebase } from "../../../firebase/firebaseApp";
 
-import Image from "next/image";
 import styles from "./home.module.css";
+
+import { useAuthContext } from "@/context/user";
+
+import Link from "next/link";
 
 export default function Page() {
   const app = initFirebase();
   const router = useRouter();
   const auth = getAuth();
-  const [user, loading] = useAuthState(auth);
+  const { user } = useAuthContext();
 
   return (
     <>
       <div className={styles.main}>
-        <Image
-          src="https://media.discordapp.net/attachments/564222011602370565/775109721631227934/ele.gif"
-          alt="EVE XCS"
-          width={100}
-          height={100}
-        ></Image>
+        <h1>There's nothing here yet...</h1>
+        <Link
+          className={`${styles.formButton} w-4`}
+          href="/platform/event-logs"
+        >
+          Go to event logs
+        </Link>
       </div>
     </>
   );
