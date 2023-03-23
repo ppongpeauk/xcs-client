@@ -43,10 +43,10 @@ export default function AppLayout({
   };
 
   useEffect(() => {
-    if (!loading && !user) {
+    if (!loading && !firebaseUser) {
       router.push("/idp/login");
     }
-  }, [loading, router, user]);
+  }, [loading, router, firebaseUser]);
 
   useEffect(() => {
     if (window.innerWidth < 768) {
@@ -54,7 +54,7 @@ export default function AppLayout({
     }
   }, []);
 
-  return !loading && user ? (
+  return !loading && firebaseUser ? (
     <>
       <main
         className={`${styles.main} ${
