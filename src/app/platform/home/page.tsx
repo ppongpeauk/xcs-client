@@ -19,7 +19,7 @@ export default function Page() {
   return (
     <>
       <div className={styles.main}>
-        <h1>There's nothing here yet...</h1>
+        <h1>There&apos;s nothing here yet...</h1>
         <Link
           className={`${styles.formButton} w-4`}
           href="/platform/event-logs"
