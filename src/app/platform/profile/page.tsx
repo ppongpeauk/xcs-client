@@ -80,7 +80,7 @@ export default function Page() {
           {isLoading ? null : (
             <Image
               className={styles.badgeBarcode}
-              src="https://barcodeapi.org/api/pdf417/{id:'5d21989728d7a'}"
+              src={`https://barcodeapi.org/api/pdf417/{id:'${user.id}'}`}
               alt="User Barcode"
               width={256}
               height={256}
