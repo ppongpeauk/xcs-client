@@ -12,7 +12,7 @@ export function AuthProvider({ children }: Props) {
   const [user, setUser] = useState<Object>({
     name: "John Doe",
     role: "Admin",
-    avatar: "https://i.pravatar.cc/512",
+    avatar: "https://i.pravatar.cc/512?img=12",
     id: "5d21989728d7a",
     email: "kurtsiberg@gmail.com",
   });
