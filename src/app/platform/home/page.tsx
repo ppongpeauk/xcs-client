@@ -24,7 +24,7 @@ export default function Page() {
           className={`${styles.formButton} w-4`}
           href="/platform/event-logs"
         >
-          Go to event logs
+          Go to Event Logs
         </Link>
       </div>
     </>
