@@ -5,7 +5,7 @@ const nextConfig = {
     appDir: true,
   },
   images: {
-    domains: ["cdn.discordapp.com", "media.discordapp.net", "barcodeapi.org"],
+    domains: ["cdn.discordapp.com", "media.discordapp.net", "barcodeapi.org", "i.pravatar.cc"],
   },
   async redirects() {
     return [

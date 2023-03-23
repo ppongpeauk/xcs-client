@@ -12,12 +12,15 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import Skeleton from "react-loading-skeleton";
 
+import { useAuthContext } from "@/context/user";
+
 export default function Page() {
   const router = useRouter();
   const pathname = usePathname();
   const app = initFirebase();
   const auth = getAuth();
-  const [user, loading] = useAuthState(auth);
+  const [firebaseUser, loading] = useAuthState(auth);
+  const { user }: any = useAuthContext();
 
   const [isLoading, setIsLoading] = useState(true);
 
@@ -43,9 +46,7 @@ export default function Page() {
             ) : (
               <Image
                 className={styles.badgeImage}
-                src={
-                  "https://cdn.discordapp.com/attachments/813308393208414219/1085935705986977812/1194f174e0d1281d41157074e5072436.png"
-                }
+                src={user.avatar}
                 alt="User Badge Image"
                 width={512}
                 height={512}
@@ -61,7 +62,7 @@ export default function Page() {
                 duration={1}
               />
             ) : (
-              "Pete Pongpeauk"
+              user.name
             )}
           </h1>
           <h2 className={styles.badgeInfoTitle}>
@@ -73,7 +74,7 @@ export default function Page() {
                 duration={1}
               />
             ) : (
-              "L4 Employee"
+              user.role
             )}
           </h2>
           {isLoading ? null : (

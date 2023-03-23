@@ -12,8 +12,7 @@ import Image from "next/image";
 import Link from "next/link";
 import Skeleton from "react-loading-skeleton";
 
-import sampleImage2 from "./1194f174e0d1281d41157074e5072436.png";
-//import sampleImage from "./eholl-portrait.png";
+import sampleImage from "./1194f174e0d1281d41157074e5072436.png";
 
 import { useAuthContext } from "@/context/user";
 
@@ -93,7 +92,7 @@ export default function Page() {
         info: {
           name: "Pete Pongpeauk",
           username: "ppongpeauk",
-          profilePicture: sampleImage2,
+          profilePicture: sampleImage,
           location: "4040 Wilson",
           accessPoint: "Front Door",
         },
@@ -105,7 +104,7 @@ export default function Page() {
         info: {
           name: "Pete Pongpeauk",
           username: "ppongpeauk",
-          profilePicture: sampleImage2,
+          profilePicture: sampleImage,
           location: "4040 Wilson",
           accessPoint: "Front Door",
         },
@@ -117,7 +116,7 @@ export default function Page() {
         info: {
           name: "Pete Pongpeauk",
           username: "ppongpeauk",
-          profilePicture: sampleImage2,
+          profilePicture: sampleImage,
           location: "4040 Wilson",
           accessPoint: "Front Door",
         },
@@ -129,7 +128,7 @@ export default function Page() {
         info: {
           name: "Pete Pongpeauk",
           username: "ppongpeauk",
-          profilePicture: sampleImage2,
+          profilePicture: sampleImage,
           location: "4040 Wilson",
           accessPoint: "Front Door",
         },
@@ -143,7 +142,7 @@ export default function Page() {
         info: {
           name: "Pete Pongpeauk",
           username: "ppongpeauk",
-          profilePicture: sampleImage2,
+          profilePicture: sampleImage,
           location: "4040 Wilson",
           accessPoint: "Front Door",
         },
@@ -157,7 +156,7 @@ export default function Page() {
         info: {
           name: "Pete Pongpeauk",
           username: "ppongpeauk",
-          profilePicture: sampleImage2,
+          profilePicture: sampleImage,
           location: "4040 Wilson",
           accessPoint: "Front Door",
         },

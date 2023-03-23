@@ -9,7 +9,13 @@ type Props = {
 };
 
 export function AuthProvider({ children }: Props) {
-  const [user, setUser] = useState<string>("ah");
+  const [user, setUser] = useState<Object>({
+    name: "John Doe",
+    role: "Admin",
+    avatar: "https://i.pravatar.cc/512",
+    id: "5d21989728d7a",
+    email: "kurtsiberg@gmail.com",
+  });
 
   let sharedState: any = { user, setUser };
 

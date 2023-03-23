@@ -18,6 +18,8 @@ import { usePathname, useRouter } from "next/navigation";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { initFirebase } from "../../firebase/firebaseApp";
 
+import { useAuthContext } from "@/context/user";
+
 export default function AppLayout({
   children, // will be a page or nested layout
 }: {
@@ -27,7 +29,8 @@ export default function AppLayout({
   const pathname = usePathname();
   const app = initFirebase();
   const auth = getAuth();
-  const [user, loading] = useAuthState(auth);
+  const [firebaseUser, loading] = useAuthState(auth);
+  const { user } = useAuthContext();
   const [accountDropdownVisible, setAccountDropdownVisible] = useState(false);
   const [navbarVisible, setNavbarVisible] = useState(true);
 
@@ -76,7 +79,7 @@ export default function AppLayout({
               onClick={() => setAccountDropdownVisible(!accountDropdownVisible)}
             >
               <Image
-                src="https://cdn.discordapp.com/attachments/813308393208414219/1085935705986977812/1194f174e0d1281d41157074e5072436.png"
+                src={user.avatar}
                 alt="Avatar"
                 width={64}
                 height={64}
@@ -108,19 +111,17 @@ export default function AppLayout({
             }}
           >
             <Image
-              src="https://cdn.discordapp.com/attachments/813308393208414219/1085048432823128114/0ec4c87ead4f513c336f092a803a8cf6.png"
+              src={user.avatar}
               width={64}
               height={64}
               alt="Avatar"
               className={styles.accountDropdownAvatar}
             />
             <div className={styles.accountDropdownHeaderInfo}>
-              <h1 className={styles.accountDropdownHeaderName}>Eve Holloway</h1>
-              <h1 className={styles.accountDropdownHeaderRole}>
-                Premium Member
-              </h1>
+              <h1 className={styles.accountDropdownHeaderName}>{user.name}</h1>
+              <h1 className={styles.accountDropdownHeaderRole}>{user.role}</h1>
               <h1 className={styles.accountDropdownHeaderEmail}>
-                eholl2004@gmail.com
+                {user.email}
               </h1>
             </div>
           </Link>
