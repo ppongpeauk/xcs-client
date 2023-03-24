@@ -160,9 +160,13 @@
 }
 
 .accountDropdownHeaderRole {
-  font-size: 0.875rem;
-  font-weight: 400;
+  display: flex;
+  font-weight: 600;
   color: #212529;
+}
+
+.accountDropdownHeaderRoleIcon {
+  margin-right: 4px;
 }
 
 .accountDropdownHeaderEmail {

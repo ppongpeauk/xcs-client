@@ -1,0 +1,112 @@
+.main {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+}
+
+.subscriptionPlan {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  height: 75%;
+  width: 384px;
+  background-color: #fff;
+  border-radius: var(--border-radius);
+  border: 1px solid #ccc;
+  margin: 0 8px;
+  overflow: hidden;
+  padding: 24px;
+  box-sizing: content-box;
+}
+
+.subscriptionPlanPremium {
+  border: 4px solid #007bff;
+}
+
+.subscriptionPlanTitle {
+  font-size: 1.5em;
+}
+
+.subscriptionPlanCategory {
+  font-size: 1em;
+  font-weight: 600;
+  color: #aaa;
+}
+
+.subscriptionPlanPrice {
+  font-size: 2em;
+  font-weight: 600;
+}
+
+.subscriptionPlanRecurrence {
+  font-size: 0.5em;
+  color: #aaa;
+}
+
+.subscriptionPlanDivider {
+  width: 100%;
+  height: 1px;
+  background-color: #ccc;
+  margin: 16px 0;
+}
+
+.subscriptionPlanFeatureIcon {
+  width: 24px;
+  height: 24px;
+  margin-right: 8px;
+}
+
+.subscriptionPlanFeature {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100%;
+  margin: 8px 0;
+}
+
+@media screen and (max-width: 768px) {
+  .subscriptionPlan {
+    flex-direction: column;
+    width: 100%;
+  }
+}
+
+.subscriptionPlanInteract {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 64px;
+  margin: 8px 0;
+  margin-top: auto;
+}
+
+.formButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 75% !important;
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  border-radius: var(--border-radius-input);
+  background-color: #fff;
+  cursor: pointer;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+  transition: background 0.2s;
+  font-weight: 600;
+  align-self: center;
+}
+
+.formButton:hover {
+  background-color: #eee;
+}
+
+.formButton:active {
+  background-color: #ddd;
+}

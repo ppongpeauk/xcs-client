@@ -62,7 +62,7 @@
 
   height: 48px;
   width: 100%;
-  transition: background-color 0.2s;
+  transition: background-color 0.2s, color 0.2s;
 
   color: #212529;
   font-weight: 600;
@@ -83,6 +83,20 @@
 
 .navButton__active:active {
   background-color: #343a40;
+}
+
+.navButton__premium {
+  border: 2px solid #007bff;
+  color: #007bff;
+}
+
+.navButton__premium:hover {
+  background-color: #007bff;
+  color: #fff;
+}
+
+.navButton__premium:active {
+  background-color: #0069d9;
 }
 
 @media screen and (max-width: 768px) {

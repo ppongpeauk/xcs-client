@@ -23,6 +23,7 @@ export default function Login() {
     useSignInWithEmailAndPassword(auth);
 
   const [user] = useAuthState(auth);
+  
   const [alert, setAlert] = useState("");
   const [pending, setPending] = useState(false);
 

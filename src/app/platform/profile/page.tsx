@@ -2,10 +2,7 @@
 
 import styles from "./profile.module.css";
 
-import { initFirebase } from "@/firebase/firebaseApp";
-import { getAuth } from "@firebase/auth";
-import { usePathname, useRouter } from "next/navigation";
-import { useAuthState } from "react-firebase-hooks/auth";
+import { useRouter } from "next/navigation";
 
 import { useEffect, useState } from "react";
 
@@ -14,15 +11,24 @@ import Skeleton from "react-loading-skeleton";
 
 import { useAuthContext } from "@/context/user";
 
+import { loadStripe } from "@stripe/stripe-js";
+import axios from "axios";
+const stripePromise = loadStripe(
+  process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY as string
+);
+
 export default function Page() {
   const router = useRouter();
-  const pathname = usePathname();
-  const app = initFirebase();
-  const auth = getAuth();
-  const [firebaseUser, loading] = useAuthState(auth);
   const { user }: any = useAuthContext();
 
   const [isLoading, setIsLoading] = useState(true);
+  
+  const createCustomerPortalSession = async () => {
+    const portalSession = await axios.post("/api/create-customer-portal-session", {
+      user: user,
+    });
+    router.push(portalSession.data.url);
+  };
 
   useEffect(() => {
     setTimeout(() => {
@@ -97,7 +103,12 @@ export default function Page() {
               style={{ marginBottom: "1rem" }}
               count={16.5}
             />
-          ) : null}
+          ) : (
+            <>
+              <h2 className={styles.infoTitle}>Personal Information</h2>
+              <button onClick={createCustomerPortalSession}>Manage billing</button>
+            </>
+          )}
         </div>
       </div>
     </>

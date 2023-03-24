@@ -1,9 +1,7 @@
 "use client";
 
-import { getAuth } from "@firebase/auth";
+import { useAuthContext } from "@/context/user";
 import { usePathname, useRouter } from "next/navigation";
-import { useAuthState } from "react-firebase-hooks/auth";
-import { initFirebase } from "../firebase/firebaseApp";
 
 import Link from "next/link";
 import styles from "./Navbar.module.css";
@@ -14,6 +12,7 @@ import HouseRoundedIcon from "@mui/icons-material/HouseRounded";
 import SensorsRoundedIcon from "@mui/icons-material/SensorsRounded";
 import SupportRoundedIcon from "@mui/icons-material/SupportRounded";
 import WidgetsRoundedIcon from "@mui/icons-material/WidgetsRounded";
+import WorkspacePremiumIcon from "@mui/icons-material/WorkspacePremium";
 
 export default function Navbar(props: {
   setVisible: (visible: boolean) => void;
@@ -21,9 +20,8 @@ export default function Navbar(props: {
 }) {
   const router = useRouter();
   const currentRoute = usePathname();
-  const app = initFirebase();
-  const auth = getAuth();
-  const [user, loading] = useAuthState(auth);
+
+  const { user } = useAuthContext();
 
   function setNavbarVisible(visible: boolean) {
     console.log(window.innerWidth);
@@ -107,12 +105,26 @@ export default function Navbar(props: {
           <SupportRoundedIcon sx={{ fontSize: "24px", marginRight: "12px" }} />
           Get Support
         </Link>
+        {user?.isPremium === false ? (
+          <>
+            <span className={styles.navCategoryTitle}>Upgrade</span>
+            <Link
+              className={`${styles.navButton} ${styles.navButton__premium}`}
+              href="/platform/upgrade"
+            >
+              <WorkspacePremiumIcon
+                sx={{ fontSize: "24px", marginRight: "12px" }}
+              />
+              Upgrade
+            </Link>
+          </>
+        ) : null}
       </div>
-      {/* <div className={`${styles.navButtons} mb-4`}>
+      <div className={`${styles.navButtons} mb-4`}>
         <span className={styles.navCategoryTitle}>
-          V{process.env.NEXT_PUBLIC_VERSION}
+          Version {process.env.NEXT_PUBLIC_VERSION}
         </span>
-      </div> */}
+      </div>
     </div>
   );
 }

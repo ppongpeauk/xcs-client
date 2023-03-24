@@ -6,6 +6,7 @@ import Navbar from "../../components/Navbar";
 import ExitToAppOutlinedIcon from "@mui/icons-material/ExitToAppOutlined";
 import MenuOpenRoundedIcon from "@mui/icons-material/MenuOpenRounded";
 import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
+import WorkspacePremiumIcon from "@mui/icons-material/WorkspacePremium";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -63,7 +64,7 @@ export default function AppLayout({
       >
         <Navbar setVisible={setNavbarVisible} visible={navbarVisible} />
         <div className={styles.topBar}>
-          <h1 className={styles.pageTitle}>{pageNames[pathname]}</h1>
+          <h1 className={styles.pageTitle}>{pageNames[pathname as string]}</h1>
           <div className={styles.topBarButtons}>
             <button
               className={styles.topBarButton}
@@ -104,7 +105,7 @@ export default function AppLayout({
           }`}
         >
           <Link
-            href="/xcs/profile"
+            href="/platform/profile"
             className={styles.accountDropdownHeader}
             onClick={() => {
               setAccountDropdownVisible(false);
@@ -119,7 +120,25 @@ export default function AppLayout({
             />
             <div className={styles.accountDropdownHeaderInfo}>
               <h1 className={styles.accountDropdownHeaderName}>{user.name}</h1>
-              <h1 className={styles.accountDropdownHeaderRole}>{user.role}</h1>
+              {user.isPremium ? (
+                <>
+                  <h1 className={styles.accountDropdownHeaderRole}>
+                    <WorkspacePremiumIcon
+                      className={styles.accountDropdownHeaderRoleIcon}
+                      sx={{
+                        height: "100%",
+                      }}
+                    />
+                    XCS Premium
+                  </h1>
+                </>
+              ) : (
+                <>
+                  <h1 className={styles.accountDropdownHeaderRole}>
+                    Free User
+                  </h1>
+                </>
+              )}
               <h1 className={styles.accountDropdownHeaderEmail}>
                 {user.email}
               </h1>
