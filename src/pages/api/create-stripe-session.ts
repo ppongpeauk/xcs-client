@@ -22,6 +22,7 @@ async function CreateStripeSession(req: any, res: any) {
     customer_email: user.email,
     metadata: {uid: user.id},
     allow_promotion_codes: true,
+    customer: user.customerId || undefined,
   });
 
   res.json({ id: session.id });

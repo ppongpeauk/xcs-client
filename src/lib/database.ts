@@ -25,7 +25,7 @@ export async function updateUserSubscription(customerId: string, premiumStatus: 
       // doc.data() is never undefined for query doc snapshots
       await updateDoc(doc.ref as any, {
         isPremium: premiumStatus,
-        customerId: (premiumStatus ? customerId : null)
+        // customerId: (premiumStatus ? customerId : null)
       }); 
     }
   );
