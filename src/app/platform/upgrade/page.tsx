@@ -66,7 +66,7 @@ export default function Page() {
             <h2 className={styles.subscriptionPlanCategory}>Entry Points</h2>
             <li className={styles.subscriptionPlanFeature}>
               <span className={styles.subscriptionPlanFeatureText}>
-                4 Access Points per Location
+                4 Access Points / Location
               </span>
             </li>
             <li className={styles.subscriptionPlanFeature}>
@@ -83,6 +83,12 @@ export default function Page() {
             <h2 className={styles.subscriptionPlanCategory}>Event Logs</h2>
             <li className={styles.subscriptionPlanFeature}>
               <span className={styles.subscriptionPlanFeatureText}>-</span>
+            </li>
+            <h2 className={styles.subscriptionPlanCategory}>Miscellaneous</h2>
+            <li className={styles.subscriptionPlanFeature}>
+              <span className={styles.subscriptionPlanFeatureText}>
+                -
+              </span>
             </li>
             <h2 className={styles.subscriptionPlanCategory}>
               Customer Support
@@ -115,30 +121,36 @@ export default function Page() {
             <h2 className={styles.subscriptionPlanCategory}>Locations</h2>
             <li className={styles.subscriptionPlanFeature}>
               <span className={styles.subscriptionPlanFeatureText}>
-                Unlimited Locations
+                <strong>Unlimited</strong> Locations
               </span>
             </li>
             <h2 className={styles.subscriptionPlanCategory}>Entry Points</h2>
             <li className={styles.subscriptionPlanFeature}>
               <span className={styles.subscriptionPlanFeatureText}>
-                Unlimited Access Points per Location
+                <strong>Unlimited</strong> Access Points / Location
               </span>
             </li>
             <li className={styles.subscriptionPlanFeature}>
               <span className={styles.subscriptionPlanFeatureText}>
-                Access assignable to users and groups
+                Access assignable to <strong>users and groups</strong>
               </span>
             </li>
             <h2 className={styles.subscriptionPlanCategory}>Organizations</h2>
             <li className={styles.subscriptionPlanFeature}>
               <span className={styles.subscriptionPlanFeatureText}>
-                16 Organizations
+                <strong>16</strong> Organizations
               </span>
             </li>
             <h2 className={styles.subscriptionPlanCategory}>Event Logs</h2>
             <li className={styles.subscriptionPlanFeature}>
               <span className={styles.subscriptionPlanFeatureText}>
-                Access to Event Logs (up to 30 days old)
+                Access to event logs <i>(up to 1 month)</i>
+              </span>
+            </li>
+            <h2 className={styles.subscriptionPlanCategory}>Miscellaneous</h2>
+            <li className={styles.subscriptionPlanFeature}>
+              <span className={styles.subscriptionPlanFeatureText}>
+                Reverse Compatibility with NTE Axesys
               </span>
             </li>
             <h2 className={styles.subscriptionPlanCategory}>

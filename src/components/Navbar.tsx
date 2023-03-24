@@ -111,6 +111,7 @@ export default function Navbar(props: {
             <Link
               className={`${styles.navButton} ${styles.navButton__premium}`}
               href="/platform/upgrade"
+              onClick={() => setNavbarVisible(false)}
             >
               <WorkspacePremiumIcon
                 sx={{ fontSize: "24px", marginRight: "12px" }}

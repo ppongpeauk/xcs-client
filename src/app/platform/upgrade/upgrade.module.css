@@ -73,6 +73,12 @@
   .subscriptionPlan {
     flex-direction: column;
     width: 100%;
+    height: auto;
+    margin: 24px 0;
+  }
+  .main {
+    flex-direction: column;
+    height: auto;
   }
 }
 

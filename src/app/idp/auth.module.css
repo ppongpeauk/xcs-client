@@ -268,5 +268,5 @@
 }
 
 .faqModal__invisible, .faqModal__invisible * {
-  pointer-events: none;
+  pointer-events: none !important;
 }
