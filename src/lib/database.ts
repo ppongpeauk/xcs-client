@@ -31,6 +31,19 @@ export async function updateUserSubscription(customerId: string, premiumStatus: 
   );
 }
 
+export async function updateUserCustomerID(customerId: string, uid: string) {
+  const docRef = await doc(db, "users", uid);
+  const docSnap = await getDoc(docRef);
+  if (docSnap.exists()) {
+    console.info(docSnap.data());
+    await updateDoc(docRef, {
+      customerId: customerId
+    });
+  } else {
+    return null;
+  }
+}
+
 export async function getUserDataFromUid(uid: string) {
   const docRef = await doc(db, "users", uid);
   const docSnap = await getDoc(docRef);

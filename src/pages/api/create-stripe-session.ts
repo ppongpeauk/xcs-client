@@ -1,3 +1,4 @@
+import { updateUserCustomerID } from "@/lib/database";
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 
 async function CreateStripeSession(req: any, res: any) {
@@ -13,16 +14,35 @@ async function CreateStripeSession(req: any, res: any) {
     price: process.env.NEXT_PUBLIC_STRIPE_PRICE_ID,
   };
 
+  var customer;
+
+  if (!user.customerId) {
+    customer = await stripe.customers.create({
+      email: user.email,
+      name: user.fullName,
+    });
+    await updateUserCustomerID(customer.id, user.id);
+  } else {
+    var customer = await stripe.customers.retrieve(user.customerId);
+  }
+
+  if (customer.deleted) {
+    customer = await stripe.customers.create({
+      email: user.email,
+      name: user.fullName,
+    });
+    await updateUserCustomerID(customer.id, user.id);
+  }
+
   const session = await stripe.checkout.sessions.create({
     payment_method_types: ['card'],
     line_items: [transformedItem],
     mode: 'subscription',
     success_url: redirectURL + "/platform/upgrade/thank-you",
     cancel_url: redirectURL + "/platform/upgrade",
-    customer_email: user.email,
     metadata: {uid: user.id},
     allow_promotion_codes: true,
-    customer: user.customerId || undefined,
+    customer: customer.id
   });
 
   res.json({ id: session.id });
