@@ -13,6 +13,47 @@ import SensorsRoundedIcon from "@mui/icons-material/SensorsRounded";
 import SupportRoundedIcon from "@mui/icons-material/SupportRounded";
 import WidgetsRoundedIcon from "@mui/icons-material/WidgetsRounded";
 import WorkspacePremiumIcon from "@mui/icons-material/WorkspacePremium";
+import {
+  HTMLAttributeAnchorTarget,
+  MouseEventHandler,
+  ReactElement,
+} from "react";
+import { Url } from "next/dist/shared/lib/router/router";
+
+interface NavbarButtonParameters {
+  title: String;
+  url: Url;
+  icon: ReactElement;
+  target?: HTMLAttributeAnchorTarget;
+  onClick: MouseEventHandler;
+  premium?: boolean;
+}
+
+function NavbarButton({
+  title,
+  url,
+  icon,
+  target,
+  onClick,
+  premium
+}: NavbarButtonParameters) {
+  const currentRoute = usePathname() as any;
+  return (
+    <Link
+      className={`${styles.navButton} ${
+        currentRoute == url ? styles.navButton__active : ""
+      } ${premium ? styles.navButton__premium : ""}`}
+      href={url}
+      onClick={onClick}
+      target={target || ""}
+    >
+      <>
+        {icon}
+        {title}
+      </>
+    </Link>
+  );
+}
 
 export default function Navbar(props: {
   setVisible: (visible: boolean) => void;
@@ -24,7 +65,6 @@ export default function Navbar(props: {
   const { user } = useAuthContext();
 
   function setNavbarVisible(visible: boolean) {
-    console.log(window.innerWidth);
     if (window.innerWidth < 768) {
       props.setVisible(visible);
     }
@@ -39,85 +79,77 @@ export default function Navbar(props: {
       </div>
       <div className={`${styles.navButtons} mb-auto`}>
         <span className={styles.navCategoryTitle}>Main Menu</span>
-        <Link
-          className={`${styles.navButton} ${
-            currentRoute == "/platform/home" ? styles.navButton__active : ""
-          }`}
+        <NavbarButton
+          title="Home"
           onClick={() => setNavbarVisible(false)}
-          href="/platform/home"
-        >
-          <HouseRoundedIcon sx={{ fontSize: "24px", marginRight: "12px" }} />
-          Home
-        </Link>
-        <Link
-          className={`${styles.navButton} ${
-            currentRoute == "/platform/event-logs"
-              ? styles.navButton__active
-              : ""
-          }`}
-          href="/platform/event-logs"
+          url="/platform/home"
+          icon={
+            <HouseRoundedIcon sx={{ fontSize: "24px", marginRight: "12px" }} />
+          }
+        />
+        <NavbarButton
+          title="Event Logs"
           onClick={() => setNavbarVisible(false)}
-        >
-          <SensorsRoundedIcon sx={{ fontSize: "24px", marginRight: "12px" }} />
-          Event Logs
-        </Link>
-        <Link
-          className={`${styles.navButton} ${
-            currentRoute == "/platform/profile" ? styles.navButton__active : ""
-          }`}
-          href="/platform/profile"
+          url="/platform/event-logs"
+          icon={
+            <SensorsRoundedIcon
+              sx={{ fontSize: "24px", marginRight: "12px" }}
+            />
+          }
+        />
+        <NavbarButton
+          title="Profile"
           onClick={() => setNavbarVisible(false)}
-        >
-          <BadgeRoundedIcon sx={{ fontSize: "24px", marginRight: "12px" }} />
-          Profile
-        </Link>
-        <Link
-          className={`${styles.navButton} ${
-            currentRoute == "/platform/organizations"
-              ? styles.navButton__active
-              : ""
-          }`}
-          href="/platform/organizations"
+          url="/platform/profile"
+          icon={
+            <BadgeRoundedIcon sx={{ fontSize: "24px", marginRight: "12px" }} />
+          }
+        />
+        <NavbarButton
+          title="Organizations"
           onClick={() => setNavbarVisible(false)}
-        >
-          <CorporateFareRoundedIcon
-            sx={{ fontSize: "24px", marginRight: "12px" }}
-          />
-          Organizations
-        </Link>
-        <Link
-          className={`${styles.navButton} ${
-            currentRoute == "/platform/locations"
-              ? styles.navButton__active
-              : ""
-          }`}
-          href="/platform/locations"
+          url="/platform/organizations"
+          icon={
+            <CorporateFareRoundedIcon
+              sx={{ fontSize: "24px", marginRight: "12px" }}
+            />
+          }
+        />
+        <NavbarButton
+          title="Locations"
           onClick={() => setNavbarVisible(false)}
-        >
-          <WidgetsRoundedIcon sx={{ fontSize: "24px", marginRight: "12px" }} />
-          Locations
-        </Link>
-        <Link
-          className={styles.navButton}
-          href="https://discord.gg/a2ZsmPB"
+          url="/platform/locations"
+          icon={
+            <WidgetsRoundedIcon
+              sx={{ fontSize: "24px", marginRight: "12px" }}
+            />
+          }
+        />
+        <NavbarButton
+          title="Get Support"
+          onClick={() => setNavbarVisible(false)}
+          url="https://discord.gg/a2ZsmPB"
+          icon={
+            <SupportRoundedIcon
+              sx={{ fontSize: "24px", marginRight: "12px" }}
+            />
+          }
           target="_blank"
-        >
-          <SupportRoundedIcon sx={{ fontSize: "24px", marginRight: "12px" }} />
-          Get Support
-        </Link>
+        />
         {user?.isPremium === false ? (
           <>
             <span className={styles.navCategoryTitle}>Upgrade</span>
-            <Link
-              className={`${styles.navButton} ${styles.navButton__premium}`}
-              href="/platform/upgrade"
+            <NavbarButton
+              title="Upgrade"
               onClick={() => setNavbarVisible(false)}
-            >
-              <WorkspacePremiumIcon
+              url="/platform/upgrade"
+              icon={
+                <WorkspacePremiumIcon
                 sx={{ fontSize: "24px", marginRight: "12px" }}
               />
-              Upgrade
-            </Link>
+              }
+              premium={true}
+            />
           </>
         ) : null}
       </div>

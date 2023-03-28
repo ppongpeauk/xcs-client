@@ -1,7 +1,11 @@
+import styles from "./locations.module.css";
+
 export default function Page() {
   return (
     <>
-      <h1>Locations Page</h1>
+      <div className={styles.main}>
+
+      </div>
     </>
   );
 }
