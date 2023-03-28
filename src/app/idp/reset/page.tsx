@@ -50,7 +50,7 @@ export default function Login() {
             router.push("/");
           } else {
             setAlert(
-              "Unable to send a password reset email. Please check your username and try again."
+              "Unable to send a password reset email. Please check your email and try again."
             );
           }
         })
@@ -84,12 +84,12 @@ export default function Login() {
               </div>
             )}
             <form onSubmit={onSubmit}>
-              <label htmlFor="username">Username</label>
+              <label htmlFor="email">Email</label>
               <input
                 className={styles.formInput}
-                type="username"
-                id="username"
-                name="username"
+                type="email"
+                id="email"
+                name="email"
                 onChange={(e) => setUsernameField(e.target.value)}
               />
               <button

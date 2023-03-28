@@ -183,12 +183,12 @@ export default function Login() {
               </div>
             )}
             <form onSubmit={onSubmit}>
-              <label htmlFor="username">Username</label>
+              <label htmlFor="email">Email</label>
               <input
                 className={styles.formInput}
-                type="username"
-                id="username"
-                name="username"
+                type="email"
+                id="email"
+                name="email"
                 onChange={(e) => setUsernameField(e.target.value)}
               />
               <label htmlFor="password">Password</label>
