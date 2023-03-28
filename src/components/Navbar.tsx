@@ -41,7 +41,7 @@ function NavbarButton({
   return (
     <Link
       className={`${styles.navButton} ${
-        currentRoute == url ? styles.navButton__active : ""
+        (!premium && currentRoute == url) ? styles.navButton__active : ""
       } ${premium ? styles.navButton__premium : ""}`}
       href={url}
       onClick={onClick}

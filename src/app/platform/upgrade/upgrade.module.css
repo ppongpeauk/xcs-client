@@ -70,6 +70,9 @@
 }
 
 @media screen and (max-width: 768px) {
+  .main {
+      padding: 24px;
+  }
   .subscriptionPlan {
     flex-direction: column;
     width: 100%;
@@ -91,6 +94,7 @@
   height: 64px;
   margin: 8px 0;
   margin-top: auto;
+  font-weight: 600;
 }
 
 .formButton {
