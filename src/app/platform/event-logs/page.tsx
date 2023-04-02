@@ -12,9 +12,9 @@ import Image from "next/image";
 import Link from "next/link";
 import Skeleton from "react-loading-skeleton";
 
-import sampleImage from "./1194f174e0d1281d41157074e5072436.png";
-
 import { useAuthContext } from "@/context/user";
+
+import placeholderPicture from "@/assets/no-user.png";
 
 function SkeletonGroup() {
   const { user } = useAuthContext();
@@ -90,9 +90,9 @@ export default function Page() {
         status: 0,
         time: "8:42:15 PM",
         info: {
-          name: "Pete Pongpeauk",
-          username: "ppongpeauk",
-          profilePicture: sampleImage,
+          name: "restrafes",
+          username: null,
+          profilePicture: null,
           location: "4040 Wilson",
           accessPoint: "Front Door",
         },
@@ -104,7 +104,7 @@ export default function Page() {
         info: {
           name: "Pete Pongpeauk",
           username: "ppongpeauk",
-          profilePicture: sampleImage,
+          profilePicture: null,
           location: "4040 Wilson",
           accessPoint: "Front Door",
         },
@@ -116,7 +116,7 @@ export default function Page() {
         info: {
           name: "Pete Pongpeauk",
           username: "ppongpeauk",
-          profilePicture: sampleImage,
+          profilePicture: null,
           location: "4040 Wilson",
           accessPoint: "Front Door",
         },
@@ -128,35 +128,7 @@ export default function Page() {
         info: {
           name: "Pete Pongpeauk",
           username: "ppongpeauk",
-          profilePicture: sampleImage,
-          location: "4040 Wilson",
-          accessPoint: "Front Door",
-        },
-      },
-    ],
-    Yesterday: [
-      {
-        id: "0eef70df-5989-447f-9a65-b858793efda2",
-        status: 1,
-        time: "4:15:22 PM",
-        info: {
-          name: "Pete Pongpeauk",
-          username: "ppongpeauk",
-          profilePicture: sampleImage,
-          location: "4040 Wilson",
-          accessPoint: "Front Door",
-        },
-      },
-    ],
-    "March 14": [
-      {
-        id: "0eef70df-5989-447f-9a65-b858793efda2",
-        status: 0,
-        time: "11:45:28 PM",
-        info: {
-          name: "Pete Pongpeauk",
-          username: "ppongpeauk",
-          profilePicture: sampleImage,
+          profilePicture: null,
           location: "4040 Wilson",
           accessPoint: "Front Door",
         },
@@ -170,29 +142,25 @@ export default function Page() {
     if (alias.name && !alias.username) {
       return (
         <>
-          {alias.profilePicture ? (
-            <Image
-              src={alias.profilePicture}
-              className={styles.logInfoUserPhoto}
-              alt="Profile picture"
-              height={24}
-            />
-          ) : null}
-          <Link href="/">{alias.name}</Link>;
+          <Image
+            src={alias.profilePicture || placeholderPicture}
+            className={styles.logInfoUserPhoto}
+            alt="Profile picture"
+            height={24}
+          />
+          <span>{alias.name}</span>
         </>
       );
     } else if (!alias.name && alias.username) {
       return (
         <>
-          {alias.profilePicture ? (
-            <Image
-              src={alias.profilePicture}
-              className={styles.logInfoUserPhoto}
-              alt="Profile picture"
-              height={24}
-            />
-          ) : null}
-          <Link href="/">
+          <Image
+            src={alias.profilePicture || placeholderPicture}
+            className={styles.logInfoUserPhoto}
+            alt="Profile picture"
+            height={24}
+          />
+          <Link href={`/platform/user/${alias.username}`}>
             <strong className={styles.username}>@{alias.username}</strong>
           </Link>
         </>
@@ -200,15 +168,13 @@ export default function Page() {
     } else if (alias.name && alias.username) {
       return (
         <>
-          {alias.profilePicture ? (
-            <Image
-              src={alias.profilePicture}
-              className={styles.logInfoUserPhoto}
-              alt="Profile picture"
-              height={24}
-            />
-          ) : null}
-          <Link href="/">
+          <Image
+            src={alias.profilePicture || placeholderPicture}
+            className={styles.logInfoUserPhoto}
+            alt="Profile picture"
+            height={24}
+          />
+          <Link href={`/platform/user/${alias.username}`}>
             <strong>{alias.name}</strong>{" "}
             <span className={styles.username}>(@{alias.username})</span>
           </Link>
@@ -268,7 +234,7 @@ export default function Page() {
                           <div
                             className={`${styles.logInfoColumn} ${styles.logInfoButton}`}
                           >
-                            <Link href={`/access-points/${log.id}`}>
+                            <Link href={`/platform/access-points/${log.id}`}>
                               <PreviewRoundedIcon sx={{ fontSize: 20 }} />
                             </Link>
                           </div>
