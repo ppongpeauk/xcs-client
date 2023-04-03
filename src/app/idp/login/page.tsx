@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import {
   useAuthState,
-  useSignInWithEmailAndPassword,
+  useSignInWithEmailAndPassword
 } from "react-firebase-hooks/auth";
 import { initFirebase } from "../../../firebase/firebaseApp";
 

@@ -5,6 +5,12 @@ export const metadata = {
   description: "EVE XCS",
 };
 
+import { Roboto_Flex } from "next/font/google";
+
+const font = Roboto_Flex({
+  subsets: ["latin"],
+});
+
 export default function RootLayout({
   // Layouts must accept a children prop.
   // This will be populated with nested layouts or pages
@@ -16,7 +22,7 @@ export default function RootLayout({
     <>
       <AuthProvider>
         <html lang="en">
-          <body>{children}</body>
+          <body className={font.className}>{children}</body>
         </html>
       </AuthProvider>
     </>
