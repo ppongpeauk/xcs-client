@@ -83,58 +83,60 @@ export default function Page() {
     }, Math.floor(Math.random() * 2000));
   }, []);
 
-  const fetchLogs: { [key: string]: any } = {
-    Today: [
-      {
-        id: "0eef70df-5989-447f-9a65-b858793efda2",
-        status: 0,
-        time: "8:42:15 PM",
-        info: {
-          name: "restrafes",
-          username: null,
-          profilePicture: null,
-          location: "4040 Wilson",
-          accessPoint: "Front Door",
-        },
-      },
-      {
-        id: "0eef70df-5989-447f-9a65-b858793efda2",
-        status: 1,
-        time: "7:26:48 PM",
-        info: {
-          name: "Pete Pongpeauk",
-          username: "ppongpeauk",
-          profilePicture: null,
-          location: "4040 Wilson",
-          accessPoint: "Front Door",
-        },
-      },
-      {
-        id: "0eef70df-5989-447f-9a65-b858793efda2",
-        status: 1,
-        time: "12:00:34 PM",
-        info: {
-          name: "Pete Pongpeauk",
-          username: "ppongpeauk",
-          profilePicture: null,
-          location: "4040 Wilson",
-          accessPoint: "Front Door",
-        },
-      },
-      {
-        id: "0eef70df-5989-447f-9a65-b858793efda2",
-        status: 1,
-        time: "11:59:47 AM",
-        info: {
-          name: "Pete Pongpeauk",
-          username: "ppongpeauk",
-          profilePicture: null,
-          location: "4040 Wilson",
-          accessPoint: "Front Door",
-        },
-      },
-    ],
-  };
+  // const fetchLogs: { [key: string]: any } = {
+  //   Today: [
+  //     {
+  //       id: "0eef70df-5989-447f-9a65-b858793efda2",
+  //       status: 0,
+  //       time: "8:42:15 PM",
+  //       info: {
+  //         name: "restrafes",
+  //         username: null,
+  //         profilePicture: null,
+  //         location: "4040 Wilson",
+  //         accessPoint: "Front Door",
+  //       },
+  //     },
+  //     {
+  //       id: "0eef70df-5989-447f-9a65-b858793efda2",
+  //       status: 1,
+  //       time: "7:26:48 PM",
+  //       info: {
+  //         name: "Pete Pongpeauk",
+  //         username: "ppongpeauk",
+  //         profilePicture: null,
+  //         location: "4040 Wilson",
+  //         accessPoint: "Front Door",
+  //       },
+  //     },
+  //     {
+  //       id: "0eef70df-5989-447f-9a65-b858793efda2",
+  //       status: 1,
+  //       time: "12:00:34 PM",
+  //       info: {
+  //         name: "Pete Pongpeauk",
+  //         username: "ppongpeauk",
+  //         profilePicture: null,
+  //         location: "4040 Wilson",
+  //         accessPoint: "Front Door",
+  //       },
+  //     },
+  //     {
+  //       id: "0eef70df-5989-447f-9a65-b858793efda2",
+  //       status: 1,
+  //       time: "11:59:47 AM",
+  //       info: {
+  //         name: "Pete Pongpeauk",
+  //         username: "ppongpeauk",
+  //         profilePicture: null,
+  //         location: "4040 Wilson",
+  //         accessPoint: "Front Door",
+  //       },
+  //     },
+  //   ],
+  // };
+  
+  const fetchLogs: { [key: string]: any } = {};
 
   function formattedAlias(alias: Alias): JSX.Element {
     let res = <></>;
@@ -199,58 +201,66 @@ export default function Page() {
                 <h1>{date}</h1>
               </div>
               <table className={styles.table}>
-                <>
-                  <tr className={styles.tr}>
-                    <th className={styles.th}>Time</th>
-                    <th className={styles.th}>Status</th>
-                    <th className={styles.th}>Accessor</th>
-                    <th className={styles.th}>Location</th>
-                    <th className={styles.th}>Entry Point</th>
-                    <th className={styles.th}>Actions</th>
-                  </tr>
-                  {fetchLogs[date] &&
-                    fetchLogs[date].map((log: any) => (
-                      <tr key={log.id} className={styles.tr}>
-                        <td className={styles.td}>{log.time}</td>
-                        <td className={styles.td}>
-                          {log.status === 0 ? (
-                            <DoneRoundedIcon
-                              className={`${styles.logStatusIcon} ${styles.logStatusIcon__success}`}
-                            />
-                          ) : (
-                            <DoNotDisturbAltRoundedIcon
-                              className={`${styles.logStatusIcon} ${styles.logStatusIcon__error}`}
-                            />
-                          )}
-                        </td>
-                        <td className={styles.td}>
-                          <div className={styles.tdName}>
-                            {formattedAlias(log.info)}
-                          </div>
-                        </td>
-                        <td className={styles.td}>{log.info.location}</td>
-                        <td className={styles.td}>{log.info.accessPoint}</td>
-                        <td className={`${styles.td} ${styles.actions}`}>
-                          <div
-                            className={`${styles.logInfoColumn} ${styles.logInfoButton}`}
-                          >
-                            <Link href={`/platform/access-points/${log.id}`}>
-                              <PreviewRoundedIcon sx={{ fontSize: 20 }} />
-                            </Link>
-                          </div>
-                          <div
-                            className={`${styles.logInfoColumn} ${styles.logInfoButton}`}
-                          >
-                            <button>
-                              <SentimentSatisfiedAltRoundedIcon
-                                sx={{ fontSize: 20 }}
+                {Object.keys(fetchLogs).length > 0 ? (
+                  <>
+                    <tr className={styles.tr}>
+                      <th className={styles.th}>Time</th>
+                      <th className={styles.th}>Status</th>
+                      <th className={styles.th}>Accessor</th>
+                      <th className={styles.th}>Location</th>
+                      <th className={styles.th}>Entry Point</th>
+                      <th className={styles.th}>Actions</th>
+                    </tr>
+                    {fetchLogs[date] &&
+                      fetchLogs[date].map((log: any) => (
+                        <tr key={log.id} className={styles.tr}>
+                          <td className={styles.td}>{log.time}</td>
+                          <td className={styles.td}>
+                            {log.status === 0 ? (
+                              <DoneRoundedIcon
+                                className={`${styles.logStatusIcon} ${styles.logStatusIcon__success}`}
                               />
-                            </button>
-                          </div>
-                        </td>
-                      </tr>
-                    ))}
-                </>
+                            ) : (
+                              <DoNotDisturbAltRoundedIcon
+                                className={`${styles.logStatusIcon} ${styles.logStatusIcon__error}`}
+                              />
+                            )}
+                          </td>
+                          <td className={styles.td}>
+                            <div className={styles.tdName}>
+                              {formattedAlias(log.info)}
+                            </div>
+                          </td>
+                          <td className={styles.td}>{log.info.location}</td>
+                          <td className={styles.td}>{log.info.accessPoint}</td>
+                          <td className={`${styles.td} ${styles.actions}`}>
+                            <div
+                              className={`${styles.logInfoColumn} ${styles.logInfoButton}`}
+                            >
+                              <Link href={`/platform/access-points/${log.id}`}>
+                                <PreviewRoundedIcon sx={{ fontSize: 20 }} />
+                              </Link>
+                            </div>
+                            <div
+                              className={`${styles.logInfoColumn} ${styles.logInfoButton}`}
+                            >
+                              <button>
+                                <SentimentSatisfiedAltRoundedIcon
+                                  sx={{ fontSize: 20 }}
+                                />
+                              </button>
+                            </div>
+                          </td>
+                        </tr>
+                      ))}
+                  </>
+                ) : (
+                  <tr key={1} className={styles.tr}>
+                    <td className={styles.td}>
+                      No recent attempts were found. Start scanning!
+                    </td>
+                  </tr>
+                )}
               </table>
             </div>
           ))
