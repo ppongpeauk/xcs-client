@@ -45,7 +45,7 @@ const handler = async (
         };
         res.status(200).json(ret);
       } else {
-        res.status(400).json({ success: true, subjectId: id, groupId: "-1", productsOwned: { monospace0: false, polaris0: false, hera0: false }});
+        res.status(200).json({ success: true, subjectId: id, groupId: "-1", productsOwned: { monospace0: false, polaris0: false, hera0: false }});
       }
   } else {
     res.status(400).json({ success: false, message: "Bad request" });
