@@ -20,7 +20,7 @@ const handler = async (
       .collection("licenses")
       .find({ subjectId: id }, findOptions)
       .toArray();
-    res.status(200).json({ success: true, data: licenses[0] });
+    res.status(200).json({ success: true, data: licenses.length > 0 ? licenses[0] : {"subjectId":id,"linkedGroupId":"-1","campaignId":"0","linkedAccountId":"0","licenseIdentifier":"0","dateCreated":"","disabled":"0","monospace0":"0","polaris0":"0","hera0":"0"} });
   }
 }
 
