@@ -38,14 +38,14 @@ const handler = async (
           subjectId: id,
           groupId: "-1",
           productsOwned: {
-            monospace: bv(license.monospace0),
-            polaris: bv(license.polaris0),
-            hera: bv(license.hera0)
+            monospace0: bv(license.monospace0),
+            polaris0: bv(license.polaris0),
+            hera0: bv(license.hera0)
           }
         };
         res.status(200).json(ret);
       } else {
-        res.status(400).json({ success: true, subjectId: id, groupId: "-1", productsOwned: { monospace: false, polaris: false, hera: false }});
+        res.status(400).json({ success: true, subjectId: id, groupId: "-1", productsOwned: { monospace0: false, polaris0: false, hera0: false }});
       }
   } else {
     res.status(400).json({ success: false, message: "Bad request" });
