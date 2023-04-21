@@ -6,9 +6,9 @@ const handler = async (
   res: NextApiResponse
 ): Promise<void> => {
   if (req.method === "GET") {
-    const { username } = req.query as { id: string, username : string };
+    const { id, username } = req.query as { id: string, username : string };
 
-    if (!username) {
+    if (!username && !id) {
       res.status(400).json({ success: false, message: "Bad request" });
       return;
     }
@@ -18,9 +18,15 @@ const handler = async (
     const findOptions = {projection: { _id: 0 }};
     const users = await db
       .collection("users")
-      .find({ username: username }, findOptions)
+      .find({ $or: [{username: username}, {id: id}] }, findOptions)
       .toArray();
-    res.status(200).json({ success: true, data: users });
+    if (users.length > 0) {
+      res.status(200).json({ success: true, data: users[0] });
+      return;
+    } else {
+      res.status(404).json({ success: false, message: "User not found" });
+      return;
+    }
   } else {
     res.status(400).json({ success: false, message: "Bad request" });
   }
