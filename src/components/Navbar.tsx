@@ -13,12 +13,12 @@ import SensorsRoundedIcon from "@mui/icons-material/SensorsRounded";
 import SupportRoundedIcon from "@mui/icons-material/SupportRounded";
 import WidgetsRoundedIcon from "@mui/icons-material/WidgetsRounded";
 import WorkspacePremiumIcon from "@mui/icons-material/WorkspacePremium";
+import { Url } from "next/dist/shared/lib/router/router";
 import {
   HTMLAttributeAnchorTarget,
   MouseEventHandler,
-  ReactElement,
+  ReactElement
 } from "react";
-import { Url } from "next/dist/shared/lib/router/router";
 
 interface NavbarButtonParameters {
   title: String;
@@ -138,7 +138,7 @@ export default function Navbar(props: {
         />
         {user?.isPremium === false ? (
           <>
-            <span className={styles.navCategoryTitle}>Upgrade</span>
+            <span className={styles.navCategoryTitle}>Membership</span>
             <NavbarButton
               title="Upgrade"
               onClick={() => setNavbarVisible(false)}

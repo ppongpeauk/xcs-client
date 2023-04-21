@@ -1,0 +1,23 @@
+[
+  {
+    "id": "FF0gCiIJYUPfmA4CTfqXTyPcHQb2",
+    "name": {
+      "privacyLevel": "public",
+      "first": "John",
+      "last": "Doe"
+    },
+    "email": {
+      "privacyLevel": "public",
+      "value": "person@example.com"
+    },
+    "username": "username",
+    "avatarURI": null,
+    "groups": [],
+    "platform": {
+      "membership": "premium"
+    },
+    "stripe": {
+      "customerId": "cus_NaGeHc4y727Crp"
+    }
+  }
+]
