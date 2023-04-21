@@ -1,6 +1,17 @@
 import clientPromise from "@/lib/mongodb";
 import { NextApiRequest, NextApiResponse } from "next";
 
+const bv = (v: string) => {
+  switch (v) {
+    case "0":
+      return false;
+    case "1":
+      return true;
+    default:
+      return false;
+  }
+};
+
 const handler = async (
   req: NextApiRequest,
   res: NextApiResponse
@@ -15,13 +26,30 @@ const handler = async (
 
     const client = await clientPromise;
     const db = client.db(process.env.MONGODB_DB as string);
-    const findOptions = {projection: { _id: 0 }};
+    const findOptions = { projection: { _id: 0 } };
     const licenses = await db
       .collection("licenses")
       .find({ subjectId: id }, findOptions)
       .toArray();
-    res.status(200).json({ success: true, data: licenses.length > 0 ? licenses[0] : {"subjectId":id,"linkedGroupId":"-1","campaignId":"0","linkedAccountId":"0","licenseIdentifier":"0","dateCreated":"","disabled":"0","monospace0":"0","polaris0":"0","hera0":"0"} });
+      if (licenses.length > 0) {
+        const license = licenses[0];
+        let ret = {
+          success: true,
+          subjectId: id,
+          groupId: "-1",
+          productsOwned: {
+            monospace: bv(license.monospace0),
+            polaris: bv(license.polaris0),
+            hera: bv(license.hera0)
+          }
+        };
+        res.status(200).json(ret);
+      } else {
+        res.status(400).json({ success: true, subjectId: id, groupId: "-1", productsOwned: { monospace: false, polaris: false, hera: false }});
+      }
+  } else {
+    res.status(400).json({ success: false, message: "Bad request" });
   }
-}
+};
 
 export default handler;
