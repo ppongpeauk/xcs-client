@@ -25,7 +25,7 @@ export default function Page() {
   
   const createCustomerPortalSession = async () => {
     const portalSession = await axios.post("/api/create-customer-portal-session", {
-      user: user,
+      user: user.data,
     });
     router.push(portalSession.data.url);
   };
@@ -52,7 +52,7 @@ export default function Page() {
             ) : (
               <Image
                 className={styles.badgeImage}
-                src={user.avatar}
+                src={user.data.avatarURI}
                 alt="User Badge Image"
                 width={512}
                 height={512}
@@ -68,25 +68,13 @@ export default function Page() {
                 duration={1}
               />
             ) : (
-              user.name
+              `${user.data?.name.first} ${user.data?.name.last}`
             )}
           </h1>
-          <h2 className={styles.badgeInfoTitle}>
-            {isLoading ? (
-              <Skeleton
-                className={styles.badgeInfoTitle}
-                width={200}
-                height={24}
-                duration={1}
-              />
-            ) : (
-              user.role
-            )}
-          </h2>
           {isLoading ? null : (
             <Image
               className={styles.badgeBarcode}
-              src={`https://barcodeapi.org/api/pdf417/{id:'${user.id}'}`}
+              src={`https://barcodeapi.org/api/pdf417/{id:'${user.data.id}'}`}
               alt="User Barcode"
               width={256}
               height={256}

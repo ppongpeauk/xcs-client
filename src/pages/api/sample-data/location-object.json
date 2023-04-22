@@ -1,0 +1,14 @@
+[
+  {
+    "id": "ae2e38ba-ff76-4190-ab95-c0f538bb50e4",
+    "name": "Example Location",
+    "description": "This is an example location",
+    "tags": [],
+    "organizationId": "0bd8f82a-89fc-4746-81a7-7d1581a678ea",
+    "lastUpdatedDate": "2021-02-23T19:00:00.000Z",
+    "avatarURI": "https://cdn.discordapp.com/attachments/813308393208414219/1070969018560815205/IMG_9331.JPG",
+    "roblox": {
+      "placeId": 123456789
+    }
+  }
+]

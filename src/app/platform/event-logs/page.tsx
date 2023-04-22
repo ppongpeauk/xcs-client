@@ -19,10 +19,6 @@ import placeholderPicture from "@/assets/no-user.png";
 function SkeletonGroup() {
   const { user } = useAuthContext();
 
-  useEffect(() => {
-    console.log(user);
-  }, [user]);
-
   return (
     <>
       <div className={styles.logDayGroup}>

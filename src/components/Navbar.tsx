@@ -35,13 +35,13 @@ function NavbarButton({
   icon,
   target,
   onClick,
-  premium
+  premium,
 }: NavbarButtonParameters) {
   const currentRoute = usePathname() as any;
   return (
     <Link
       className={`${styles.navButton} ${
-        (!premium && currentRoute == url) ? styles.navButton__active : ""
+        !premium && currentRoute == url ? styles.navButton__active : ""
       } ${premium ? styles.navButton__premium : ""}`}
       href={url}
       onClick={onClick}
@@ -136,7 +136,7 @@ export default function Navbar(props: {
           }
           target="_blank"
         />
-        {user?.isPremium === false ? (
+        {user.data?.platform.membership !== "premium" ? (
           <>
             <span className={styles.navCategoryTitle}>Membership</span>
             <NavbarButton
@@ -145,8 +145,8 @@ export default function Navbar(props: {
               url="/platform/upgrade"
               icon={
                 <WorkspacePremiumIcon
-                sx={{ fontSize: "24px", marginRight: "12px" }}
-              />
+                  sx={{ fontSize: "24px", marginRight: "12px" }}
+                />
               }
               premium={true}
             />

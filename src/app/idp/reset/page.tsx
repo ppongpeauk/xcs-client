@@ -1,12 +1,12 @@
 "use client";
 
-import { getAuth } from "firebase/auth";
+import { auth } from "@/firebase/firebaseApp";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import {
   useAuthState,
-  useSendPasswordResetEmail,
+  useSendPasswordResetEmail
 } from "react-firebase-hooks/auth";
 import { initFirebase } from "../../../firebase/firebaseApp";
 
@@ -16,7 +16,6 @@ import styles from "../auth.module.css";
 export default function Login() {
   const router = useRouter();
   const app = initFirebase();
-  const auth = getAuth();
   const [sendPasswordResetEmail, sending, error] =
     useSendPasswordResetEmail(auth);
 

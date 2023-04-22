@@ -16,20 +16,20 @@ async function CreateStripeSession(req: any, res: any) {
 
   var customer;
 
-  if (!user.customerId) {
+  if (!user.payment.customerId) {
     customer = await stripe.customers.create({
-      email: user.email,
-      name: user.fullName,
+      email: user.email.value,
+      name: `${user.firstName} ${user.lastName}`,
     });
     await updateUserCustomerID(customer.id, user.id);
   } else {
-    var customer = await stripe.customers.retrieve(user.customerId);
+    var customer = await stripe.customers.retrieve(user.payment.customerId);
   }
 
   if (customer.deleted) {
     customer = await stripe.customers.create({
-      email: user.email,
-      name: user.fullName,
+      email: user.email.value,
+      name: `${user.firstName} ${user.lastName}`,
     });
     await updateUserCustomerID(customer.id, user.id);
   }

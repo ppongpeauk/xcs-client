@@ -1,6 +1,6 @@
 "use client";
 
-import { getAuth } from "firebase/auth";
+import { auth } from "@/firebase/firebaseApp";
 import { initFirebase } from "../../../firebase/firebaseApp";
 
 import styles from "./upgrade.module.css";
@@ -17,7 +17,6 @@ const stripePromise = loadStripe(
 
 export default function Page() {
   const app = initFirebase();
-  const auth = getAuth();
   const { user } = useAuthContext();
   const searchParams = useSearchParams();
   const router = useRouter();
@@ -26,7 +25,7 @@ export default function Page() {
     const stripe = (await stripePromise) as any;
     const checkoutSession = await axios.post("/api/create-stripe-session", {
       item: "eve-xcs",
-      user: user,
+      user: user.data,
     });
     const result = await stripe.redirectToCheckout({
       sessionId: checkoutSession.data.id,
@@ -99,7 +98,7 @@ export default function Page() {
               </span>
             </li>
           </ul>
-          {!user.isPremium ? (
+          {user.data?.platform.membership !== "premium" ? (
             <div className={styles.subscriptionPlanInteract}>
               <p>Current Plan</p>
             </div>
@@ -162,7 +161,7 @@ export default function Page() {
               </span>
             </li>
           </ul>
-          {user.isPremium ? (
+          {user.data?.platform.membership === "premium" ? (
             <div className={styles.subscriptionPlanInteract}>
               <p>Current Plan</p>
             </div>

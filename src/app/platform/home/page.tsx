@@ -1,6 +1,6 @@
 "use client";
 
-import { getAuth } from "firebase/auth";
+import { auth } from "@/firebase/firebaseApp";
 import { useRouter } from "next/navigation";
 import { initFirebase } from "../../../firebase/firebaseApp";
 
@@ -13,7 +13,6 @@ import Link from "next/link";
 export default function Page() {
   const app = initFirebase();
   const router = useRouter();
-  const auth = getAuth();
   const { user } = useAuthContext();
 
   return (

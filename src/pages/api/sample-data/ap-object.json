@@ -1,0 +1,23 @@
+[
+  {
+    "id": 1,
+    "name": "Front Door",
+    "location": 1361631,
+    "organization": 1,
+    "tags": [
+      "door",
+      "front"
+    ],
+    "managers": [
+      {
+        "type": "roblox",
+        "group": 1,
+        "rank": [255, ">"]
+      }
+    ],
+    "allowedRanks": [
+      "admin",
+      "user"
+    ]
+  }
+]

@@ -1,0 +1,14 @@
+[
+  {
+    "id": "0bd8f82a-89fc-4746-81a7-7d1581a678ea",
+    "name": "Organization Name",
+    "description": "Organization Description",
+    "members": ["FF0gCiIJYUPfmA4CTfqXTyPcHQb2"],
+    "permissions": {
+      "FF0gCiIJYUPfmA4CTfqXTyPcHQb2": {
+        "read": true,
+        "write": true
+      }
+    }
+  }
+]

@@ -1,7 +1,8 @@
 "use client";
 
 import styles from "@/app/platform/main.module.css";
-import Navbar from "../../components/Navbar";
+import Footer from "@/components/Footer";
+import Navbar from "@/components/Navbar";
 
 import ExitToAppOutlinedIcon from "@mui/icons-material/ExitToAppOutlined";
 import MenuOpenRoundedIcon from "@mui/icons-material/MenuOpenRounded";
@@ -14,7 +15,7 @@ import "react-loading-skeleton/dist/skeleton.css";
 
 import { useEffect, useState } from "react";
 
-import { getAuth } from "@firebase/auth";
+import { auth } from "@/firebase/firebaseApp";
 import { usePathname, useRouter } from "next/navigation";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { initFirebase } from "../../firebase/firebaseApp";
@@ -29,7 +30,6 @@ export default function AppLayout({
   const router = useRouter();
   const pathname = usePathname();
   const app = initFirebase();
-  const auth = getAuth();
   const [firebaseUser, loading] = useAuthState(auth);
   const { user } = useAuthContext();
   const [accountDropdownVisible, setAccountDropdownVisible] = useState(false);
@@ -41,6 +41,7 @@ export default function AppLayout({
     "/platform/profile": "Profile",
     "/platform/locations": "Locations",
     "/platform/organizations": "Organizations",
+    "/platform/upgrade": "Upgrade",
   };
 
   useEffect(() => {
@@ -55,7 +56,7 @@ export default function AppLayout({
     }
   }, []);
 
-  return !loading && firebaseUser ? (
+  return !loading && firebaseUser && user ? (
     <>
       <main
         className={`${styles.main} ${
@@ -80,7 +81,7 @@ export default function AppLayout({
               onClick={() => setAccountDropdownVisible(!accountDropdownVisible)}
             >
               <Image
-                src={user.avatar}
+                src={user.data?.avatarURI}
                 alt="Avatar"
                 width={64}
                 height={64}
@@ -112,15 +113,20 @@ export default function AppLayout({
             }}
           >
             <Image
-              src={user.avatar}
+              src={user.data?.avatarURI}
               width={64}
               height={64}
               alt="Avatar"
               className={styles.accountDropdownAvatar}
             />
             <div className={styles.accountDropdownHeaderInfo}>
-              <h1 className={styles.accountDropdownHeaderName}>{user.name}</h1>
-              {user.isPremium ? (
+              <h1
+                className={styles.accountDropdownHeaderName}
+              >{`${user.data?.name.first} ${user.data?.name.last}`}</h1>
+              <h1 className={styles.accountDropdownHeaderSubname}>
+                {`@${user.data?.username}`}
+              </h1>
+              {user.data?.platform.membership === "premium" ? (
                 <>
                   <h1 className={styles.accountDropdownHeaderRole}>
                     <WorkspacePremiumIcon
@@ -163,7 +169,10 @@ export default function AppLayout({
             Logout
           </button>
         </div>
-        <div className={styles.mainContent}>{children}</div>
+        <div className={styles.mainContent}>
+          {children}
+          {/* <Footer /> */}
+        </div>
       </main>
     </>
   ) : null;

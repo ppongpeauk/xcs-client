@@ -1,11 +1,9 @@
 "use client";
 
-import { getUserDataFromUid } from "@/lib/database";
-import { getAuth } from "firebase/auth";
+import { auth } from "@/firebase/firebaseApp";
+import axios from "axios";
 import { createContext, useContext, useEffect, useState } from "react";
-import {
-  useAuthState
-} from "react-firebase-hooks/auth";
+import { useAuthState } from "react-firebase-hooks/auth";
 
 const AppContext = createContext(null);
 
@@ -14,38 +12,50 @@ type Props = {
 };
 
 export function AuthProvider({ children }: Props) {
-  const auth = getAuth();
+  // const auth = getAuth();
   const [firebaseUser] = useAuthState(auth);
 
   const [user, setUser] = useState<Object>({
     name: "",
     id: "",
     role: "",
-    avatar: "",
+    avatarURI: "",
     email: "",
     isPremium: false,
   });
-  
+
+  async function syncUserData() {
+    if (!auth.currentUser) return;
+    auth.currentUser
+      .getIdToken()
+      .then(function (idToken: string) {
+        axios
+          .post(
+            "/api/v1/user",
+            { },
+            { params: { id: firebaseUser!.uid }, headers: { Authorization: `Bearer ${idToken}` } }
+          )
+          .then((res) => {
+            if (res.data) {
+              setUser(res.data);
+              console.info("User data synced", res.data);
+            }
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      })
+      .catch(function (error: string) {
+        // Handle error
+      });
+  }
+
   useEffect(() => {
     if (!firebaseUser) return;
-    async function syncUserData() {
-      const userData = await getUserDataFromUid(firebaseUser!.uid);
-      if (userData) {
-        setUser({
-            name: userData.fullName,
-            id: firebaseUser!.uid,
-            isPremium: userData.isPremium,
-            avatar: userData.avatar,
-            email: userData.email,
-            role: userData.role,
-            customerId: userData.customerId,
-          });
-        }
-    }
     syncUserData();
   }, [firebaseUser]);
 
-  let sharedState: any = { user, setUser };
+  let sharedState: any = { user, setUser, auth: auth, syncUserData };
 
   return (
     <AppContext.Provider value={sharedState}>{children}</AppContext.Provider>

@@ -1,6 +1,7 @@
 "use client";
 
-import { getAuth } from "firebase/auth";
+import { auth } from "@/firebase/firebaseApp";
+import axios from "axios";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -18,12 +19,11 @@ import CloseIcon from "@mui/icons-material/Close";
 export default function Login() {
   const router = useRouter();
   const app = initFirebase();
-  const auth = getAuth();
   const [signInWithEmailAndPassword, userSO, loading, error] =
     useSignInWithEmailAndPassword(auth);
 
   const [user] = useAuthState(auth);
-  
+
   const [alert, setAlert] = useState("");
   const [pending, setPending] = useState(false);
 
@@ -39,7 +39,7 @@ export default function Login() {
     }
   }, [router, user]);
 
-  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (pending) return;
@@ -48,9 +48,33 @@ export default function Login() {
     setPending(true);
     setAlert("");
 
+    // if (!usernameField || !passwordField) {
+    //   setAlert("Please fill in all of the fields.");
+    //   setPending(false);
+    //   return;
+    // }
+
     // attempt to sign in
-    setTimeout(() => {
-      signInWithEmailAndPassword(usernameField, passwordField)
+    setTimeout(async () => {
+      let email = "";
+      await axios
+        .post("/api/v1/email-by-username", null, {
+          params: { username: usernameField || "" },
+        })
+        .then((res) => {
+          if (res.data.email) {
+            console.log(res.data.email);
+            email = res.data.email;
+          } else {
+            setAlert(
+              "Are you sure you've entered the right login or password? Please check and try again."
+            );
+            setPending(false);
+            return;
+          }
+        });
+
+      signInWithEmailAndPassword(email, passwordField)
         .then((res) => {
           if (res) {
             router.push("/");
@@ -127,36 +151,23 @@ export default function Login() {
               </div>
               <div className={`${styles.faqBody}`}>
                 <div className={`${styles.faqItem}`}>
+                  <h2 className={`${styles.faqItemTitle}`}>What is EVE XCS?</h2>
+                  <p className={`${styles.faqItemBody}`}>
+                    EVE XCS is an online access point control platform developed
+                    by Restrafes & Co. that allows organizations to manage and
+                    control access to their facilities remotely.
+                  </p>
+                </div>
+                <div className={`${styles.faqItem}`}>
                   <h2 className={`${styles.faqItemTitle}`}>
                     What is my login?
                   </h2>
                   <p className={`${styles.faqItemBody}`}>
-                    Your login credentials should have been given to you by a
-                    representative of Restrafes & Co. A temporary password
-                    should have been given to you via. email upon first sign up.
-                  </p>
-                </div>
-              </div>
-              <div className={`${styles.faqBody}`}>
-                <div className={`${styles.faqItem}`}>
-                  <h2 className={`${styles.faqItemTitle}`}>
-                    How can I sign up?
-                  </h2>
-                  <p className={`${styles.faqItemBody}`}>
-                    As of now, accounts are given on a case-by-case basis. If
-                    you would like to sign up, please contact a representative
-                    of Restrafes & Co.
-                  </p>
-                </div>
-              </div>
-              <div className={`${styles.faqBody}`}>
-                <div className={`${styles.faqItem}`}>
-                  <h2 className={`${styles.faqItemTitle}`}>
-                    How can I contact a representative?
-                  </h2>
-                  <p className={`${styles.faqItemBody}`}>
-                    You can contact a representative of Restrafes & Co. via
-                    email: hello@restrafes.co
+                    Your login for EVE XCS is the email address that was used to
+                    invite you to the platform. If you are unsure of your login
+                    or did not receive an invitation, please contact the
+                    authorized member of your organization who manages access
+                    control or email xcs@restrafes.co for assistance.
                   </p>
                 </div>
               </div>
@@ -183,12 +194,12 @@ export default function Login() {
               </div>
             )}
             <form onSubmit={onSubmit}>
-              <label htmlFor="email">Email</label>
+              <label htmlFor="username">Username</label>
               <input
                 className={styles.formInput}
-                type="email"
-                id="email"
-                name="email"
+                type="username"
+                id="username"
+                name="username"
                 onChange={(e) => setUsernameField(e.target.value)}
               />
               <label htmlFor="password">Password</label>

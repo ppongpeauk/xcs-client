@@ -1,0 +1,50 @@
+[
+  {
+    "id": "FF0gCiIJYUPfmA4CTfqXTyPcHQb2",
+    "name": {
+      "privacyLevel": "public",
+      "first": "Pete",
+      "last": "Pongpeauk"
+    },
+    "email": {
+      "privacyLevel": "public",
+      "verified": false,
+      "value": "kurtsiberg@gmail.com"
+    },
+    "username": "ppongpeauk",
+    "avatarURI": "https://cdn.discordapp.com/attachments/813308393208414219/1088750737145729106/pete.png",
+    "organizations": [
+      {
+        "id": "FF0gCiIJYUPfmA4CTfqXTyPcHQb2",
+        "name": "Pete Pongpeauk",
+        "owner": "FF0gCiIJYUPfmA4CTfqXTyPcHQb2",
+        "type": "personal",
+        "avatarURI": "https://cdn.discordapp.com/attachments/813308393208414219/1088750737145729106/pete.png",
+        "role": "owner"
+      }
+    ],
+    "notifications": {
+      "email": {
+        "enabled": true,
+        "frequency": "daily"
+      }
+    },
+    "alerts": [
+      {
+        "title": "Email address not verified",
+        "message": "Please verify your email address to start using the platform.",
+        "type": "warning",
+        "action": {
+          "title": "Verify email",
+          "url": "https://xcs.restrafes.co/platform/onboarding/verify-email"
+        }
+      }
+    ],
+    "platform": {
+      "membership": "premium"
+    },
+    "payment": {
+      "customerId": "cus_NaGeHc4y727Crp"
+    }
+  }
+]
