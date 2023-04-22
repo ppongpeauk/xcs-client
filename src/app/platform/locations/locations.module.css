@@ -9,7 +9,8 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 0, 16px;
+  margin-right: 1rem;
+  flex-grow: 1;
 }
 
 .mainEditor {
@@ -18,18 +19,21 @@
   align-items: center;
   justify-content: center;
   height: 100%;
-  width: 50%;
+  min-width: 384px;
+  flex-grow: 4;
   background-color: #fff;
   border-radius: var(--border-radius);
   border: 1px solid #ccc;
-  padding: 0, 16px;
+  margin: 0, 8px;
 }
 
 .mainColumns {
   display: flex;
   flex-direction: row;
+  align-items: flex-start;
   justify-content: space-between;
   width: 100%;
+  height: 100%;
 }
 
 .mainTitle {
@@ -141,6 +145,7 @@
   overflow: hidden;
   border: 1px solid #ccc;
   margin-right: 16px;
+  object-fit: cover;
 }
 
 @media screen and (max-width: 768px) {
