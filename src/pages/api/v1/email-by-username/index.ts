@@ -1,5 +1,4 @@
 import clientPromise from "@/lib/mongodb";
-import { tokenToID } from "@/pages/api/firebase";
 import { NextApiRequest, NextApiResponse } from "next";
 
 const handler = async (
@@ -26,7 +25,7 @@ const handler = async (
       return;
     }
   } else {
-    res.status(400).json({ success: false, message: "Bad request" });
+    res.status(400).json({ success: false, error: "Bad request" });
     return;
   }
 };

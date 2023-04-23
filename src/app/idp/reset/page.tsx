@@ -5,8 +5,8 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import {
-  useAuthState,
-  useSendPasswordResetEmail
+    useAuthState,
+    useSendPasswordResetEmail
 } from "react-firebase-hooks/auth";
 import { initFirebase } from "../../../firebase/firebaseApp";
 

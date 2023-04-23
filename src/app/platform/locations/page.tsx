@@ -1,88 +1,266 @@
 "use client";
 
 import { useAuthContext } from "@/context/user";
+import { Location, Organization } from "@/interfaces";
+import DeleteForeverOutlinedIcon from "@mui/icons-material/DeleteForeverOutlined";
+import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
+import WidgetsRoundedIcon from "@mui/icons-material/WidgetsRounded";
+import { Tooltip, Zoom } from "@mui/material";
 import axios from "axios";
+import moment from "moment";
 import Image from "next/image";
 import { useEffect, useState } from "react";
+import Skeleton from "react-loading-skeleton";
 import styles from "./locations.module.css";
 
-interface Organization {
-  id: string;
-  name: string;
-  avatarURI: string;
-  owner: string;
-  type: string;
+interface LocationEditorProps {
+  location: Location | null;
+  locationLoading: boolean;
+  saveLocationChanges: (e: React.FormEvent<HTMLFormElement>) => void;
+  locationDownloadPackage: (e: React.MouseEvent<HTMLButtonElement>) => void;
+  alertMessage: string | null;
 }
 
-interface Location {
-  id: string;
-  name: string;
-  description: string;
-  tags: any;
-  organizationId: string;
-  lastUpdatedDate: string;
-  avatarURI: string;
-  roblox: {
-    id: string;
-  };
+function LocationEditor({
+  location,
+  locationLoading,
+  saveLocationChanges,
+  locationDownloadPackage,
+  alertMessage,
+}: LocationEditorProps) {
+  return (
+    <>
+      <div className={styles.mainEditor}>
+        {location ? (
+          <>
+            <h1 className={styles.mainEditor__title}><WidgetsRoundedIcon className={styles.mainEditor__titleIcon}/>{location.name}</h1>
+            {alertMessage ? (
+              (!alertMessage[0]) ? (
+                <div className={`${styles.alertContainer} ${styles.alertContainerError}`}>
+                  {alertMessage[1]}
+                </div>
+              ) : (
+                <div className={styles.alertContainer}>{alertMessage[1]}</div>
+              )
+            ) : null}
+            <form className={styles.form} onSubmit={saveLocationChanges}>
+              <div className={styles.formInputRow}>
+                <div className={styles.formInputGroup}>
+                  <label htmlFor="name" className={styles.label}>
+                    Name
+                  </label>
+                  <input
+                    id="name"
+                    name="name"
+                    className={styles.formInput}
+                    type="text"
+                    placeholder="Location Name"
+                    defaultValue={location.name}
+                  />
+                </div>
+                <Tooltip
+                  title="The place ID cannot be changed once set."
+                  followCursor
+                >
+                  <div className={styles.formInputGroup}>
+                    <label htmlFor="placeId" className={styles.label}>
+                      Place ID
+                    </label>
+                    <input
+                      id="placeId"
+                      name="placeId"
+                      className={styles.formInput}
+                      type="text"
+                      placeholder="Place ID"
+                      defaultValue={location.roblox.placeId}
+                      disabled={true}
+                    />
+                  </div>
+                </Tooltip>
+              </div>
+              <div className={styles.formInputRow}>
+                <div className={styles.formInputGroup}>
+                  <button
+                    type="submit"
+                    className={styles.formButton}
+                    disabled={locationLoading}
+                  >
+                    Save
+                  </button>
+                </div>
+                <div className={styles.formInputGroup}>
+                  <button
+                    className={styles.formButton}
+                    disabled={locationLoading}
+                    onClick={locationDownloadPackage}
+                  >
+                    Download Starter Pack
+                  </button>
+                </div>
+              </div>
+            </form>
+          </>
+        ) : (
+          <div className={styles.mainEditor__empty}>
+            <h1 className={styles.mainEditor__emptyTitle}>
+              Select a location to edit...
+            </h1>
+          </div>
+        )}
+      </div>
+    </>
+  );
 }
 
-// function Dropdown() {
-//   const [organization, setOrganization] = useState<Organization>({
-//     id: "1",
-//     name: "Pete Pongpeauk",
-//     avatarURI:
-//       "https://cdn.discordapp.com/attachments/813308393208414219/1088750737145729106/pete.png",
-//     owner: "FF0gCiIJYUPfmA4CTfqXTyPcHQb2",
-//     type: "personal",
-//   });
-//   return (
-//     <>
-//       <div className={styles.dropdown}>
-//         <button className={styles.dropdownButton}>
-//           <Image
-//             className={styles.dropdownButtonIcon}
-//             src={organization?.imageURI}
-//             width={36}
-//             height={36}
-//             alt={organization?.name}
-//           />
-//           <span className={styles.dropdownButtonText}>
-//             {organization?.name}
-//           </span>
-//           {organization?.type === "personal" ? (
-//             <span className={styles.pill}>Personal</span>
-//           ) : null}
-//           <span className={styles.dropdownArrowIcon}>
-//             <svg
-//               xmlns="http://www.w3.org/2000/svg"
-//               width="24"
-//               height="24"
-//               viewBox="0 0 24 24"
-//               id="arrow-drop-down"
-//             >
-//               <path fill="none" d="M0 0h24v24H0V0z"></path>
-//               <path d="M7 10l5 5 5-5H7z"></path>
-//             </svg>
-//           </span>
-//         </button>
-//         <div className={styles.dropdownContent}>
-//           <a href="#">personal</a>
-//         </div>
-//       </div>
-//     </>
-//   );
-// }
+function Dropdown({ organization }: { organization: Organization }) {
+  return (
+    <>
+      <div className={styles.dropdown}>
+        <button className={styles.dropdownButton}>
+          <Image
+            className={styles.dropdownButtonIcon}
+            src={organization?.avatarURI}
+            width={36}
+            height={36}
+            alt={organization?.name}
+          />
+          <span className={styles.dropdownButtonText}>
+            {organization?.name}
+          </span>
+          {organization?.type === "personal" ? (
+            <span className={styles.pill}>Personal</span>
+          ) : null}
+          <span className={styles.dropdownArrowIcon}>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              id="arrow-drop-down"
+            >
+              <path fill="none" d="M0 0h24v24H0V0z"></path>
+              <path d="M7 10l5 5 5-5H7z"></path>
+            </svg>
+          </span>
+        </button>
+        <div className={styles.dropdownContent}>
+          <a href="#">personal</a>
+        </div>
+      </div>
+    </>
+  );
+}
+
+function LocationListSkeleton() {
+  return (
+    <>
+      {[...Array(16)].map((_, i) => (
+        <tr key={i} className={styles.tr}>
+          <td className={styles.td}>
+            <Skeleton width={"100%"} duration={1} />
+          </td>
+          <td className={styles.td}>
+            <Skeleton width={"100%"} duration={1} />
+          </td>
+          <td className={styles.td}>
+            <Skeleton width={"100%"} duration={1} />
+          </td>
+          <td className={styles.td}>
+            <Skeleton width={"100%"} duration={1} />
+          </td>
+        </tr>
+      ))}
+    </>
+  );
+}
 
 export default function Page() {
   const { user, auth } = useAuthContext();
-  const [locations, setLocations] = useState([]);
+  const [locations, setLocations] = useState<Location[]>([]);
+  const [location, setLocation] = useState<Location | null>(null);
   const [organization, setOrganization] = useState<Organization | null>();
-  const [organizations, setOrganizations] = useState([]);
+  const [organizations, setOrganizations] = useState<Organization[]>([]);
+  const [alertMessage, setAlertMessage] = useState<[boolean, string] | null>(null);
+
+  const [pageLoading, setPageLoading] = useState<boolean>(true);
+
+  const [locationLoading, setLocationLoading] = useState<boolean>(false);
+
+  function saveLocationChanges(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    setLocationLoading(true);
+    setAlertMessage(null);
+
+    const form = new FormData(e.currentTarget);
+
+    const data = {
+      name: form.get("name"),
+    };
+
+    auth.currentUser.getIdToken().then((idToken: string) => {
+      axios
+        .put(
+          "/api/v1/locations/update",
+          {},
+          {
+            headers: { Authorization: `Bearer ${idToken}` },
+            params: {
+              location_id: location?.id,
+              data: JSON.stringify(data),
+            },
+          }
+        )
+        .then((res) => {
+          showLocation(location as Location);
+          if (res.data.success) {
+            setAlertMessage([true, "Location updated!"]);
+            return;
+          } else {
+            setAlertMessage([false, res.data.error]);
+            return;
+          }
+        })
+        .catch((res) => {
+          setAlertMessage([false, "Something went wrong."]);
+          setLocationLoading(false);
+        })
+        .finally(() => {
+          setLocationLoading(false);
+          syncLocations();
+        });
+    });
+  }
+
+  function locationDownloadPackage(e: React.MouseEvent<HTMLButtonElement>) {
+    e.preventDefault();
+    setLocationLoading(true);
+  }
+
+  function deleteLocation(entry: Location) {
+    setLocationLoading(true);
+    auth.currentUser.getIdToken().then((idToken: string) => {
+      axios
+        .delete("/api/v1/locations/delete", {
+          headers: { Authorization: `Bearer ${idToken}` },
+          params: { location_id: entry.id },
+        })
+        .then((res) => {
+          setLocationLoading(false);
+          syncLocations();
+          if (location?.id === entry.id) {
+            setLocation(null);
+          }
+        })
+        .catch((err) => {
+          setLocationLoading(false);
+        }).finally(() => {
+          setAlertMessage(null);
+        });
+    });
+  }
 
   useEffect(() => {
-    if (!user) return;
-    //setOrganizations(user.data?.organizations ? user.data.organizations : []);
+    if (!user.data) return;
     try {
       auth.currentUser.getIdToken().then((idToken: string) => {
         axios
@@ -90,22 +268,25 @@ export default function Page() {
             "/api/v1/user/organizations",
             {},
             {
-              params: { user_id: user.data?.id },
+              params: { user_id: user.data.id },
               headers: { Authorization: `Bearer ${idToken}` },
             }
           )
           .then((res) => {
             setOrganizations(res.data.organizations);
-            console.log(`Organizations: ${res.data.organizations}`);
           })
           .catch((err) => {
             console.log(err);
           });
       });
     } catch (err) {}
-  }, [user]);
+  }, [user, auth.currentUser]);
 
-  useEffect(() => {
+  function syncLocations() {
+    if (!organization) return;
+
+    setPageLoading(true);
+    setLocations([]);
     auth.currentUser.getIdToken().then((idToken: string) => {
       axios
         .post(
@@ -117,11 +298,44 @@ export default function Page() {
           }
         )
         .then((res) => {
-          console.log(res.data.locations);
           setLocations(res.data.locations);
         })
-        .catch((err) => {});
+        .catch((err) => {})
+        .finally(() => {
+          setPageLoading(false);
+        });
     });
+  }
+
+  function showLocation(entry?: Location) {
+    setLocationLoading(true);
+    if (!entry) return;
+    auth.currentUser.getIdToken().then((idToken: string) => {
+      axios
+        .post(
+          "/api/v1/locations",
+          {},
+          {
+            params: { location_id: entry.id },
+            headers: { Authorization: `Bearer ${idToken}` },
+          }
+        )
+        .then((res) => {
+          setLocation(res.data.location);
+        })
+        .catch((err) => {
+          console.log(err);
+        })
+        .finally(() => {
+          setLocationLoading(false);
+        });
+    });
+  }
+
+  useEffect(() => {
+    syncLocations();
+    setLocation(null);
+    setAlertMessage(null);
   }, [auth.currentUser, organization]);
 
   useEffect(() => {
@@ -132,11 +346,10 @@ export default function Page() {
     }
   }, [locations, organization, organizations]);
 
-  // temporary elements
-
   return (
     <>
       <div className={styles.main}>
+        {/* temporary placeholder select element */}
         <label htmlFor="organization" className={styles.label}>
           Organization
         </label>
@@ -164,13 +377,17 @@ export default function Page() {
         <div className={styles.mainColumns}>
           <div className={styles.mainTable}>
             <table className={styles.table}>
+              <col className={styles.col} style={{ width: "30%" }} />
+              <col className={styles.col} style={{ width: "20%" }} />
+              <col className={styles.col} style={{ width: "20%" }} />
+              <col className={styles.col} style={{ width: "15%" }} />
               <tr className={styles.tr}>
                 <th className={styles.th}>Name</th>
                 <th className={styles.th}>Tags</th>
                 <th className={styles.th}>Last Updated Date</th>
                 <th className={styles.th}>Actions</th>
               </tr>
-              {locations.length > 0 ? (
+              {!pageLoading && locations.length > 0 ? (
                 locations.map((entry: Location) => {
                   return (
                     <tr key={entry.id}>
@@ -185,33 +402,56 @@ export default function Page() {
                         <span>{entry?.name}</span>
                       </td>
                       <td className={styles.td}>
-                        {entry?.tags?.map((tag: string) => {
-                          <span className={styles.pill} key={tag}>
-                            {tag}
-                          </span>;
-                        })}
+                        <div className={styles.locationPillContainer}>
+                          {entry.tags.map((tag: string) => {
+                            return (
+                              <span className={styles.pill} key={tag}>
+                                {tag}
+                              </span>
+                            );
+                          })}
+                        </div>
                       </td>
-                      <td className={styles.td}>{entry?.lastUpdatedDate}</td>
                       <td className={styles.td}>
-                        <button className={styles.button}>Edit</button>
-                        <button className={styles.button}>Delete</button>
+                        {moment(entry?.lastUpdatedDate).fromNow()}
+                      </td>
+                      <td className={styles.td}>
+                        <button
+                          onClick={() => {
+                            showLocation(entry);
+                          }}
+                        >
+                          <EditOutlinedIcon className={styles.buttonIcon} />
+                        </button>
+                        <button
+                          onClick={() => {
+                            deleteLocation(entry);
+                          }}
+                        >
+                          <DeleteForeverOutlinedIcon
+                            className={styles.buttonIcon}
+                          />
+                        </button>
                       </td>
                     </tr>
                   );
                 })
+              ) : pageLoading ? (
+                <LocationListSkeleton />
               ) : (
                 <tr key={1} className={styles.tr}>
                   <td className={styles.td}>No locations found.</td>
                 </tr>
               )}
-              {/* {locations.length > 0 ? null : (
-              <tr key={1} className={styles.tr}>
-                <td className={styles.td}>No locations found.</td>
-              </tr>
-            )} */}
             </table>
           </div>
-          <div className={styles.mainEditor}></div>
+          <LocationEditor
+            location={location}
+            locationLoading={locationLoading}
+            saveLocationChanges={saveLocationChanges}
+            locationDownloadPackage={locationDownloadPackage}
+            alertMessage={alertMessage}
+          />
         </div>
       </div>
     </>

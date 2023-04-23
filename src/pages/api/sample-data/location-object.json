@@ -1,12 +1,36 @@
 [
   {
     "id": "ae2e38ba-ff76-4190-ab95-c0f538bb50e4",
-    "name": "Example Location",
+    "name": "Example Location 1",
     "description": "This is an example location",
     "tags": [],
     "organizationId": "0bd8f82a-89fc-4746-81a7-7d1581a678ea",
     "lastUpdatedDate": "2021-02-23T19:00:00.000Z",
     "avatarURI": "https://cdn.discordapp.com/attachments/813308393208414219/1070969018560815205/IMG_9331.JPG",
+    "roblox": {
+      "placeId": 123456789
+    }
+  },
+  {
+    "id": "9dd94286-94fc-46ba-ac43-06f553d6d1a1",
+    "name": "Example Location 2",
+    "description": "This is an example location 2",
+    "tags": [],
+    "organizationId": "0bd8f82a-89fc-4746-81a7-7d1581a678ea",
+    "lastUpdatedDate": "2021-02-23T19:00:00.000Z",
+    "avatarURI": "https://cdn.discordapp.com/attachments/829363883277287494/1099220948751753266/Png.png",
+    "roblox": {
+      "placeId": 123456789
+    }
+  },
+  {
+    "id": "03cf8c9e-01a2-4bce-92f7-63420de6dad8",
+    "name": "Example Location 3",
+    "description": "This is an example location 3",
+    "tags": [],
+    "organizationId": "0bd8f82a-89fc-4746-81a7-7d1581a678ea",
+    "lastUpdatedDate": "2021-02-23T19:00:00.000Z",
+    "avatarURI": "https://cdn.discordapp.com/attachments/829363883277287494/1099433684198768700/Png.png",
     "roblox": {
       "placeId": 123456789
     }

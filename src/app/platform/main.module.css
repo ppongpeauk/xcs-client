@@ -29,6 +29,7 @@
   align-items: center;
   font-size: 1.75rem;
   font-weight: 600;
+  margin-right: auto;
 }
 
 .topBar {
@@ -163,7 +164,6 @@
   font-size: 0.875rem;
   font-weight: 600;
   color: #212529;
-  margin-bottom: 4px;
 }
 
 .accountDropdownHeaderRole {
@@ -209,6 +209,10 @@
 @media screen and (min-width: 768px) {
   .navbarVisible {
     width: calc(100% - 240px);
+  }
+
+  .topBarMenuButton {
+    display: none;
   }
 
   .navbarVisible .topBar {

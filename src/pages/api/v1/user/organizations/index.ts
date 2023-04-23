@@ -16,7 +16,7 @@ const handler = async (
       const uid = await tokenToID(authorization.split('Bearer ')[1]);
       // check if the token is valid and if the user is the same as the one in the request
       if (uid !== user_id) {
-        res.status(401).json({ success: false, message: "Unauthorized" });
+        res.status(401).json({ success: false, error: "Unauthorized" });
         return;
       }
 
@@ -34,11 +34,11 @@ const handler = async (
 
     } catch {
       // return an internal server error if there was an unexpected exception
-      res.status(500).json({ success: false, message: "Internal server error" });
+      res.status(500).json({ success: false, error: "Internal server error" });
     }
   } else {
     // return a method not allowed error if the request method is not POST
-    res.status(405).json({ success: false, message: "Method not allowed" });
+    res.status(405).json({ success: false, error: "Method not allowed" });
   }
 };
 

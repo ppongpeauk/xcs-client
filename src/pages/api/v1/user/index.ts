@@ -11,13 +11,13 @@ const handler = async (
 
     // refuse request if an illegally formatted authorization header is provided (before validating it)
     if (!req.headers.authorization || !req.headers.authorization.startsWith('Bearer ')) {
-      res.status(401).json({ success: false, message: "Unauthorized" });
+      res.status(401).json({ success: false, error: "Unauthorized" });
       return;
     }
 
     // refuse request if no id or username is provided
     if (!username && !id) {
-      res.status(400).json({ success: false, message: "Bad request" });
+      res.status(400).json({ success: false, error: "Bad request" });
       return;
     }
 
@@ -41,11 +41,11 @@ const handler = async (
       res.status(200).json({ success: true, data: users[0] });
       return;
     } else {
-      res.status(404).json({ success: false, message: "User not found" });
+      res.status(404).json({ success: false, error: "User not found" });
       return;
     }
   } else {
-    res.status(400).json({ success: false, message: "Bad request" });
+    res.status(400).json({ success: false, error: "Bad request" });
   }
 };
 

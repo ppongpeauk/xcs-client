@@ -65,17 +65,17 @@ export default function AppLayout({
       >
         <Navbar setVisible={setNavbarVisible} visible={navbarVisible} />
         <div className={styles.topBar}>
+          <button
+            className={`${styles.topBarButton} ${styles.topBarMenuButton}`}
+            onClick={() => {
+              setNavbarVisible(!navbarVisible);
+              setAccountDropdownVisible(false);
+            }}
+          >
+            <MenuOpenRoundedIcon sx={{ fontSize: "32px" }} />
+          </button>
           <h1 className={styles.pageTitle}>{pageNames[pathname as string]}</h1>
           <div className={styles.topBarButtons}>
-            <button
-              className={styles.topBarButton}
-              onClick={() => {
-                setNavbarVisible(!navbarVisible);
-                setAccountDropdownVisible(false);
-              }}
-            >
-              <MenuOpenRoundedIcon sx={{ fontSize: "32px" }} />
-            </button>
             <button
               className={`${styles.topBarButton} ${styles.topBarAccountButton}`}
               onClick={() => setAccountDropdownVisible(!accountDropdownVisible)}
@@ -175,5 +175,11 @@ export default function AppLayout({
         </div>
       </main>
     </>
-  ) : null;
+  ) : (
+    <>
+      <h1>
+        Loading...
+      </h1>
+    </>
+  );
 }
