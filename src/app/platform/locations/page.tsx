@@ -18,7 +18,7 @@ interface LocationEditorProps {
   locationLoading: boolean;
   saveLocationChanges: (e: React.FormEvent<HTMLFormElement>) => void;
   locationDownloadPackage: (e: React.MouseEvent<HTMLButtonElement>) => void;
-  alertMessage: string | null;
+  alertMessage: [boolean, string] | null;
 }
 
 function LocationEditor({
