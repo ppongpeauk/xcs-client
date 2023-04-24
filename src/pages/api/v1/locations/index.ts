@@ -6,7 +6,7 @@ const handler = async (
   req: NextApiRequest,
   res: NextApiResponse
 ): Promise<void> => {
-  if (req.method === "POST") {
+  if (req.method === "GET") {
     // request parameters & headers
     const { location_id } = req.query as { location_id: string };
     const { authorization } = req.headers as { authorization: string };
@@ -19,8 +19,6 @@ const handler = async (
     const db = client.db(process.env.MONGODB_DB as string);
     const locations = db.collection("locations");
     const location = await locations.findOne({ id: location_id });
-
-    console.info("location", location_id)
 
     if (!location) {
       res.status(404).json({ success: false, error: "Location not found" });

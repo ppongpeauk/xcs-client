@@ -6,7 +6,7 @@ export async function setUserSubscription(userEmail: string, customerId: string,
   const db = client.db(process.env.MONGODB_DB as string);
   await db.
     collection("users")
-    .updateOne({email: userEmail}, {$set: {platform: {
+    .updateOne({"payment.customerId": customerId}, {$set: {platform: {
       membership: premiumStatus ? "premium" : "free"
     }}});
   return true;

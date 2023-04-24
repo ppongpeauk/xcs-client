@@ -18,3 +18,11 @@ export interface Location {
     placeId: string;
   };
 }
+
+export interface LocationEditorProps {
+  location: Location | null;
+  locationLoading: boolean;
+  saveLocationChanges: (e: React.FormEvent<HTMLFormElement>) => void;
+  locationDownloadPackage: (e: React.MouseEvent<HTMLButtonElement>) => void;
+  alertMessage: [boolean, string] | null;
+}

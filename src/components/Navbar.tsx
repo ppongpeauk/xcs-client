@@ -3,14 +3,16 @@
 import { useAuthContext } from "@/context/user";
 import { usePathname, useRouter } from "next/navigation";
 
+import Image from "next/image";
 import Link from "next/link";
 import styles from "./Navbar.module.css";
 
+import restrafesWordmark from "@/assets/wordmark.png";
 import BadgeRoundedIcon from "@mui/icons-material/BadgeRounded";
 import CorporateFareRoundedIcon from "@mui/icons-material/CorporateFareRounded";
+import ForumRoundedIcon from "@mui/icons-material/ForumRounded";
 import HouseRoundedIcon from "@mui/icons-material/HouseRounded";
 import SensorsRoundedIcon from "@mui/icons-material/SensorsRounded";
-import SupportRoundedIcon from "@mui/icons-material/SupportRounded";
 import WidgetsRoundedIcon from "@mui/icons-material/WidgetsRounded";
 import WorkspacePremiumIcon from "@mui/icons-material/WorkspacePremium";
 import { Url } from "next/dist/shared/lib/router/router";
@@ -87,16 +89,18 @@ export default function Navbar(props: {
             <HouseRoundedIcon sx={{ fontSize: "24px", marginRight: "12px" }} />
           }
         />
-        <NavbarButton
-          title="Event Logs"
-          onClick={() => setNavbarVisible(false)}
-          url="/platform/event-logs"
-          icon={
-            <SensorsRoundedIcon
-              sx={{ fontSize: "24px", marginRight: "12px" }}
-            />
-          }
-        />
+        {user.data?.platform.membership === "premium" ? (
+          <NavbarButton
+            title="Event Logs"
+            onClick={() => setNavbarVisible(false)}
+            url="/platform/event-logs"
+            icon={
+              <SensorsRoundedIcon
+                sx={{ fontSize: "24px", marginRight: "12px" }}
+              />
+            }
+          />
+        ) : null}
         <NavbarButton
           title="Profile"
           onClick={() => setNavbarVisible(false)}
@@ -130,9 +134,7 @@ export default function Navbar(props: {
           onClick={() => setNavbarVisible(false)}
           url="https://discord.gg/a2ZsmPB"
           icon={
-            <SupportRoundedIcon
-              sx={{ fontSize: "24px", marginRight: "12px" }}
-            />
+            <ForumRoundedIcon sx={{ fontSize: "24px", marginRight: "12px" }} />
           }
           target="_blank"
         />
@@ -153,10 +155,10 @@ export default function Navbar(props: {
           </>
         ) : null}
       </div>
-      <div className={`${styles.navButtons} mb-4`}>
-        <span className={styles.navCategoryTitle}>
-          Version {process.env.NEXT_PUBLIC_VERSION}
-        </span>
+      <div className={`${styles.navButtons} mb-8`}>
+        <div>
+          <Image src={restrafesWordmark} alt="Restrafes Wordmark" height={32} />
+        </div>
       </div>
     </div>
   );

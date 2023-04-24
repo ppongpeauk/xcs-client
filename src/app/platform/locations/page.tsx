@@ -2,10 +2,12 @@
 
 import { useAuthContext } from "@/context/user";
 import { Location, Organization } from "@/interfaces";
+import BadgeRoundedIcon from "@mui/icons-material/BadgeRounded";
 import DeleteForeverOutlinedIcon from "@mui/icons-material/DeleteForeverOutlined";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
+import InfoRoundedIcon from "@mui/icons-material/InfoRounded";
 import WidgetsRoundedIcon from "@mui/icons-material/WidgetsRounded";
-import { Tooltip, Zoom } from "@mui/material";
+import { Tooltip } from "@mui/material";
 import axios from "axios";
 import moment from "moment";
 import Image from "next/image";
@@ -28,15 +30,30 @@ function LocationEditor({
   locationDownloadPackage,
   alertMessage,
 }: LocationEditorProps) {
+  const [name, setName] = useState<string>("");
+  const [placeId, setPlaceId] = useState<string>("");
+
+  useEffect(() => {
+    if (location) {
+      setName(location.name);
+      setPlaceId(location.roblox.placeId || "");
+    }
+  }, [location]);
+
   return (
     <>
       <div className={styles.mainEditor}>
         {location ? (
           <>
-            <h1 className={styles.mainEditor__title}><WidgetsRoundedIcon className={styles.mainEditor__titleIcon}/>{location.name}</h1>
+            <h1 className={styles.mainEditor__title}>
+              <WidgetsRoundedIcon className={styles.mainEditor__titleIcon} />
+              {location.name}
+            </h1>
             {alertMessage ? (
-              (!alertMessage[0]) ? (
-                <div className={`${styles.alertContainer} ${styles.alertContainerError}`}>
+              !alertMessage[0] ? (
+                <div
+                  className={`${styles.alertContainer} ${styles.alertContainerError}`}
+                >
                   {alertMessage[1]}
                 </div>
               ) : (
@@ -44,6 +61,10 @@ function LocationEditor({
               )
             ) : null}
             <form className={styles.form} onSubmit={saveLocationChanges}>
+              <h2 className={styles.mainEditor__subtitle}>
+                <InfoRoundedIcon className={styles.mainEditor__subtitleIcon} />
+                Location Info
+              </h2>
               <div className={styles.formInputRow}>
                 <div className={styles.formInputGroup}>
                   <label htmlFor="name" className={styles.label}>
@@ -55,7 +76,8 @@ function LocationEditor({
                     className={styles.formInput}
                     type="text"
                     placeholder="Location Name"
-                    defaultValue={location.name}
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
                   />
                 </div>
                 <Tooltip
@@ -72,12 +94,19 @@ function LocationEditor({
                       className={styles.formInput}
                       type="text"
                       placeholder="Place ID"
-                      defaultValue={location.roblox.placeId}
-                      disabled={true}
+                      value={placeId}
+                      onChange={(e) => setPlaceId(e.target.value)}
+                      readOnly={location.roblox.placeId !== null}
                     />
                   </div>
                 </Tooltip>
               </div>
+              <h2 className={styles.mainEditor__subtitle}>
+                <BadgeRoundedIcon className={styles.mainEditor__subtitleIcon} />
+                Permissions
+              </h2>
+
+              <hr className={styles.mainEditor__hr}></hr>
               <div className={styles.formInputRow}>
                 <div className={styles.formInputGroup}>
                   <button
@@ -180,13 +209,16 @@ export default function Page() {
   const [location, setLocation] = useState<Location | null>(null);
   const [organization, setOrganization] = useState<Organization | null>();
   const [organizations, setOrganizations] = useState<Organization[]>([]);
-  const [alertMessage, setAlertMessage] = useState<[boolean, string] | null>(null);
+  const [alertMessage, setAlertMessage] = useState<[boolean, string] | null>(
+    null
+  );
 
   const [pageLoading, setPageLoading] = useState<boolean>(true);
 
   const [locationLoading, setLocationLoading] = useState<boolean>(false);
 
   function saveLocationChanges(e: React.FormEvent<HTMLFormElement>) {
+    if (location === null) return;
     e.preventDefault();
     setLocationLoading(true);
     setAlertMessage(null);
@@ -195,6 +227,9 @@ export default function Page() {
 
     const data = {
       name: form.get("name"),
+      roblox: {
+        placeId: form.get("placeId") === "" ? null : form.get("placeId"),
+      }
     };
 
     auth.currentUser.getIdToken().then((idToken: string) => {
@@ -211,7 +246,7 @@ export default function Page() {
           }
         )
         .then((res) => {
-          showLocation(location as Location);
+          showLocation(location);
           if (res.data.success) {
             setAlertMessage([true, "Location updated!"]);
             return;
@@ -221,7 +256,7 @@ export default function Page() {
           }
         })
         .catch((res) => {
-          setAlertMessage([false, "Something went wrong."]);
+          setAlertMessage([false, res.data?.error || "An error occurred."]);
           setLocationLoading(false);
         })
         .finally(() => {
@@ -253,7 +288,8 @@ export default function Page() {
         })
         .catch((err) => {
           setLocationLoading(false);
-        }).finally(() => {
+        })
+        .finally(() => {
           setAlertMessage(null);
         });
     });
@@ -264,14 +300,10 @@ export default function Page() {
     try {
       auth.currentUser.getIdToken().then((idToken: string) => {
         axios
-          .post(
-            "/api/v1/user/organizations",
-            {},
-            {
-              params: { user_id: user.data.id },
-              headers: { Authorization: `Bearer ${idToken}` },
-            }
-          )
+          .get("/api/v1/user/organizations", {
+            params: { user_id: user.data.id },
+            headers: { Authorization: `Bearer ${idToken}` },
+          })
           .then((res) => {
             setOrganizations(res.data.organizations);
           })
@@ -289,14 +321,10 @@ export default function Page() {
     setLocations([]);
     auth.currentUser.getIdToken().then((idToken: string) => {
       axios
-        .post(
-          "/api/v1/locations/list",
-          {},
-          {
-            params: { organization_id: organization?.id },
-            headers: { Authorization: `Bearer ${idToken}` },
-          }
-        )
+        .get("/api/v1/locations/list", {
+          params: { organization_id: organization?.id },
+          headers: { Authorization: `Bearer ${idToken}` },
+        })
         .then((res) => {
           setLocations(res.data.locations);
         })
@@ -312,14 +340,10 @@ export default function Page() {
     if (!entry) return;
     auth.currentUser.getIdToken().then((idToken: string) => {
       axios
-        .post(
-          "/api/v1/locations",
-          {},
-          {
-            params: { location_id: entry.id },
-            headers: { Authorization: `Bearer ${idToken}` },
-          }
-        )
+        .get("/api/v1/locations", {
+          params: { location_id: entry.id },
+          headers: { Authorization: `Bearer ${idToken}` },
+        })
         .then((res) => {
           setLocation(res.data.location);
         })

@@ -3,7 +3,7 @@ import { tokenToID } from "@/pages/api/firebase";
 import { NextApiRequest, NextApiResponse } from "next";
 
 const handler = async (req: NextApiRequest, res: NextApiResponse): Promise<void> => {
-  if (req.method === "POST") {
+  if (req.method === "GET") {
     // refuse request if an illegally formatted authorization header is provided (before validating it)
     if (req.headers.authorization && !req.headers.authorization.startsWith('Bearer ')) {
       res.status(401).json({ success: false, error: "Unauthorized" });

@@ -26,8 +26,13 @@ const nextConfig = {
       },
       {
         source: "/login",
-        destination: '/ldp',
-        permanent: true,
+        destination: '/idp',
+        permanent: false,
+      },
+      {
+        source: "/idp/invitation",
+        destination: '/idp',
+        permanent: false,
       },
     ]
   },

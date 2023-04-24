@@ -33,8 +33,6 @@ const handler = async (
   // get location
   const location = await locations.findOne({ id: location_id });
 
-  console.info("q", req.query);
-
   // location doesn't exist
   if (!location) {
     res.status(404).json({ success: false, error: "Location not found" });
@@ -42,23 +40,29 @@ const handler = async (
   }
 
   // placeIds cannot be changed once set
-  if (parsedData?.roblox?.placeId) {
+  
+  if (parsedData.roblox["placeId"] !== null) {
+    parsedData.roblox.placeId = parsedData.roblox.placeId.trim().replace(/\D/g,'');
+    if (parsedData.roblox.placeId.length === 0) {
+      res.status(200).json({ success: false, error: "The Place ID cannot be empty if specified." });
+      return;
+    }
     if (
-      location.roblox.placeId !== parsedData.roblox.placeId &&
-      location.roblox.placeId !== ""
+      location.roblox.placeId !== null && parsedData.roblox.placeId !== location.roblox.placeId
     ) {
-      res.status(200).json({ success: false, error: "placeId mismatch" });
+      res.status(200).json({ success: false, error: "Place ID mismatch. The place ID cannot be changed once set." });
       return;
     }
   }
 
   // naming guidelines
+  parsedData.name = parsedData.name.trim();
   if (parsedData.name !== undefined) {
-    if (parsedData.name.length > 50) {
-      res.status(200).json({ success: false, error: "Name too long" });
+    if (parsedData.name.length > 32) {
+      res.status(200).json({ success: false, error: "Name cannot be more than 32 characters." });
       return;
     } else if (parsedData.name.length < 4) {
-      res.status(200).json({ success: false, error: "Name too short" });
+      res.status(200).json({ success: false, error: "Name cannot be less than 4 characters." });
       return;
     }
   }

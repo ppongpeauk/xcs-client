@@ -6,7 +6,7 @@ const handler = async (
   req: NextApiRequest,
   res: NextApiResponse
 ): Promise<void> => {
-  if (req.method === "POST") {
+  if (req.method === "GET") {
     // request parameters & headers
     const { user_id } = req.query as { user_id: string };
     const { authorization } = req.headers as { authorization: string };
