@@ -83,11 +83,6 @@
   src: url(./SpaceGrotesk.woff2);
 }
 
-/* @font-face {
-  font-family: "Hanken Grotesk";
-  src: url(./HankenGrotesk.woff2);
-} */
-
 @font-face {
   font-family: 'Hanken Grotesk';
   src: url('HankenGrotesk-Black.woff2') format('woff2'),
