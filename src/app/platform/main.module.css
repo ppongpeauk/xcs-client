@@ -1,70 +1,74 @@
+/* Main Containers */
+
 .main {
-  position: absolute;
-  left: 0;
   background-color: #e9ecef;
-  width: 100%;
   height: 100vh;
+  left: 0;
+  position: absolute;
   transition: left 0.25s, width 0.25s;
+  width: 100%;
+}
+
+.mainContent {
+  box-sizing: border-box;
+  height: calc(100vh - 96px);
+  left: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  padding: 24px;
+  position: absolute;
+  top: 96px;
+  width: 100%;
 }
 
 .navbarVisible {
   left: 240px;
 }
 
-.mainContent {
-  position: absolute;
-  top: 96px;
-  left: 0;
-  width: 100%;
-  height: calc(100vh - 96px);
-  overflow-y: auto;
-  overflow-x: hidden;
-  padding: 24px;
-  box-sizing: border-box;
-}
+/* Top Bar */
 
 .pageTitle {
-  display: flex;
-  justify-content: center;
   align-items: center;
+  display: flex;
   font-size: 1.75rem;
   font-weight: 600;
+  justify-content: center;
   margin-right: auto;
 }
 
 .topBar {
-  position: fixed;
-  display: flex;
-  justify-content: space-between;
   align-items: center;
   background-color: #fff;
-  padding: 24px;
   border-bottom: 1px solid #ccc;
+  display: flex;
   height: 96px;
+  justify-content: space-between;
+  padding: 24px;
+  position: fixed;
+  transition: width 0.25s;
   width: 100%;
   z-index: 768;
-  transition: width 0.25s;
 }
 
 .topBarButtons {
+  align-items: center;
   display: flex;
   justify-content: flex-end;
-  align-items: center;
 }
 
 .topBarButton {
-  display: flex;
-  justify-content: center;
   align-items: center;
+  background-color: #fff;
   border: 1px solid transparent;
   border-radius: 50%;
-  margin: 0 8px;
-  height: 56px;
-  width: 56px;
-  transition: background-color 0.2s;
-  background-color: #fff;
   color: #212529;
+  display: flex;
+  height: 56px;
+  justify-content: center;
+  margin: 0 8px;
   overflow: hidden;
+  transition: background-color 0.2s;
+  width: 56px;
 }
 
 .topBarButton:hover {
@@ -79,33 +83,35 @@
   background-color: #eee;
 }
 
+/* Account Dropdown */
+
 .accountDropdownModal {
-  position: fixed;
-  left: -240px;
-  width: calc(100vw + 240px);
   height: 100vh;
+  left: -240px;
+  position: fixed;
+  width: calc(100vw + 240px);
   z-index: 512;
 }
 
 .accountDropdownContainer {
-  display: flex;
-  position: fixed;
-  top: 96px;
-  right: 0;
-  margin: 0;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
   align-items: flex-start;
   background-color: #fff;
   border: 1px solid #ccc;
   border-radius: var(--border-radius);
+  display: flex;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  margin: 0;
+  opacity: 100%;
   padding: 16px;
+  pointer-events: all;
+  position: fixed;
+  right: 0;
+  top: 96px;
+  transition: opacity 0.2s;
   width: 384px;
   z-index: 1024;
-  opacity: 100%;
-  transition: opacity 0.2s;
-  pointer-events: all;
 }
 
 .accountDropdownContainer__invisible {
@@ -114,31 +120,31 @@
 }
 
 .accountDropdownButton {
-  display: flex;
-  justify-content: flex-start;
   align-items: center;
   border: 1px solid #ccc;
   border-radius: var(--border-radius);
-  padding: 0 8px;
-  height: 48px;
-  width: 100%;
-  margin-top: 16px;
-  transition: background-color 0.2s;
   color: #212529;
+  display: flex;
   font-weight: 600;
+  height: 48px;
+  justify-content: flex-start;
+  margin-top: 16px;
+  padding: 0 8px;
+  transition: background-color 0.2s;
+  width: 100%;
 }
 
 .accountDropdownHeader {
-  display: flex;
-  justify-content: space-between;
   align-items: center;
-  width: 100%;
-  height: 96px;
-  padding: 8px 0;
-  font-weight: 500;
-  color: #ced4da;
   border-radius: var(--border-radius);
+  color: #ced4da;
+  display: flex;
+  font-weight: 500;
+  height: 96px;
+  justify-content: space-between;
+  padding: 8px 0;
   transition: background-color 0.2s;
+  width: 100%;
 }
 
 .accountDropdownHeader:hover {
@@ -155,21 +161,21 @@
 }
 
 .accountDropdownHeaderName {
+  color: #212529;
   font-size: 1.25rem;
   font-weight: 800;
-  color: #212529;
 }
 
 .accountDropdownHeaderSubname {
+  color: #212529;
   font-size: 0.875rem;
   font-weight: 600;
-  color: #212529;
 }
 
 .accountDropdownHeaderRole {
+  color: #212529;
   display: flex;
   font-weight: 600;
-  color: #212529;
 }
 
 .accountDropdownHeaderRoleIcon {
@@ -177,25 +183,25 @@
 }
 
 .accountDropdownHeaderEmail {
+  color: #212529;
   font-size: 0.875rem;
   font-weight: 400;
-  color: #212529;
 }
 
 .accountDropdownAvatar {
-  display: flex;
-  justify-content: center;
   align-items: center;
-  border: 1px solid #ccc;
-  border-radius: 50%;
-  margin: 0 16px;
-  height: 100%;
-  width: auto;
-  transition: background-color 0.2s;
   background-color: #fff;
   border: 1px solid #ccc;
+  border: 1px solid #ccc;
+  border-radius: 50%;
   color: #212529;
+  display: flex;
+  height: 100%;
+  justify-content: center;
+  margin: 0 16px;
   overflow: hidden;
+  transition: background-color 0.2s;
+  width: auto;
 }
 
 .accountDropdownButton:hover {
@@ -204,6 +210,19 @@
 
 .accountDropdownButton:active {
   background-color: #ddd;
+}
+
+.pill {
+  align-items: center;
+  background-color: #000;
+  border-radius: 24px;
+  color: #fff;
+  display: flex;
+  font-size: 0.875rem;
+  font-weight: 600;
+  justify-content: center;
+  margin: 0 4px;
+  padding: 4px 8px;
 }
 
 @media screen and (min-width: 768px) {
@@ -238,17 +257,4 @@
     border-top: 0;
     width: 100vw;
   }
-}
-
-.pill {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-radius: 24px;
-  padding: 4px 8px;
-  font-size: 0.875rem;
-  font-weight: 600;
-  background-color: #000;
-  color: #fff;
-  margin: 0 4px;
 }

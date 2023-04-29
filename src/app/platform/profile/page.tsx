@@ -52,7 +52,7 @@ export default function Page() {
             ) : (
               <Image
                 className={styles.badgeImage}
-                src={user.data.avatarURI}
+                src={user.data?.avatarURI}
                 alt="User Badge Image"
                 width={512}
                 height={512}
@@ -74,7 +74,7 @@ export default function Page() {
           {isLoading ? null : (
             <Image
               className={styles.badgeBarcode}
-              src={`https://barcodeapi.org/api/pdf417/{id:'${user.data.id}'}`}
+              src={`https://barcodeapi.org/api/pdf417/{id:'${user.data?.id}'}`}
               alt="User Barcode"
               width={256}
               height={256}
