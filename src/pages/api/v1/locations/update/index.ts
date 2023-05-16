@@ -47,6 +47,10 @@ const handler = async (
       res.status(200).json({ success: false, error: "The Place ID cannot be empty if specified." });
       return;
     }
+    if (parsedData.roblox.placeId == 0) {
+      res.status(200).json({ success: false, error: "The Place ID cannot be zero." });
+      return;
+    }
     if (
       location.roblox.placeId !== null && parsedData.roblox.placeId !== location.roblox.placeId
     ) {
