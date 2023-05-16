@@ -268,6 +268,9 @@ export default function Page() {
 
   function locationDownloadPackage(e: React.MouseEvent<HTMLButtonElement>) {
     e.preventDefault();
+    axios.get(`/api/v1/locations/package`).then((res) => {
+      
+    });
     setLocationLoading(true);
   }
 
